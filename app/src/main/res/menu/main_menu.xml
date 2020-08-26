@@ -10,6 +10,11 @@
     </group>
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/log_record"
+            android:title="활동 기록"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/share"
             android:title="공유하기"/>
         <item
