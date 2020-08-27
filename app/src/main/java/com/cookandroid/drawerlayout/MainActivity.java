@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -98,7 +99,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
+
+        switch (menuitem.getItemId()){
+            case R.id.auto_set:
+                Intent intent1 = new Intent(MainActivity.this,AutoSetActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.alarm:
+                Intent intent2 = new Intent(MainActivity.this, AlarmActivity.class);
+                startActivity(intent2);
+                break;
+        }
         return true;
     }
 }
