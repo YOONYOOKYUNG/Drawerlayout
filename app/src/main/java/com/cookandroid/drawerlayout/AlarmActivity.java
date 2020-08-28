@@ -3,8 +3,10 @@ package com.cookandroid.drawerlayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -13,6 +15,7 @@ import java.util.Calendar;
 public class AlarmActivity extends AppCompatActivity {
 
     TextView st_time,st_time2;
+    ImageView set_alarm, fin_alarm, backarrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,38 @@ public class AlarmActivity extends AppCompatActivity {
                 tpd.show();
             }
         });
+
+        set_alarm = findViewById(R.id.set_alarm);
+        fin_alarm = findViewById(R.id.fin_alarm);
+
+
+        set_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AlarmActivity.this,SetalarmActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fin_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AlarmActivity.this, FinalarmActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        backarrow = findViewById(R.id.backarrow);
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }
 

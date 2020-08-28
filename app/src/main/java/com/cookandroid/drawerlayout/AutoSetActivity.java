@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,6 +95,15 @@ public class AutoSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 miseclose();
+            }
+        });
+
+        ImageView backarrow;
+        backarrow = findViewById(R.id.backarrow);
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }
@@ -189,5 +199,10 @@ public class AutoSetActivity extends AppCompatActivity {
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }

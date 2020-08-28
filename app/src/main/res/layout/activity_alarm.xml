@@ -135,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/set_alarm"
             android:layout_marginLeft="220dp"
             android:layout_gravity="center"
             android:layout_width="20dp"
@@ -162,6 +163,7 @@
             android:layout_height="wrap_content"/>
 
         <ImageView
+            android:id="@+id/fin_alarm"
             android:layout_marginLeft="220dp"
             android:layout_gravity="center"
             android:layout_width="20dp"

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -15,6 +16,7 @@ public class SetalarmActivity extends AppCompatActivity {
     TimePicker tp;
     TextView st_time;
     Button btnsave;
+    ImageView backarrow1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,20 @@ public class SetalarmActivity extends AppCompatActivity {
             }
         });
 
+        backarrow1 = findViewById(R.id.backarrow1);
+
+        backarrow1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+    }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }
+
 

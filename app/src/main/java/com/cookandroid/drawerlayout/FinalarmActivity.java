@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -14,6 +15,7 @@ public class FinalarmActivity extends AppCompatActivity {
     TimePicker tp;
     Button btnsave;
     TextView st_time;
+    ImageView backarrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +33,19 @@ public class FinalarmActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        backarrow = findViewById(R.id.backarrow);
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }

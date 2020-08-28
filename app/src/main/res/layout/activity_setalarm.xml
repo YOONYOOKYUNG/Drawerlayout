@@ -11,10 +11,11 @@
         android:layout_height="55dp"
         android:background="#B7DBF4">
         <ImageView
-            android:src="@drawable/back2"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"/>
+            android:id="@+id/backarrow1"
+            android:src="@drawable/backarrow1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"/>
         <TextView
             android:id="@+id/txt_bar"
             android:layout_width="wrap_content"

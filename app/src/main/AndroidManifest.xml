@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SetalarmActivity"></activity>
+        <activity android:name=".ConnpopupActivity"></activity>
+        <activity android:name=".SetalarmActivity" />
         <activity android:name=".FinalarmActivity" />
         <activity android:name=".AlarmActivity" />
         <activity android:name=".AutoSetActivity" />
