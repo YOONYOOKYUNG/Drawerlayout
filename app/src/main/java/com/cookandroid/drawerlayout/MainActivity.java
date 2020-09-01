@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvdate = findViewById(R.id.tvdate);
         tvdate.setText(today);
 
-
+        //click -> popup
         condition = findViewById(R.id.condition);
         myDialog = new Dialog(this);
         condition.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
 
@@ -111,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.log_record:
+                Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
+                startActivity(intent3);
         }
         return true;
     }
