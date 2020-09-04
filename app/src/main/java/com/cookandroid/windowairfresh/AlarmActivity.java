@@ -22,7 +22,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AlarmActivity extends AppCompatActivity {
 
@@ -59,6 +61,10 @@ public class AlarmActivity extends AppCompatActivity {
         fpi = PendingIntent.getActivity(this, 0, push,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        //Calendar calendar = Calendar.getInstance();
+        String data = format.format(new Date());
+
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -74,24 +80,42 @@ public class AlarmActivity extends AppCompatActivity {
             }
         });
 
+        switchbtn2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked == true){
+
+                    Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 켜졌습니다..",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    removeNotifi();
+                    Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 꺼졌습니다.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         st_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int hour = cal.get(Calendar.HOUR_OF_DAY);
-                final int min = cal.get(Calendar.MINUTE);
-                TimePickerDialog tpd;
-                tpd = new TimePickerDialog(AlarmActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        st_time.setText(hourOfDay + " 시 " + minute + " 분 ");
+                if(switchbtn2.isChecked() == false){
+                    Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 꺼져있습니다.",Toast.LENGTH_SHORT).show();
+                }else {
+                    Calendar cal = Calendar.getInstance();
+                    int hour = cal.get(Calendar.HOUR_OF_DAY);
+                    final int min = cal.get(Calendar.MINUTE);
+                    TimePickerDialog tpd;
+                    tpd = new TimePickerDialog(AlarmActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            st_time.setText(hourOfDay + " 시 " + minute + " 분 ");
 
-                    }
+                        }
 
-                }, hour, min, false);
-                tpd.setTitle("시간 설정");
-                tpd.show();
+                    }, hour, min, false);
+                    tpd.setTitle("시간 설정");
+                    tpd.show();
+                }
             }
         });
 
