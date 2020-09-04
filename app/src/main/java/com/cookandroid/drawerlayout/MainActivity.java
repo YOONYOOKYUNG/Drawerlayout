@@ -112,9 +112,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent2);
                 break;
+
             case R.id.log_record:
                 Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
                 startActivity(intent3);
+
+            case R.id.window:
+                Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);
+                startActivity(intent4);
         }
         return true;
     }

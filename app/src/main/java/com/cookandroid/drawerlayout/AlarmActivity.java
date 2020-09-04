@@ -2,6 +2,9 @@ package com.cookandroid.drawerlayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +19,10 @@ public class AlarmActivity extends AppCompatActivity {
 
     TextView st_time,st_time2;
     ImageView set_alarm, fin_alarm, backarrow;
+    NotificationManager nm;
+    Notification.Builder builder;
+    PendingIntent fpi;
+    Intent push;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

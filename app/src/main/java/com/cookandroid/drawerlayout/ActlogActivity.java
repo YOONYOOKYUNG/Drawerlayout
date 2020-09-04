@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 public class ActlogActivity extends AppCompatActivity {
-    RecyclerView recyview;
-    String s1[];
+    ListView listview;
     ImageView backarrow;
 
     @Override
@@ -18,12 +18,10 @@ public class ActlogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actlog);
 
-        s1 = getResources().getStringArray(R.array.description);
 
-        MyAdapter myAdapter = new MyAdapter(this, s1);
-        recyview = findViewById(R.id.recyview);
-        recyview.setAdapter(myAdapter);
-        recyview.setLayoutManager(new LinearLayoutManager(this));
+
+        listview = findViewById(R.id.listview);
+
 
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
