@@ -1,4 +1,4 @@
-package com.cookandroid.drawerlayout;
+package com.cookandroid.windowairfresh;
 
 import android.app.Dialog;
 import android.content.Context;

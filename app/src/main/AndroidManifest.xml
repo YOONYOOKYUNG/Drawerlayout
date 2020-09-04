@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cookandroid.drawerlayout">
+    package="com.cookandroid.windowairfresh">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <application
@@ -10,23 +10,23 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActlogActivity"/>
-        <activity android:name=".ConnpopupActivity" />
-        <activity android:name=".SetalarmActivity" />
-        <activity android:name=".FinalarmActivity" />
-        <activity android:name=".AlarmActivity" />
-        <activity android:name=".AutoSetActivity" />
-        <activity android:name=".WindowlistActivity"/>
-        <activity android:name="ListViewItem"/>
+        <activity android:name="com.cookandroid.windowairfresh.ActlogActivity"/>
+        <activity android:name="com.cookandroid.windowairfresh.ConnpopupActivity" />
+        <activity android:name="com.cookandroid.windowairfresh.SetalarmActivity" />
+        <activity android:name="com.cookandroid.windowairfresh.FinalarmActivity" />
+        <activity android:name="com.cookandroid.windowairfresh.AlarmActivity" />
+        <activity android:name="com.cookandroid.windowairfresh.AutoSetActivity" />
+        <activity android:name="com.cookandroid.windowairfresh.WindowlistActivity"/>
+        <activity android:name="com.cookandroid.windowairfresh.ListViewItem"/>
         <activity
-            android:name=".SplashActivity">
+            android:name="com.cookandroid.windowairfresh.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name="com.cookandroid.windowairfresh.MainActivity"/>
     </application>
 
 </manifest>

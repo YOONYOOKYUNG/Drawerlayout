@@ -1,4 +1,4 @@
-package com.cookandroid.drawerlayout;
+package com.cookandroid.windowairfresh;
 
 import android.content.Context;
 import android.graphics.Color;
