@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:layout_marginLeft="10dp"
-            android:text="푸시 수신 동의 설정 시, \n 어플 종료시에도 알림을 받습니다." />
+            android:text="푸시 수신 동의 설정 시,\n 어플 종료시에도 알림을 받습니다." />
     </RelativeLayout>
 
     <TextView
