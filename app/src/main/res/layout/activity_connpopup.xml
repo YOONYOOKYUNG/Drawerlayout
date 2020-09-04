@@ -10,18 +10,22 @@
     tools:context=".ConnpopupActivity">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1">
+        <ImageView
+            android:src="@drawable/waflogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/linear"
-            android:gravity="center"
-            android:text="이 어플을 이용할시, 블루투스 연결이 필요합니다.\n 연결 하시겠습니까?"
+            android:layout_centerHorizontal="true"
+            android:text="블루투스 연결이 필요합니다.\n 연결 하시겠습니까?"
             android:textSize="20dp"/>
 
         <LinearLayout

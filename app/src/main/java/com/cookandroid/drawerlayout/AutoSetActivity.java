@@ -19,7 +19,7 @@ public class AutoSetActivity extends AppCompatActivity {
     Button tpopen, tpclose, mmopen, mmclose;
     TextView tp_open, tp_close, mm_open, mm_close;
     LinearLayout suchi;
-    ToggleButton tbtn, ntbtn;
+    ToggleButton tbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,38 +35,21 @@ public class AutoSetActivity extends AppCompatActivity {
         mm_close = findViewById(R.id.mm_close);
         suchi = findViewById(R.id.suchi);
         tbtn = findViewById(R.id.tbtn);
-        ntbtn = findViewById(R.id.ntbtn);
 
         suchi.setVisibility(View.INVISIBLE);
-
-        ntbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ntbtn.isChecked() == true) {
-                    tbtn.setChecked(false);
-                    suchi.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(), "수동모드가 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else if(ntbtn.isChecked() == false){
-                    tbtn.setChecked(true);
-                    suchi.setVisibility(View.VISIBLE);
-                    Toast.makeText(getApplicationContext(), "자동모드가 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         tbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tbtn.isChecked() == true){
-                    ntbtn.setChecked(false);
+                if (tbtn.isChecked() == true) {
                     suchi.setVisibility(View.VISIBLE);
+                    Toast.makeText(getApplicationContext(), "자동모드가 켜졌습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else if(tbtn.isChecked() == false){
-                    ntbtn.setChecked(true);
+                    tbtn.setChecked(false);
                     suchi.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "수동모드가 켜졌습니다.", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 

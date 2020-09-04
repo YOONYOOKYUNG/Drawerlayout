@@ -27,36 +27,7 @@
     </RelativeLayout>
 
     <TextView
-        android:text="수동 모드 설정"
-        android:textSize="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#EDEDED"
-        android:padding="10dp"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/nautoM"
-            android:text="수동 모드"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ToggleButton
-            android:id="@+id/ntbtn"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"/>
-        <TextView
-            android:layout_below="@+id/nautoM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  창문의 외부상태에 대한 알림을 전송합니다." />
-    </RelativeLayout>
-    <TextView
-        android:text="자동 모드 설정"
+        android:text="모드 설정"
         android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +53,7 @@
             android:layout_below="@+id/autoM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 설정한 수치에 창문이 자동개폐됩니다." />
+            android:text=" 설정한 수치에 창문이 자동개폐됩니다. \n 자동모드가 " />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/suchi"
