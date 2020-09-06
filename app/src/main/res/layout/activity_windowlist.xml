@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ActlogActivity">
+    tools:context=".WindowlistActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,17 +21,21 @@
             android:id="@+id/txt_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="활동 로그"
+            android:text="설정"
             android:textSize="22dp"
-            android:textColor="#FFF"
+            android:textColor="#ffff"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="490dp"
+        android:id="@+id/listview1"/>
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:src="@drawable/add1"
+        android:padding="3dp"
+        android:id="@+id/btn1"/>
 
-
-
-    </LinearLayout>
+</LinearLayout>

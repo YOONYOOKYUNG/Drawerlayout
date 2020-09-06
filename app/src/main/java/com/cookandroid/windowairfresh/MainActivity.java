@@ -1,4 +1,4 @@
-package com.cookandroid.drawerlayout;
+package com.cookandroid.windowairfresh;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,7 +14,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -112,9 +111,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent2);
                 break;
+
             case R.id.log_record:
                 Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
                 startActivity(intent3);
+
+            case R.id.window:
+                Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);
+                startActivity(intent4);
         }
         return true;
     }

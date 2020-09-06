@@ -1,4 +1,4 @@
-package com.cookandroid.drawerlayout;
+package com.cookandroid.windowairfresh;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -42,28 +42,13 @@ public class AlarmActivity extends AppCompatActivity {
         st_time2 = findViewById(R.id.st_time2);
 
         final Switch switchbtn = findViewById(R.id.sb_use_listener);
-        builder = new Notification.Builder(this);
-        builder.setSmallIcon(R.drawable.alaram);
-        builder.setTicker("waf");
-        builder.setWhen(System.currentTimeMillis());
-        builder.setContentTitle("알림 설정");
-        builder.setContentText("푸쉬 알림이 커졌습니다.");
-        builder.setAutoCancel(true);
-        builder.setPriority(Notification.PRIORITY_MAX);
+        final Switch switchbtn2 = findViewById(R.id.sb_use_listener2);
 
-        nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        push = new Intent();
-        push.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        push.setClass(this, AlarmActivity.class);
-
-        fpi = PendingIntent.getActivity(this, 0, push,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-
+        switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(switchbtn.isChecked() == true){
-                    nm.notify(123456, builder.build());
+                    createNotifi();
                     Toast.makeText(getApplicationContext(),"푸쉬 알림이 켜졌습니다.",Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -72,6 +57,7 @@ public class AlarmActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         st_time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +95,7 @@ public class AlarmActivity extends AppCompatActivity {
 
                 }, hour, min, false);
                 tpd.setTitle("시간 설정");
-                 tpd.show();
+                tpd.show();
             }
         });
 
@@ -140,34 +126,29 @@ public class AlarmActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
     }
     @Override
     public void onBackPressed(){
         super.onBackPressed();
     }
     //알림 켰을때
-//    private void createNotifi(){
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
-//
-//        builder.setSmallIcon(R.drawable.alaram);
-//        builder.setContentTitle("WAF");
-//        builder.setWhen(System.currentTimeMillis());
-//        builder.setContentText("푸쉬 알림이 켜졌습니다.");
-//        builder.setColor(Color.WHITE);
-//        //사용자가 알림 클릭시 삭제
-//        builder.setAutoCancel(true);
-//        //우선순위 부여
-//        builder.setPriority(Notification.PRIORITY_MAX);
-//        //알림 표시
-//        NotificationManager notificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-//            notificationManager.createNotificationChannel(new NotificationChannel
-//                    ("default", "",NotificationManager.IMPORTANCE_DEFAULT));
-//        }
-//        notificationManager.notify(1,builder.build());
-//    }
-     //알림 껐을때
+    private void createNotifi(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+
+        builder.setSmallIcon(R.drawable.alaram);
+        builder.setContentTitle("WAF 푸쉬 알림");
+        builder.setContentText("푸쉬 알림이 커졌습니다.");
+
+        builder.setAutoCancel(true);
+
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            notificationManager.createNotificationChannel(new NotificationChannel("default","기본채널",NotificationManager.IMPORTANCE_DEFAULT));
+
+        }
+        notificationManager.notify(1,builder.build());
+    }
+    //알림 껐을때
     private void removeNotifi(){
         NotificationManagerCompat.from(this).cancel(1);
     }
