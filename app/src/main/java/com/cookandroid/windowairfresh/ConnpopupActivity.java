@@ -23,6 +23,8 @@ public class ConnpopupActivity extends AppCompatActivity {
         btnok = findViewById(R.id.btnok);
         btnend = findViewById(R.id.btnend);
 
+        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter(); // 블루투스 어댑터를 디폴트 어댑터로 설정
+
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

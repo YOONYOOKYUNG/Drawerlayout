@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="55dp"
-                android:text="14"
+                android:text="00"
                 android:textColor="@color/colorFont"
                 android:textStyle="bold"
                 android:textSize="25dp" />
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="35dp"
-                android:text="50"
+                android:text="00"
                 android:textStyle="bold"
                 android:textColor="@color/colorFont"
                 android:textSize="25dp" />
@@ -171,7 +171,7 @@
                 android:id="@+id/humid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30"
+                android:text="00"
                 android:textStyle="bold"
                 android:textColor="@color/colorFont"
                 android:textSize="25dp"
