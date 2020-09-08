@@ -105,11 +105,11 @@
                 android:textSize="20dp" />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/dustlayout"
             android:layout_width="360dp"
             android:layout_height="80dp"
             android:background="@drawable/shape"
             android:layout_gravity="center"
-            android:id="@+id/msmj"
             android:layout_margin="7dp"
             android:padding="15sp">
             <ImageView

@@ -25,13 +25,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView tvdate, comment;
-    ImageView condition;
-    Dialog myDialog;
+    TextView tvdate;
+    Dialog myDialog1, myDialog2, myDialog3;
+    LinearLayout dustlayout, therlayout, humidlayout;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    LinearLayout msmj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //navigation drawer menu
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.nav_drawer_open, R.string.nav_drawer_close);
+                R.string.nav_drawer_open,R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -58,31 +57,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-        cal.add(Calendar.DATE, 0);
+        cal.add(Calendar.DATE,0);
         String today = sdf.format(cal.getTime());
         tvdate = findViewById(R.id.tvdate);
         tvdate.setText(today);
 
-
         //click -> popup
-        msmj = findViewById(R.id.msmj);
-        final TextView boldtext = findViewById(R.id.boldtext);
-        myDialog = new Dialog(this);
-        msmj.setOnClickListener(new View.OnClickListener() {
+        dustlayout = findViewById(R.id.dustlayout);
+        myDialog1 = new Dialog(this);
+        dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                CustomDialog2 customDialog = new CustomDialog2(MainActivity.this);
-                customDialog.callFunction();
+            public void onClick(View view) {
+                CustomDialog_popup1 customDialogPopup1 =new CustomDialog_popup1(MainActivity.this);
+                customDialogPopup1.callFunction();
+            }
+        });
+
+        humidlayout = findViewById(R.id.humidlayout);
+        myDialog2 = new Dialog(this);
+        humidlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
+                customDialogPopup2.callHumid();
             }
         });
     }
-        public void onBackPressed () {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
+
+
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
+        else{
+            super.onBackPressed();
+        }
+    }
 
     //menu
     @Override
