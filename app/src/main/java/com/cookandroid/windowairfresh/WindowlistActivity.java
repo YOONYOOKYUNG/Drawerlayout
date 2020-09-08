@@ -2,12 +2,16 @@ package com.cookandroid.windowairfresh;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WindowlistActivity extends AppCompatActivity {
     ImageButton btn1;
@@ -25,7 +29,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         final TextView main_label = (TextView) findViewById(R.id.main_label);
-
+        final Switch switch1 = findViewById(R.id.switch1);
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
@@ -39,6 +43,33 @@ public class WindowlistActivity extends AppCompatActivity {
             }
 
         });
+
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ListViewItem item =(ListViewItem)adapter.getItem(0);
+                Toast.makeText(getApplicationContext(),item.name+"삭제되었습니다.",Toast.LENGTH_LONG).show();
+                adapter.removeitem(0); //0번째가 삭제되게 임의로 설정
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+
+        for(int i=0;i<adapter.getCount();i++){
+            ListViewItem item=(ListViewItem)adapter.getItem(i);
+
+            if (item.getCheck()){
+                listview.setBackgroundColor(Color.parseColor("#ffffff"));
+                adapter.notifyDataSetChanged();
+            }
+            else {
+                listview.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                adapter.notifyDataSetChanged();
+            }
+
+        }
 
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
