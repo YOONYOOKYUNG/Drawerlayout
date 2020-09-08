@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="55dp"
-                android:text="00"
+                android:text="14"
                 android:textColor="@color/colorFont"
                 android:textStyle="bold"
                 android:textSize="25dp" />
@@ -108,6 +108,7 @@
             android:layout_height="80dp"
             android:background="@drawable/shape"
             android:layout_gravity="center"
+            android:id="@+id/msmj"
             android:layout_margin="7dp"
             android:padding="15sp">
             <ImageView
@@ -130,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="35dp"
-                android:text="00"
+                android:text="50"
                 android:textStyle="bold"
                 android:textColor="@color/colorFont"
                 android:textSize="25dp" />
@@ -171,7 +172,7 @@
                 android:id="@+id/humid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00"
+                android:text="30"
                 android:textStyle="bold"
                 android:textColor="@color/colorFont"
                 android:textSize="25dp"

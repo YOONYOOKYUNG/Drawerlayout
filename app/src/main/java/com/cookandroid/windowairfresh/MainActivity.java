@@ -8,8 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,23 +16,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView tvdate;
     ImageView condition;
-    Button btnclose;
     Dialog myDialog;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-
+    LinearLayout msmj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //navigation drawer menu
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.nav_drawer_open,R.string.nav_drawer_close);
+                R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -61,42 +58,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-        cal.add(Calendar.DATE,0);
+        cal.add(Calendar.DATE, 0);
         String today = sdf.format(cal.getTime());
         tvdate = findViewById(R.id.tvdate);
         tvdate.setText(today);
 
         //click -> popup
-        condition = findViewById(R.id.condition);
+        msmj = findViewById(R.id.msmj);
         myDialog = new Dialog(this);
-        condition.setOnClickListener(new View.OnClickListener() {
+        condition = findViewById(R.id.condition);
+        final TextView boldtext = findViewById(R.id.boldtext);
+        myDialog = new Dialog(this);
+        msmj.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                ShowPopup();
+            public void onClick(View v) {
+                CustomDialog2 customDialog = new CustomDialog2(MainActivity.this);
+                customDialog.callFunction();
             }
         });
-
     }
 
-    public void ShowPopup(){
-        myDialog.setContentView(R.layout.popup);
-        btnclose = myDialog.findViewById(R.id.btnclose);
-
-        btnclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
-
-    public void onBackPressed(){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
     }
