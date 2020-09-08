@@ -13,4 +13,8 @@ public class Suchi {
     public void setSuchis(String suchis){ this.suchis = suchis; }
     public void setSuchib(String suchib){ this.suchib = suchib; }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

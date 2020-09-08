@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/boldtext"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:text="보통"
@@ -42,19 +41,9 @@
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="5dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:text="20㎍/㎥"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:id="@+id/suchigood"
-            android:background="@drawable/condition_good"/>
         <TextView
             android:text="50㎍/㎥"
             android:textColor="#FFF"
@@ -62,45 +51,11 @@
             android:layout_gravity="center"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:id="@+id/suchisoso"
             android:background="@drawable/condition_soso"/>
-        <TextView
-            android:text="90㎍/㎥"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="80dp"
-            android:id="@+id/suchibad"
-            android:layout_height="30dp"
-            android:background="@drawable/condition_bad"/>
-
-    </LinearLayout>
-    <LinearLayout
-
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
         <ImageView
             android:src="@drawable/triangle"
             android:layout_gravity="center"
             android:layout_width="24dp"
-            android:id="@+id/pointgood"
-            android:layout_height="24dp"
-            android:layout_marginLeft="48dp"/>
-        <ImageView
-            android:src="@drawable/triangle"
-            android:layout_gravity="center"
-            android:layout_width="24dp"
-            android:layout_marginLeft="55dp"
-            android:id="@+id/pointsoso"
-            android:layout_height="24dp"/>
-        <ImageView
-            android:src="@drawable/triangle"
-            android:layout_gravity="center"
-            android:layout_width="24dp"
-            android:id="@+id/pointbad"
-            android:layout_marginLeft="58dp"
             android:layout_height="24dp"/>
     </LinearLayout>
     <TableLayout

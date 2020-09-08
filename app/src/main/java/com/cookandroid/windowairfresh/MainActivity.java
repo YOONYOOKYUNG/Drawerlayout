@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothSocket;
-import java.util.UUID;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -27,10 +24,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView tvdate, text1, text2;
-    LinearLayout dustlayout, therlayout, humidlayout;
-    Button btnclose, popup2_close;
-    Dialog myDialog, myDialog2, myDialog3;
+    TextView tvdate;
+    ImageView condition;
+    Button btnclose;
+    Dialog myDialog;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -66,28 +63,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvdate.setText(today);
 
         //click -> popup
-        dustlayout = findViewById(R.id.dustlayout);
+        condition = findViewById(R.id.condition);
         myDialog = new Dialog(this);
-        dustlayout.setOnClickListener(new View.OnClickListener() {
+        condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog_popup1 customDialogPopup1 =new CustomDialog_popup1(MainActivity.this);
-                customDialogPopup1.callFunction();
+                ShowPopup();
             }
         });
 
-        humidlayout = findViewById(R.id.humidlayout);
-        myDialog2 = new Dialog(this);
-        humidlayout.setOnClickListener(new View.OnClickListener() {
+    }
+
+    public void ShowPopup(){
+        myDialog.setContentView(R.layout.popup);
+        btnclose = myDialog.findViewById(R.id.btnclose);
+
+        btnclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
-                customDialogPopup2.callHumid();
+                myDialog.dismiss();
             }
         });
-
-
-
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 
     public void onBackPressed(){

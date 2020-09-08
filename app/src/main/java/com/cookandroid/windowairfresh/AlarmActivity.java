@@ -42,7 +42,6 @@ public class AlarmActivity extends AppCompatActivity {
         st_time2 = findViewById(R.id.st_time2);
 
         final Switch switchbtn = findViewById(R.id.sb_use_listener);
-        final Switch switchbtn2 = findViewById(R.id.sb_use_listener2);
         builder = new Notification.Builder(this);
         builder.setSmallIcon(R.drawable.alaram);
         builder.setTicker("waf");
@@ -158,8 +157,6 @@ public class AlarmActivity extends AppCompatActivity {
         builder.setContentText("푸쉬 알림이 켜졌습니다.");
         builder.setColor(Color.WHITE);
         //사용자가 알림 클릭시 삭제
-        builder.setContentTitle("WAF 푸쉬 알림");
-        builder.setContentText("푸쉬 알림이 꺼졌습니다.");
         builder.setAutoCancel(true);
         //우선순위 부여
         builder.setPriority(Notification.PRIORITY_MAX);
