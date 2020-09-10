@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CustomDialog_popup1 {
@@ -42,6 +43,9 @@ public class CustomDialog_popup1 {
         final ImageView pointgood = dlg.findViewById(R.id.pointgood);
         final ImageView pointsoso = dlg.findViewById(R.id.pointsoso);
         final ImageView pointbad = dlg.findViewById(R.id.pointbad);
+        final LinearLayout con_good = dlg.findViewById(R.id.con_good);
+        final LinearLayout con_soso = dlg.findViewById(R.id.con_soso);
+        final LinearLayout con_bad = dlg.findViewById(R.id.con_bad);
         final Button btnclose = (Button) dlg.findViewById(R.id.btnclose);
 
 
@@ -57,6 +61,9 @@ public class CustomDialog_popup1 {
             suchibad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);
             pointsoso.setVisibility(View.INVISIBLE);
+            con_good.setVisibility(View.VISIBLE);
+            con_soso.setVisibility(View.INVISIBLE);
+            con_bad.setVisibility(View.INVISIBLE);
 
         }else if (Integer.parseInt(suchisoso.getText().toString())<80){
             boldtext.setText("보통");
@@ -65,13 +72,21 @@ public class CustomDialog_popup1 {
             suchibad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);
             pointgood.setVisibility(View.INVISIBLE);
-        }else if (Integer.parseInt(suchibad.getText().toString())>=80){
+            con_good.setVisibility(View.INVISIBLE);
+            con_soso.setVisibility(View.VISIBLE);
+            con_bad.setVisibility(View.INVISIBLE);
+
+        }else if (Integer.parseInt(suchibad.getText().toString())<130){
             boldtext.setText("나쁨");
             con1.setImageResource(R.drawable.darkbad);
             suchigood.setVisibility(View.INVISIBLE);
             suchisoso.setVisibility(View.INVISIBLE);
             pointgood.setVisibility(View.INVISIBLE);
             pointsoso.setVisibility(View.INVISIBLE);
+            con_good.setVisibility(View.INVISIBLE);
+            con_soso.setVisibility(View.INVISIBLE);
+            con_bad.setVisibility(View.VISIBLE);
+
         }
 
 
