@@ -82,6 +82,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 customDialogPopup2.callHumid();
             }
         });
+
+        therlayout = findViewById(R.id.therlayout);
+        myDialog3 = new Dialog(this);
+        therlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog_popup3 customDialogPopup3 = new CustomDialog_popup3(MainActivity.this);
+                customDialogPopup3.callTemp();
+            }
+        });
     }
 
 
