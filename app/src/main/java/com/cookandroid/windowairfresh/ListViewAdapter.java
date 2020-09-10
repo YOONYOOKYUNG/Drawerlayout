@@ -1,7 +1,6 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    public  ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
     }
@@ -37,13 +36,13 @@ public class ListViewAdapter extends BaseAdapter {
         Switch aSwitch = (Switch) convertView.findViewById(R.id.switch1);
 
         //리스트뷰 기본 배경색 지정
-        convertView.setBackgroundColor(Color.parseColor("#B7DBF4"));
+        //convertView.setBackgroundColor(Color.parseColor("#B7DBF4"));
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         titleTextView.setText(listViewItem.getName());
-        aSwitch.setChecked(ListViewItem.getCheck());
+        aSwitch.setChecked(true);
 
         return convertView;
     }
@@ -69,4 +68,9 @@ public class ListViewAdapter extends BaseAdapter {
 
         listViewItemList.add(item);
     }
+    public void removeitem(int position){
+        listViewItemList.remove(position);
+    }
+
 }
+

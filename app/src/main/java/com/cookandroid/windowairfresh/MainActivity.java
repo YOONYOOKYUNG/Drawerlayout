@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,9 +26,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView tvdate;
-    ImageView condition;
-    Button btnclose;
-    Dialog myDialog;
+    Dialog myDialog1, myDialog2, myDialog3;
+    LinearLayout dustlayout, therlayout, humidlayout;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -63,30 +63,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvdate.setText(today);
 
         //click -> popup
-        condition = findViewById(R.id.condition);
-        myDialog = new Dialog(this);
-        condition.setOnClickListener(new View.OnClickListener() {
+        dustlayout = findViewById(R.id.dustlayout);
+        myDialog1 = new Dialog(this);
+        dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowPopup();
+                CustomDialog_popup1 customDialogPopup1 =new CustomDialog_popup1(MainActivity.this);
+                customDialogPopup1.callFunction();
             }
         });
 
-    }
-
-    public void ShowPopup(){
-        myDialog.setContentView(R.layout.popup);
-        btnclose = myDialog.findViewById(R.id.btnclose);
-
-        btnclose.setOnClickListener(new View.OnClickListener() {
+        humidlayout = findViewById(R.id.humidlayout);
+        myDialog2 = new Dialog(this);
+        humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDialog.dismiss();
+                CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
+                customDialogPopup2.callHumid();
             }
         });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
     }
+
 
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
