@@ -53,7 +53,7 @@
             android:layout_below="@+id/autoM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 설정한 수치에 창문이 자동개폐됩니다. \n 자동모드가 " />
+            android:text="설정한 수치에 의해 창문이 자동개폐됩니다." />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/suchi"

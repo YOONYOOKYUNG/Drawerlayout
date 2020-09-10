@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="240dp"
+    android:layout_height="225dp"
     android:background="@drawable/shape"
     android:orientation="vertical"
     android:padding="10dp"
@@ -11,8 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content">
         <TextView
             android:text="미세먼지"
             android:textSize="20dp"
@@ -28,6 +27,7 @@
             android:textColor="#000"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:id="@+id/boldtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -41,21 +41,96 @@
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="50㎍/㎥"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        >
+       <LinearLayout
+           android:id="@+id/con_good"
+           android:layout_width="80dp"
+           android:layout_height="30dp"
+           android:layout_marginLeft="20dp"
+           android:layout_gravity="center"
+           android:gravity="center"
+           android:background="@drawable/condition_good">
+           <TextView
+               android:id="@+id/suchigood"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="20"
+               android:textColor="#FFF"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="㎍/㎥"
+               android:textColor="#FFF"/>
+       </LinearLayout>
+        <LinearLayout
+            android:id="@+id/con_soso"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:background="@drawable/condition_soso"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/condition_soso">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:id="@+id/suchisoso"
+                android:textColor="#FFF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="㎍/㎥"
+                android:textColor="#FFF"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/con_bad"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/condition_bad">
+            <TextView
+                android:id="@+id/suchibad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="82"
+                android:textColor="#FFF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="㎍/㎥"
+                android:textColor="#FFF"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
         <ImageView
             android:src="@drawable/triangle"
             android:layout_gravity="center"
             android:layout_width="24dp"
+            android:id="@+id/pointgood"
+            android:layout_height="24dp"
+            android:layout_marginLeft="48dp"/>
+        <ImageView
+            android:src="@drawable/triangle"
+            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:layout_marginLeft="55dp"
+            android:id="@+id/pointsoso"
+            android:layout_height="24dp"/>
+        <ImageView
+            android:src="@drawable/triangle"
+            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:id="@+id/pointbad"
+            android:layout_marginLeft="58dp"
             android:layout_height="24dp"/>
     </LinearLayout>
     <TableLayout
@@ -114,10 +189,10 @@
         android:id="@+id/btnclose"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:background="@drawable/button1"
         android:layout_gravity="center|bottom"
         android:text="닫기"
         android:textColor="#FFF" />
-</LinearLayout>
 
+</LinearLayout>
