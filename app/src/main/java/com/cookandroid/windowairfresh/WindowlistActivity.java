@@ -12,10 +12,12 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class WindowlistActivity extends AppCompatActivity {
     ImageButton btn1;
     ImageView backarrow;
+    ToggleButton tbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,8 @@ public class WindowlistActivity extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
+
+        adapter.addItem("경원이방",true);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.logging.Handler;
+
 public class CustomDialog_popup1 {
     private Context context;
 
@@ -47,7 +49,6 @@ public class CustomDialog_popup1 {
         final LinearLayout con_soso = dlg.findViewById(R.id.con_soso);
         final LinearLayout con_bad = dlg.findViewById(R.id.con_bad);
         final Button btnclose = (Button) dlg.findViewById(R.id.btnclose);
-
 
         Suchi suchi = new Suchi();
         suchi.setSuchi("82");
