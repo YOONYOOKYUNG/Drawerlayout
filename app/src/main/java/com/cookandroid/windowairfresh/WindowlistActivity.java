@@ -35,8 +35,10 @@ public class WindowlistActivity extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
+        ListViewItem item1 = new ListViewItem();
+        item1.setName("경원이방");
+        item1.setCheck(true);
 
-        adapter.addItem("경원이방",true);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,7 @@ public class WindowlistActivity extends AppCompatActivity {
             }
 
         });
+
 
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
