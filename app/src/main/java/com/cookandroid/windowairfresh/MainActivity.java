@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String address = "98:D3:51:F9:28:05";
 
     TextView tvdate,thermometer,humid,micro;
+    LinearLayout therlayout, dustlayout, humidlayout;
     ImageView condition;
     Button btnclose;
-    Dialog myDialog;
+    Dialog myDialog, myDialog2, myDialog3;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -73,9 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         micro = findViewById(R.id.micro);
         humid = findViewById(R.id.humid);
 
-        thermometer = findViewById(R.id.thermometer);
-        micro = findViewById(R.id.micro);
-        humid = findViewById(R.id.humid);
 
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -132,30 +131,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvdate.setText(today);
 
         //click -> popup
-        condition = findViewById(R.id.condition);
+        dustlayout = findViewById(R.id.dustlayout);
         myDialog = new Dialog(this);
-        condition.setOnClickListener(new View.OnClickListener() {
+        dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowPopup();
+                CustomDialog_popup1 customDialogPopup1 = new CustomDialog_popup1(MainActivity.this);
+                customDialogPopup1.callFunction();
             }
         });
 
-    }
-
-    public void ShowPopup(){
-        myDialog.setContentView(R.layout.popup);
-        btnclose = myDialog.findViewById(R.id.btnclose);
-
-        btnclose.setOnClickListener(new View.OnClickListener() {
+        humidlayout = findViewById(R.id.humidlayout);
+        myDialog2 = new Dialog(this);
+        humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDialog.dismiss();
+                CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
+                customDialogPopup2.callHumid();
             }
         });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
+
+        therlayout = findViewById(R.id.therlayout);
+        myDialog3 = new Dialog(this);
+        therlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog_popup3 customDialogPopup3 = new CustomDialog_popup3(MainActivity.this);
+                customDialogPopup3.callTemp();
+            }
+        });
     }
+
+
 
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){

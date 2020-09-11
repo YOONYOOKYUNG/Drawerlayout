@@ -77,7 +77,7 @@ public class CustomDialog_popup1 {
             con_soso.setVisibility(View.VISIBLE);
             con_bad.setVisibility(View.INVISIBLE);
 
-        }else if (Integer.parseInt(suchibad.getText().toString())<130){
+        }else if (Integer.parseInt(suchibad.getText().toString())>=80){
             boldtext.setText("나쁨");
             con1.setImageResource(R.drawable.darkbad);
             suchigood.setVisibility(View.INVISIBLE);
