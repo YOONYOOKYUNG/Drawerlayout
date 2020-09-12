@@ -29,7 +29,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="490dp"
+        android:layout_height="480dp"
         android:id="@+id/listview1"/>
     <ImageButton
         android:layout_width="match_parent"

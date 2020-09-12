@@ -13,12 +13,14 @@ import java.util.logging.Handler;
 
 public class CustomDialog_popup1 {
     private Context context;
-
+    private String msmjsuchi;
 
     public CustomDialog_popup1(Context context) {
         this.context = context;
     }
-
+    public void setmsmjsuchi(String _msmj){
+        msmjsuchi = _msmj;
+    }
     // 호출할 다이얼로그 함수를 정의한다.
     public void callFunction() {
 
@@ -50,8 +52,11 @@ public class CustomDialog_popup1 {
         final LinearLayout con_bad = dlg.findViewById(R.id.con_bad);
         final Button btnclose = (Button) dlg.findViewById(R.id.btnclose);
 
+
+
+
         Suchi suchi = new Suchi();
-        suchi.setSuchi("82");
+        suchi.setSuchi(msmjsuchi);
         suchigood.setText(suchi.suchi);
         suchibad.setText(suchi.suchi);
         suchisoso.setText(suchi.suchi);
@@ -97,6 +102,10 @@ public class CustomDialog_popup1 {
                 dlg.dismiss();
             }
         });
+
     }
 
+
+
 }
+

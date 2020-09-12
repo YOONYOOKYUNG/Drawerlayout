@@ -31,12 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="Alarm_Receiver">
+       <!-- <receiver android:name="Alarm_Receiver">
             <intent-filter>
                 <action android:name="android.intent.action.sec"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".Alarm_Receiver"/>
+        <receiver android:name=".Alarm_Receiver"/>-->
         <activity android:name=".MainActivity">
         </activity>
         <activity

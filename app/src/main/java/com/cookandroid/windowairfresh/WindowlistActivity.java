@@ -18,12 +18,15 @@ public class WindowlistActivity extends AppCompatActivity {
     ImageButton btn1;
     ImageView backarrow;
     ToggleButton tbtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_windowlist);
 
         final ListView listview;
+        AutoSetActivity autotb = new AutoSetActivity();
+        tbtn=autotb.getTbtn();
 
         btn1 = findViewById(R.id.btn1);
         final ListViewAdapter adapter;
@@ -36,6 +39,18 @@ public class WindowlistActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
         adapter.addItem("방1",true);
+
+        listview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tbtn.isChecked()==true){
+                    CustomDialog_popup4 customDialog_popup4 = new CustomDialog_popup4(WindowlistActivity.this);
+                    customDialog_popup4.callFunction();
+                }
+            }
+        });
+
+
 
 
         btn1.setOnClickListener(new View.OnClickListener() {

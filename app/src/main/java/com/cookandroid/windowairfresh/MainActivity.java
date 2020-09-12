@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 CustomDialog_popup1 customDialogPopup1 = new CustomDialog_popup1(MainActivity.this);
+                customDialogPopup1.setmsmjsuchi(micro.getText().toString());
                 customDialogPopup1.callFunction();
             }
         });

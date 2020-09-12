@@ -73,5 +73,7 @@ public class ListViewAdapter extends BaseAdapter {
         listViewItemList.remove(position);
     }
 
+    public ArrayList<ListViewItem> getListViewItemList(){return listViewItemList;}
+
 }
 

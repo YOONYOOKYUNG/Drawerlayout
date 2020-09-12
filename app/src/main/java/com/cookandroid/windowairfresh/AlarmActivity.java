@@ -184,7 +184,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         if(alarmCalendar.before(Calendar.getInstance())) alarmCalendar.add(Calendar.DATE, 1);
         //알람 시간이 현재시간보다 빠를때 하루 뒤로 맞춤
-        Intent alarmIntent = new Intent(getApplicationContext(),Alarm_Receiver.class);
+       /* Intent alarmIntent = new Intent(getApplicationContext(),Alarm_Receiver.class);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmIntent.setAction(Alarm_Receiver.ACTION_RESTART_SERVICE);
         PendingIntent alarmCallPendingIntent = PendingIntent.getBroadcast(
@@ -197,7 +197,7 @@ public class AlarmActivity extends AppCompatActivity {
             alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(),alarmCallPendingIntent
             );
-        }
+        }*/
 
 
 
