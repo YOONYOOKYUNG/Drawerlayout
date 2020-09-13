@@ -102,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
         };
 
+        double t = Double.parseDouble(thermometer.getText().toString());
+        double h = Double.parseDouble(humid.getText().toString());
+        final double th = 1.8*t-0.55*(1-0.01*h)*(1.8*t-26) + 32;
+        final String discomfort = Double.toString(th);
+
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
 
@@ -142,12 +147,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
         humidlayout = findViewById(R.id.humidlayout);
         myDialog2 = new Dialog(this);
         humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
+                customDialogPopup2.setTemhumid(discomfort.getBytes().toString());
                 customDialogPopup2.callHumid();
             }
         });
@@ -158,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 CustomDialog_popup3 customDialogPopup3 = new CustomDialog_popup3(MainActivity.this);
+                customDialogPopup3.setTempersuchi(thermometer.getText().toString());
                 customDialogPopup3.callTemp();
             }
         });
@@ -311,5 +319,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
+
 
 }

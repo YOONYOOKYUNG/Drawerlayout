@@ -10,9 +10,14 @@ import android.widget.TextView;
 
 public class CustomDialog_popup2 {
     private Context context;
+    private String temhumid;
 
     public CustomDialog_popup2(Context context){
         this.context = context;
+    }
+
+    public void setTemhumid(String temhumid) {
+        this.temhumid = temhumid;
     }
 
     //호출할 다이얼로그 함수 정의
@@ -36,7 +41,7 @@ public class CustomDialog_popup2 {
         final Button popup2_close = dlg2.findViewById(R.id.popup2_close);
 
         Suchi suchi = new Suchi();
-        suchi.setSuchi("68");
+        suchi.setSuchi(temhumid);
         text1.setText(suchi.suchi);
 
         if(Integer.parseInt(text1.getText().toString())<68){

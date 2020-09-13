@@ -45,20 +45,14 @@
 
         <ImageView
             android:id="@+id/condition"
-            android:src="@drawable/soso"
+            android:src="@drawable/waflogo"
             android:layout_width="240dp"
             android:layout_height="240dp"
+            android:layout_margin="20dp"
             android:layout_gravity="center"
             android:padding="20dp"/>
 
-        <TextView
-            android:id="@+id/comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="오늘은 미세먼지가 보통입니다."
-            android:padding="10dp"
-            android:textColor="@color/colorFont" />
+
 
         <LinearLayout
             android:id="@+id/therlayout"

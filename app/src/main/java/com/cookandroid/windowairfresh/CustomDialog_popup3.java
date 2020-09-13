@@ -10,9 +10,14 @@ import android.widget.TextView;
 
 public class CustomDialog_popup3 {
     private Context context;
+    private String tempersuchi;
 
     public CustomDialog_popup3(Context context) {
         this.context = context;
+    }
+
+    public void setTempersuchi(String tempersuchi) {
+        this.tempersuchi = tempersuchi;
     }
 
     //호출할 함수 정의
@@ -36,7 +41,7 @@ public class CustomDialog_popup3 {
         final Button popup3_close = dlg3.findViewById(R.id.popup3_close);
 
         Suchi suchi = new Suchi();
-        suchi.setSuchi("18");
+        suchi.setSuchi(tempersuchi);
         thermo.setText(suchi.suchi);
 
         if(Integer.parseInt(thermo.getText().toString())<=4){
