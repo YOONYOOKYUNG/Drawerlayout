@@ -41,7 +41,6 @@ public class AlarmActivity extends AppCompatActivity {
 
 
         st_time = findViewById(R.id.st_time);
-        st_time2 = findViewById(R.id.st_time2);
 
         final Switch switchbtn = findViewById(R.id.sb_use_listener);
         final Switch switchbtn2 = findViewById(R.id.sb_use_listener2);
@@ -121,8 +120,6 @@ public class AlarmActivity extends AppCompatActivity {
         });
 
         set_alarm = findViewById(R.id.set_alarm);
-        fin_alarm = findViewById(R.id.fin_alarm);
-
 
         set_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
