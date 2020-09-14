@@ -34,13 +34,13 @@ public class WindowlistActivity extends AppCompatActivity {
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         final TextView main_label = (TextView) findViewById(R.id.main_label);
-        final Switch switch1 = findViewById(R.id.switch1);
+        //final Switch switch1 = findViewById(R.id.switch1);
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
         adapter.addItem("방1",true);
 
-        listview.setOnClickListener(new View.OnClickListener() {
+      /* listview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tbtn.isChecked()==true){
@@ -48,7 +48,7 @@ public class WindowlistActivity extends AppCompatActivity {
                     customDialog_popup4.callFunction();
                 }
             }
-        });
+        });*/
 
 
 

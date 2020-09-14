@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -19,13 +21,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
 public class AlarmActivity extends AppCompatActivity {
-    TextView st_time;
-    ImageView set_alarm, backarrow;
+    Calendar alarmCalendar;
+    TextView st_time,st_time2;
+    ImageView set_alarm, fin_alarm, backarrow;
+    int alarmHour, alarmMin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,18 +36,19 @@ public class AlarmActivity extends AppCompatActivity {
 
 
         st_time = findViewById(R.id.st_time);
+        st_time2 = findViewById(R.id.st_time2);
 
         final Switch switchbtn = findViewById(R.id.sb_use_listener);
         final Switch switchbtn2 = findViewById(R.id.sb_use_listener2);
 
+
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(switchbtn.isChecked()==true){
+                if(switchbtn.isChecked() == true){
                     createNotifi();
                     Toast.makeText(getApplicationContext(),"푸쉬 알림이 켜졌습니다.",Toast.LENGTH_SHORT).show();
                 }
-
                 else{
                     switchbtn2.setChecked(false);
                     removeNotifi();
@@ -57,11 +61,12 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked == true){
-                    Toast.makeText(getApplicationContext(),"매 시간 알림을 설정합니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 켜졌습니다.",Toast.LENGTH_SHORT).show();
+
                 }
                 else{
-                    switchbtn2.setChecked(false);
-                    Toast.makeText(getApplicationContext(),"매 시간 알림을 해제합니다.",Toast.LENGTH_SHORT).show();
+                    removeNotifi();
+                    Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 꺼졌습니다.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -71,29 +76,15 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (switchbtn2.isChecked() == true) {
-                    Calendar cal = Calendar.getInstance();
-                    int hour = cal.get(Calendar.HOUR_OF_DAY);
-                    final int min = cal.get(Calendar.MINUTE);
-                    final long now = System.currentTimeMillis();
-                    Date mdate = new Date(now);
-                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh시 mm분");
-                    final String getTime = simpleDateFormat.format(mdate);
-                    TimePickerDialog tpd;
-                    tpd = new TimePickerDialog(AlarmActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            st_time.setText(hourOfDay + "시" + minute + "분");
-                            String setTime =  hourOfDay + "시" + minute + "분";
-                            if(setTime == getTime){
-                                createNotifi();
-                            }
+                            alarmHour = hourOfDay;
+                            alarmMin = minute;
+                            setAlarm();
                         }
-
-                    }, hour, min, false);
-                    tpd.setTitle("시간 설정");
-                    tpd.show();
-                    Toast.makeText(getApplicationContext(),"설정된 시간에 알람이 켜집니다.",Toast.LENGTH_SHORT).show();
-
+                    }, alarmHour, alarmMin, false);
+                    Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 설정되었습니다.",Toast.LENGTH_SHORT).show();
                 }else if(switchbtn2.isChecked()==false){
                     Toast.makeText(getApplicationContext(),"방해 금지 모드 설정이 꺼졌습니다.\n방해모드금지를 활성화 시켜주세요.",Toast.LENGTH_SHORT).show();
                 }
@@ -101,7 +92,31 @@ public class AlarmActivity extends AppCompatActivity {
 
         });
 
+
+        st_time2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int hour = cal.get(Calendar.HOUR_OF_DAY);
+                final int min = cal.get(Calendar.MINUTE);
+                TimePickerDialog tpd;
+                tpd = new TimePickerDialog(AlarmActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        st_time2.setText(hourOfDay + " 시 " + minute + " 분 ");
+
+                    }
+
+                }, hour, min, false);
+                tpd.setTitle("시간 설정");
+                tpd.show();
+            }
+        });
+
         set_alarm = findViewById(R.id.set_alarm);
+        fin_alarm = findViewById(R.id.fin_alarm);
 
 
         set_alarm.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +127,13 @@ public class AlarmActivity extends AppCompatActivity {
             }
         });
 
+        fin_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AlarmActivity.this, FinalarmActivity.class);
+                startActivity(intent);
+            }
+        });
 
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +142,10 @@ public class AlarmActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
     //알림 켰을때
     private void createNotifi(){
@@ -140,12 +166,20 @@ public class AlarmActivity extends AppCompatActivity {
     }
     //알림 껐을때
     private void removeNotifi(){
-        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(1);
-        notificationManager.cancelAll();
-
+        NotificationManagerCompat.from(this).cancel(1);
     }
-    private void compare(){
+    private void setAlarm(){
+
+        alarmCalendar = Calendar.getInstance();
+        alarmCalendar.setTimeInMillis(System.currentTimeMillis());
+        alarmCalendar.set(Calendar.HOUR_OF_DAY,alarmHour);
+        alarmCalendar.set(Calendar.MINUTE,alarmMin);
+        alarmCalendar.set(Calendar.SECOND,0);
+        //TimepickerDialog에서 설정한 시간을 알람 시간으로 설정
+
+
+
+
 
     }
 }
