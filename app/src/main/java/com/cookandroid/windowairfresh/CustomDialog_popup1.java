@@ -6,16 +6,21 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.logging.Handler;
 
 public class CustomDialog_popup1 {
     private Context context;
-
+    private String msmjsuchi;
 
     public CustomDialog_popup1(Context context) {
         this.context = context;
     }
-
+    public void setmsmjsuchi(String _msmj){
+        msmjsuchi = _msmj;
+    }
     // 호출할 다이얼로그 함수를 정의한다.
     public void callFunction() {
 
@@ -42,11 +47,16 @@ public class CustomDialog_popup1 {
         final ImageView pointgood = dlg.findViewById(R.id.pointgood);
         final ImageView pointsoso = dlg.findViewById(R.id.pointsoso);
         final ImageView pointbad = dlg.findViewById(R.id.pointbad);
+        final LinearLayout con_good = dlg.findViewById(R.id.con_good);
+        final LinearLayout con_soso = dlg.findViewById(R.id.con_soso);
+        final LinearLayout con_bad = dlg.findViewById(R.id.con_bad);
         final Button btnclose = (Button) dlg.findViewById(R.id.btnclose);
 
 
+
+
         Suchi suchi = new Suchi();
-        suchi.setSuchi("82");
+        suchi.setSuchi(msmjsuchi);
         suchigood.setText(suchi.suchi);
         suchibad.setText(suchi.suchi);
         suchisoso.setText(suchi.suchi);
@@ -57,6 +67,9 @@ public class CustomDialog_popup1 {
             suchibad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);
             pointsoso.setVisibility(View.INVISIBLE);
+            con_good.setVisibility(View.VISIBLE);
+            con_soso.setVisibility(View.INVISIBLE);
+            con_bad.setVisibility(View.INVISIBLE);
 
         }else if (Integer.parseInt(suchisoso.getText().toString())<80){
             boldtext.setText("보통");
@@ -65,6 +78,10 @@ public class CustomDialog_popup1 {
             suchibad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);
             pointgood.setVisibility(View.INVISIBLE);
+            con_good.setVisibility(View.INVISIBLE);
+            con_soso.setVisibility(View.VISIBLE);
+            con_bad.setVisibility(View.INVISIBLE);
+
         }else if (Integer.parseInt(suchibad.getText().toString())>=80){
             boldtext.setText("나쁨");
             con1.setImageResource(R.drawable.darkbad);
@@ -72,6 +89,10 @@ public class CustomDialog_popup1 {
             suchisoso.setVisibility(View.INVISIBLE);
             pointgood.setVisibility(View.INVISIBLE);
             pointsoso.setVisibility(View.INVISIBLE);
+            con_good.setVisibility(View.INVISIBLE);
+            con_soso.setVisibility(View.INVISIBLE);
+            con_bad.setVisibility(View.VISIBLE);
+
         }
 
 
@@ -81,6 +102,10 @@ public class CustomDialog_popup1 {
                 dlg.dismiss();
             }
         });
+
     }
 
+
+
 }
+

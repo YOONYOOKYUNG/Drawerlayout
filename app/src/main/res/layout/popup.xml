@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="240dp"
+    android:layout_height="225dp"
     android:background="@drawable/shape"
     android:orientation="vertical"
     android:padding="10dp"
@@ -45,34 +45,64 @@
         android:layout_width="wrap_content"
         android:layout_height="38dp"
         >
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:text="20㎍/㎥"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:layout_gravity="center"
+       <LinearLayout
+           android:id="@+id/con_good"
+           android:layout_width="80dp"
+           android:layout_height="30dp"
+           android:layout_marginLeft="20dp"
+           android:layout_gravity="center"
+           android:gravity="center"
+           android:background="@drawable/condition_good">
+           <TextView
+               android:id="@+id/suchigood"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="20"
+               android:textColor="#FFF"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="㎍/㎥"
+               android:textColor="#FFF"/>
+       </LinearLayout>
+        <LinearLayout
+            android:id="@+id/con_soso"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:id="@+id/suchigood"
-            android:background="@drawable/condition_good"/>
-        <TextView
-            android:text="50㎍/㎥"
-            android:textColor="#FFF"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/condition_soso">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:id="@+id/suchisoso"
+                android:textColor="#FFF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="㎍/㎥"
+                android:textColor="#FFF"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/con_bad"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:id="@+id/suchisoso"
-            android:background="@drawable/condition_soso"/>
-        <TextView
-            android:text="50㎍/㎥"
-            android:textColor="#FFF"
-            android:gravity="center"
             android:layout_gravity="center"
-            android:layout_width="80dp"
-            android:id="@+id/suchibad"
-            android:layout_height="30dp"
-            android:background="@drawable/condition_bad"/>
+            android:gravity="center"
+            android:background="@drawable/condition_bad">
+            <TextView
+                android:id="@+id/suchibad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="82"
+                android:textColor="#FFF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="㎍/㎥"
+                android:textColor="#FFF"/>
+        </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
@@ -159,9 +189,10 @@
         android:id="@+id/btnclose"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:background="@drawable/button1"
         android:layout_gravity="center|bottom"
         android:text="닫기"
         android:textColor="#FFF" />
+
 </LinearLayout>

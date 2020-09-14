@@ -19,6 +19,7 @@ public class AutoSetActivity extends AppCompatActivity {
     TextView tp_open, tp_close, mm_open, mm_close;
     LinearLayout suchi;
     ToggleButton tbtn;
+    public ToggleButton getTbtn(){return tbtn;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
