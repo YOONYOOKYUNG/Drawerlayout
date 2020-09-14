@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,11 +28,12 @@ import java.util.Calendar;
 public class AlarmActivity extends AppCompatActivity {
     TextView st_time;
     ImageView set_alarm, backarrow;
+    private static int ONE_MINUTE = 5626;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-
+       // new AlarmHATT(getApplication()).Alarm();
 
         st_time = findViewById(R.id.st_time);
 
@@ -74,19 +77,10 @@ public class AlarmActivity extends AppCompatActivity {
                     Calendar cal = Calendar.getInstance();
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
                     final int min = cal.get(Calendar.MINUTE);
-                    final long now = System.currentTimeMillis();
-                    Date mdate = new Date(now);
-                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh시 mm분");
-                    final String getTime = simpleDateFormat.format(mdate);
                     TimePickerDialog tpd;
                     tpd = new TimePickerDialog(AlarmActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            st_time.setText(hourOfDay + "시" + minute + "분");
-                            String setTime =  hourOfDay + "시" + minute + "분";
-                            if(setTime == getTime){
-                                createNotifi();
-                            }
                         }
 
                     }, hour, min, false);
@@ -147,6 +141,27 @@ public class AlarmActivity extends AppCompatActivity {
     }
     private void compare(){
 
+    }
+    private void timerNoti(){
+
+//    }
+//    public class AlarmHATT {
+//        private Context context;
+//        public AlarmHATT(Context context){
+//            this.context = context;
+//        }
+//        public void Alarm(){
+//            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//            Intent intent = new Intent(AlarmActivity.this, 0, intent, 0 );
+//
+//            PendingIntent sender = PendingIntent.getBroadcast(AlarmActivity.this,0,intent,0);
+//
+//            Calendar calendar = Calendar.getInstance();
+//
+//            calendar.set(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+//
+//            am.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+//        }
     }
 }
 
