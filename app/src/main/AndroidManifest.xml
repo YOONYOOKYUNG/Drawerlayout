@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -13,12 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActlogActivity"> </activity>
+        <activity android:name=".ActlogActivity"/>
         <activity android:name=".ConnpopupActivity" />
         <activity android:name=".SetalarmActivity" />
         <activity android:name=".FinalarmActivity" />
         <activity android:name=".AlarmActivity" />
         <activity android:name=".AutoSetActivity" />
+        <activity android:name=".MainActivity"/>
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme">
@@ -27,13 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="Alarm_Receiver">
-            <intent-filter>
-                <action android:name="android.intent.action.sec"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".Alarm_Receiver"/>
-        <activity android:name=".MainActivity">
-        </activity>
     </application>
+
 </manifest>
