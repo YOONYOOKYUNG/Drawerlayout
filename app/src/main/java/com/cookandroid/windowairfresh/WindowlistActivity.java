@@ -34,23 +34,21 @@ public class WindowlistActivity extends AppCompatActivity {
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         final TextView main_label = (TextView) findViewById(R.id.main_label);
-        final Switch switch1 = findViewById(R.id.switch1);
+        //final Switch switch1 = findViewById(R.id.switch1);
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
-        adapter.addItem("방1",true);
+        adapter.addItem("거실 창문1",true);
 
-        listview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tbtn.isChecked()==true){
-                    CustomDialog_popup4 customDialog_popup4 = new CustomDialog_popup4(WindowlistActivity.this);
-                    customDialog_popup4.callFunction();
-                }
-            }
-        });
-
-
+       listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               if (tbtn.isChecked()==true) {
+                   CustomDialog_popup4 customDialog_popup4 = new CustomDialog_popup4(WindowlistActivity.this);
+                   customDialog_popup4.callFunction();
+               }
+           }
+       });
 
 
         btn1.setOnClickListener(new View.OnClickListener() {
