@@ -10,18 +10,18 @@ import android.widget.TextView;
 
 public class CustomDialog_popup2 {
     private Context context;
-    private String temhumid;
+    private String temphum;
 
     public CustomDialog_popup2(Context context){
         this.context = context;
     }
 
-    public void setTemhumid(String temhumid) {
-        this.temhumid = temhumid;
+    public void setTemphum(String temphum) {
+        this.temphum = temphum;
     }
 
     //호출할 다이얼로그 함수 정의
-    public void callHumid(){
+    public void callHum(){
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
         final Dialog dlg2 = new Dialog(context);
 
@@ -35,27 +35,25 @@ public class CustomDialog_popup2 {
         dlg2.show();
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
-        final ImageView con2 = dlg2.findViewById(R.id.con2);
         final TextView text1 = dlg2.findViewById(R.id.text1);
         final TextView text2 = dlg2.findViewById(R.id.text2);
         final Button popup2_close = dlg2.findViewById(R.id.popup2_close);
 
         Suchi suchi = new Suchi();
-        suchi.setSuchi(temhumid);
+        suchi.setSuchi(temphum);
         text1.setText(suchi.suchi);
 
-        if(Integer.parseInt(text1.getText().toString())<68){
-            con2.setImageResource(R.drawable.darkhappy);
-            text2.setText("쾌적해요!");
-        }else if(Integer.parseInt(text1.getText().toString())<75){
-            con2.setImageResource(R.drawable.darksmile);
-            text2.setText("불쾌지수가 보통이에요");
-        }else if(Integer.parseInt(text1.getText().toString())<80){
-            con2.setImageResource(R.drawable.darksoso);
-            text2.setText("불쾌지수가 높은 편이에요");
-        }else if(Integer.parseInt(text1.getText().toString())>=80){
-            con2.setImageResource(R.drawable.darkbad);
-            text2.setText("불쾌지수가 매우 높아요!");
+        if(Integer.parseInt(text1.getText().toString())<=15){
+            text2.setText("적정 습도 : 70%");
+        }
+        else if(Integer.parseInt(text1.getText().toString())<=20){
+            text2.setText("적정 습도 : 60%");
+        }
+        else if(Integer.parseInt(text1.getText().toString())<=23){
+            text2.setText("적정 습도 : 50%");
+        }
+        else{
+            text2.setText("적정 습도 : 40%");
         }
 
         popup2_close.setOnClickListener(new View.OnClickListener() {
@@ -65,4 +63,5 @@ public class CustomDialog_popup2 {
             }
         });
     }
+
 }

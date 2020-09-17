@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/window"
             android:title="창문 설정"/>
@@ -9,7 +9,7 @@
             android:title="활동 기록"/>
     </group>
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/alarm"
             android:title="알람 설정"/>
@@ -18,7 +18,7 @@
             android:title="Auto 모드 설정" />
     </group>
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/share"
             android:title="공유하기"/>
@@ -26,7 +26,7 @@
             android:id="@+id/contact"
             android:title="문의하기"/>
     </group>
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/info"
             android:title="정보"/>

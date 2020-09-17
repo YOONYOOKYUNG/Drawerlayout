@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     TextView tvdate,thermometer,humid,micro;
     LinearLayout therlayout, dustlayout, humidlayout;
-    ImageView condition;
     Button btnclose;
     Dialog myDialog, myDialog2, myDialog3;
     DrawerLayout drawerLayout;
@@ -102,10 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
         };
 
-        double t = Double.parseDouble(thermometer.getText().toString());
-        double h = Double.parseDouble(humid.getText().toString());
-        final double th = 1.8*t-0.55*(1-0.01*h)*(1.8*t-26) + 32;
-        final String discomfort = Double.toString(th);
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
@@ -154,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
-                customDialogPopup2.setTemhumid(discomfort.getBytes().toString());
-                customDialogPopup2.callHumid();
+                customDialogPopup2.setTemphum(thermometer.getText().toString());
+                customDialogPopup2.callHum();
             }
         });
 
@@ -205,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);
                 startActivity(intent4);
         }
+
         return true;
     }
 
