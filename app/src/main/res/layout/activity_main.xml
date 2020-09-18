@@ -34,14 +34,30 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="20dp">
+
         <TextView
-            android:id="@+id/tvdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:textColor="@color/colorFont" />
+         android:id="@+id/tvdate"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:layout_margin="10dp"
+         android:gravity="center"
+         android:textColor="@color/colorFont" />
+
+         <ImageView
+             android:id="@+id/update"
+             android:src="@drawable/update"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:layout_margin="20dp"
+             android:layout_gravity="center"
+             android:padding="20dp"/>
+    </LinearLayout>
 
         <ImageView
             android:id="@+id/main_icon"
@@ -51,8 +67,6 @@
             android:layout_margin="20dp"
             android:layout_gravity="center"
             android:padding="20dp"/>
-
-
 
         <LinearLayout
             android:id="@+id/therlayout"
