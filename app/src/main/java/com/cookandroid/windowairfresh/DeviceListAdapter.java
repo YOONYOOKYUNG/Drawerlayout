@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Device list adapter.
- * 
+ *
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
  */
@@ -21,15 +21,15 @@ public class DeviceListAdapter extends BaseAdapter{
 	private LayoutInflater mInflater;	//레이아웃 객체화
 	private List<BluetoothDevice> mData;
 	private OnPairButtonClickListener mListener;
-	
-	public DeviceListAdapter(Context context) { 
-        mInflater = LayoutInflater.from(context);        
-    }
-	
+
+	public DeviceListAdapter(Context context) {
+		mInflater = LayoutInflater.from(context);
+	}
+
 	public void setData(List<BluetoothDevice> data) {
 		mData = data;
 	}
-	
+
 	public void setListener(OnPairButtonClickListener listener) {
 		mListener = listener;
 	}
@@ -49,7 +49,7 @@ public class DeviceListAdapter extends BaseAdapter{
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		//홀더안의 여러가지 뷰를 관리
-		
+
 		if (convertView == null) {
 			//뷰가 하나도 없으면
 			convertView			=  mInflater.inflate(R.layout.list_item_device, null);
@@ -62,19 +62,19 @@ public class DeviceListAdapter extends BaseAdapter{
 			//블루투스 주소
 			holder.pairBtn		= (Button) convertView.findViewById(R.id.btn_pair);
 			//블루투스 연결 상태
-			
+
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		BluetoothDevice device	= mData.get(position);
 
 		//블루투스 정보를 가저오는 코드
 		holder.nameTv.setText(device.getName());
 		holder.addressTv.setText(device.getAddress());
 		holder.pairBtn.setText((device.getBondState() == BluetoothDevice.BOND_BONDED) ? "연결해제" : "연결");
-		holder.pairBtn.setOnClickListener(new View.OnClickListener() {			
+		holder.pairBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mListener != null) {
@@ -82,8 +82,8 @@ public class DeviceListAdapter extends BaseAdapter{
 				}
 			}
 		});
-		
-        return convertView;
+
+		return convertView;
 	}
 
 	static class ViewHolder {
@@ -91,7 +91,7 @@ public class DeviceListAdapter extends BaseAdapter{
 		TextView addressTv;
 		TextView pairBtn;
 	}
-	
+
 	public interface OnPairButtonClickListener {
 		void onPairButtonClick(int position);
 	}

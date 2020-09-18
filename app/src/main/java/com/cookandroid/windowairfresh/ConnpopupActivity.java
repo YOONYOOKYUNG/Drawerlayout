@@ -27,6 +27,10 @@ public class ConnpopupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        //GPS permission 허용
         setContentView(R.layout.activity_connpopup);
         setTitle("Bluetooth 연결");
         btnok = findViewById(R.id.btnok);
@@ -59,6 +63,7 @@ public class ConnpopupActivity extends AppCompatActivity {
                                 startActivityForResult(intent, 1000);
                                 }
                         }
+
                         mBluetoothAdapter.startDiscovery(); }
                 });
 
@@ -91,10 +96,6 @@ public class ConnpopupActivity extends AppCompatActivity {
     public void onPause() {
         if (mBluetoothAdapter != null) {
             //장치가 블루투스를 지원하는 경우
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            //GPS permission 허용
             if (mBluetoothAdapter.isDiscovering()) {
                 //블루투스 기기를 발견했다면
                 mBluetoothAdapter.cancelDiscovery();
