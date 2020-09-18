@@ -2,6 +2,9 @@ package com.cookandroid.windowairfresh;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -15,7 +18,6 @@ import android.widget.Toast;
  */
 
 public class CustomDialog {
-
     private Context context;
     private ListView listview;
     private ListViewAdapter adapter;
@@ -59,10 +61,9 @@ public class CustomDialog {
                 //String temp = message.getText().toString();
                 adapter.addItem(message.getText().toString(),true);
                 adapter.notifyDataSetChanged();
-
                 // 커스텀 다이얼로그를 종료한다.
                 dlg.dismiss();
-            }
+          }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

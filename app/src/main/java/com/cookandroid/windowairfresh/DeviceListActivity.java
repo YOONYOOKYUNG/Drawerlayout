@@ -1,14 +1,23 @@
 package com.cookandroid.windowairfresh;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -20,16 +29,29 @@ import java.util.ArrayList;
  *
  */
 public class DeviceListActivity extends Activity {
+	String[] WindowList = new String[7];
 	private ListView mListView, mListView2;
 	private DeviceListAdapter mAdapter,mAdapter2;
 	private ArrayList<BluetoothDevice> mDeviceList,mDeviceList2;
-	
+	Handler handler2 = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			if (msg.what == 0) {   // Message id 가 0 이면
+				Intent intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
+				startActivity(intent);
+			}
+		}
+	};
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+
+
 		setContentView(R.layout.activity_paired_devices);
 		//어느 페이지의 레이아웃인가요?
+
 		mDeviceList		= getIntent().getExtras().getParcelableArrayList("device.list");
 		mDeviceList2		= getIntent().getExtras().getParcelableArrayList("device.list2");
 		mListView		= (ListView) findViewById(R.id.lv_paired);
@@ -39,8 +61,8 @@ public class DeviceListActivity extends Activity {
 
 		mAdapter.setData(mDeviceList);
 		mAdapter2.setData(mDeviceList2);
-
 		mAdapter.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
+
 			@Override
 			public void onPairButtonClick(int position) {
 				//버튼을 클릭하면
@@ -52,6 +74,7 @@ public class DeviceListActivity extends Activity {
 				} else {
 					showToast("연결중...");
 					pairDevice(device); //페어링
+				//	Address(device);
 				}
 			}
 		});
@@ -70,6 +93,7 @@ public class DeviceListActivity extends Activity {
 				} else {
 					showToast("연결중...");
 					pairDevice(device); //페어링
+				//	Address(device);
 				}
 			}
 		});
@@ -88,10 +112,20 @@ public class DeviceListActivity extends Activity {
 		
 		super.onDestroy();
 	}
-	
-	
+
+
 	private void showToast(String message) {
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+
+	private void Address(BluetoothDevice device) {
+		//주소 저장
+		for(int i=0;i<=9;i++){
+			if(WindowList[i]==""){
+				WindowList[i]=device.getAddress();
+				break;
+			}
+		}
 	}
 	
     private void pairDevice(BluetoothDevice device) {
@@ -126,9 +160,18 @@ public class DeviceListActivity extends Activity {
 	        	 
 	        	 if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
 	        		 showToast("연결됨");
-					 Intent changeintent = new Intent(DeviceListActivity.this,MainActivity.class);
-					 startActivity(changeintent);
-	        	 } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
+					 final WindowlistActivity windowlistActivity = new WindowlistActivity();
+					 CustomDialog customDialog = new CustomDialog(DeviceListActivity.this);
+					 customDialog.setAdapter(windowlistActivity.GetAdapter());
+					 customDialog.callFunction(windowlistActivity.GetMainlabel());
+
+
+
+
+
+					// Intent Intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
+				   //  startActivity(Intent);
+				 } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
 	        		 showToast("연결해제됨");
 	        	 }
 	        	 
