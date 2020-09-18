@@ -18,6 +18,7 @@
         android:layout_gravity="start" >
 
     </com.google.android.material.navigation.NavigationView>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -27,8 +28,7 @@
         android:theme="?attr/actionBarTheme"
         app:navigationIcon="@drawable/icon_menu" />
 
-
-    <LinearLayout
+     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -44,7 +44,7 @@
             android:textColor="@color/colorFont" />
 
         <ImageView
-            android:id="@+id/condition"
+            android:id="@+id/main_icon"
             android:src="@drawable/waflogo"
             android:layout_width="240dp"
             android:layout_height="240dp"
@@ -184,7 +184,6 @@
                 android:textColor="@color/colorFont"
                 android:textSize="20dp" />
         </LinearLayout>
+
     </LinearLayout>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>
