@@ -54,7 +54,7 @@ public class AutoSetActivity extends AppCompatActivity {
         });
 
 
-        tpopen.setOnClickListener(new View.OnClickListener() {
+        tp_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 windowOpen();
@@ -62,19 +62,19 @@ public class AutoSetActivity extends AppCompatActivity {
 
             }
         });
-        tpclose.setOnClickListener(new View.OnClickListener() {
+        tp_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 windowClose();
             }
         });
-        mmopen.setOnClickListener(new View.OnClickListener() {
+        mm_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 miseopen();
             }
         });
-        mmclose.setOnClickListener(new View.OnClickListener() {
+        mm_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 miseclose();

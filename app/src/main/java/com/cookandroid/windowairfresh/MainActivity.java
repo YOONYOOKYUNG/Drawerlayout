@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         humid = findViewById(R.id.humid);
 
 
+        ConnectedThread = new ConnectedThread(btSocket);
+
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
@@ -101,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             };
         };
+
+        ConnectedThread.start();
+
 
         double t = Double.parseDouble(thermometer.getText().toString());
         double h = Double.parseDouble(humid.getText().toString());
@@ -306,8 +311,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
         }
-        ConnectedThread = new ConnectedThread(btSocket);
-        ConnectedThread.start();
     }
 
     @Override
@@ -319,6 +322,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
-
-
 }
