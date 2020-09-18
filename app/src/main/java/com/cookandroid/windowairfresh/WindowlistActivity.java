@@ -15,9 +15,11 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -36,6 +38,11 @@ public class WindowlistActivity extends AppCompatActivity {
     ImageView backarrow;
     ToggleButton tbtn;
 
+    ListViewAdapter adapter;
+    TextView main_label;
+
+    public ListViewAdapter GetAdapter(){return adapter;}
+    public TextView GetMainlabel(){return main_label;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +57,7 @@ public class WindowlistActivity extends AppCompatActivity {
         adapter = new ListViewAdapter();
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
-        final TextView main_label = (TextView) findViewById(R.id.main_label);
+        main_label = (TextView) findViewById(R.id.main_label);
         //final Switch switch1 = findViewById(R.id.switch1);
 
         listview = (ListView) findViewById(R.id.listview1);
