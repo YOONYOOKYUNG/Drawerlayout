@@ -29,28 +29,31 @@ import java.util.ArrayList;
  *
  */
 public class DeviceListActivity extends Activity {
+	// 핸들러
+	Handler aHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			Toast.makeText(DeviceListActivity.this, "데이터수신 했습니다.", Toast.LENGTH_SHORT).show();
+
+			if(msg.what == 0){
+					Intent Intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
+					startActivity(Intent);
+			}
+		}
+	} ;
 	String[] WindowList = new String[7];
 	private ListView mListView, mListView2;
 	private DeviceListAdapter mAdapter,mAdapter2;
 	private ArrayList<BluetoothDevice> mDeviceList,mDeviceList2;
-	Handler handler2 = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			if (msg.what == 0) {   // Message id 가 0 이면
-				Intent intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
-				startActivity(intent);
-			}
-		}
-	};
+	Handler handler;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
-
 		setContentView(R.layout.activity_paired_devices);
 		//어느 페이지의 레이아웃인가요?
+
 
 		mDeviceList		= getIntent().getExtras().getParcelableArrayList("device.list");
 		mDeviceList2		= getIntent().getExtras().getParcelableArrayList("device.list2");
@@ -104,6 +107,8 @@ public class DeviceListActivity extends Activity {
 
 
 		registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
+
+
 	}
 
 	@Override
@@ -165,8 +170,6 @@ public class DeviceListActivity extends Activity {
 					customDialog.setAdapter(windowlistActivity.GetAdapter());
 					customDialog.callFunction(windowlistActivity.GetMainlabel());
 
-					// Intent Intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
-					//  startActivity(Intent);
 				} else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
 					showToast("연결해제됨");
 				}
