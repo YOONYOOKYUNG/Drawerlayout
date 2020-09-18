@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 /**
  * Device list.
- * 
+ *
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
  */
@@ -74,7 +74,7 @@ public class DeviceListActivity extends Activity {
 				} else {
 					showToast("연결중...");
 					pairDevice(device); //페어링
-				//	Address(device);
+					//	Address(device);
 				}
 			}
 		});
@@ -93,7 +93,7 @@ public class DeviceListActivity extends Activity {
 				} else {
 					showToast("연결중...");
 					pairDevice(device); //페어링
-				//	Address(device);
+					//	Address(device);
 				}
 			}
 		});
@@ -103,13 +103,13 @@ public class DeviceListActivity extends Activity {
 
 
 
-		registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED)); 
+		registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		unregisterReceiver(mPairReceiver);
-		
+
 		super.onDestroy();
 	}
 
@@ -127,57 +127,53 @@ public class DeviceListActivity extends Activity {
 			}
 		}
 	}
-	
-    private void pairDevice(BluetoothDevice device) {
+
+	private void pairDevice(BluetoothDevice device) {
 		//선택한 디바이스 페어링 요청
-        try {
-            Method method = device.getClass().getMethod("createBond", (Class[]) null);
-            method.invoke(device, (Object[]) null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		try {
+			Method method = device.getClass().getMethod("createBond", (Class[]) null);
+			method.invoke(device, (Object[]) null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    private void unpairDevice(BluetoothDevice device) {
+	private void unpairDevice(BluetoothDevice device) {
 		//선택한 디바이스 언페어링 요청
-        try {
-            Method method = device.getClass().getMethod("removeBond", (Class[]) null);
-            method.invoke(device, (Object[]) null);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private final BroadcastReceiver mPairReceiver = new BroadcastReceiver() {
-	    public void onReceive(Context context, Intent intent) {
-	        String action = intent.getAction();
-	        
-	        if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-	        	//페어링 상태가 변경되면 페어링상태 업데이트
-	        	 final int state 		= intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
-	        	 final int prevState	= intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
-	        	 
-	        	 if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
-	        		 showToast("연결됨");
-					 final WindowlistActivity windowlistActivity = new WindowlistActivity();
-					 CustomDialog customDialog = new CustomDialog(DeviceListActivity.this);
-					 customDialog.setAdapter(windowlistActivity.GetAdapter());
-					 customDialog.callFunction(windowlistActivity.GetMainlabel());
+		try {
+			Method method = device.getClass().getMethod("removeBond", (Class[]) null);
+			method.invoke(device, (Object[]) null);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
+	private final BroadcastReceiver mPairReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
 
+			if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+				//페어링 상태가 변경되면 페어링상태 업데이트
+				final int state 		= intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+				final int prevState	= intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
 
+				if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
+					showToast("연결됨");
+					final WindowlistActivity windowlistActivity = new WindowlistActivity();
+					CustomDialog customDialog = new CustomDialog(DeviceListActivity.this);
+					customDialog.setAdapter(windowlistActivity.GetAdapter());
+					customDialog.callFunction(windowlistActivity.GetMainlabel());
 
 					// Intent Intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
-				   //  startActivity(Intent);
-				 } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
-	        		 showToast("연결해제됨");
-	        	 }
-	        	 
-	        	 mAdapter.notifyDataSetChanged();
-	        	 //어댑터값 갱신
-	        }
-	    }
+					//  startActivity(Intent);
+				} else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
+					showToast("연결해제됨");
+				}
+
+				mAdapter.notifyDataSetChanged();
+				//어댑터값 갱신
+			}
+		}
 	};
 }
