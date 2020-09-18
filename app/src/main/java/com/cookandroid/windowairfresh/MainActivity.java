@@ -263,8 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             while (true) {
                 try {
                     bytes = InputStream.read(buffer);        // Get number of bytes and message in "buffer"
-                    if (bytes>4)
-                        handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                    handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
                 } catch (IOException e) {
                     break;
                 }
@@ -305,6 +304,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ConnectedThread = new ConnectedThread(btSocket);
         ConnectedThread.start();
     }
+
+
 
     @Override
     public void onPause() {
