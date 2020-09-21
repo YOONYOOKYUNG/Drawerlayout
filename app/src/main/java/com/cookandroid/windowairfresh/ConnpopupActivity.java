@@ -128,7 +128,7 @@ public class ConnpopupActivity extends AppCompatActivity {
                 //블루투스 디바이스 검색이 끝났을 때
                 mProgressDlg.dismiss();
                 //로딩중 화면 사라짐
-                Intent newIntent = new Intent(ConnpopupActivity.this, BluetoothListActivity.class);
+                Intent newIntent = new Intent(ConnpopupActivity.this, DeviceListActivity.class);
                 newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
                 Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
                 ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();

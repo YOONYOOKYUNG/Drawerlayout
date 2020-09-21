@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, ConnpopupActivity.class));
+                startActivity(new Intent(SplashActivity.this, WindowlistActivity.class));
             }
         };
 
