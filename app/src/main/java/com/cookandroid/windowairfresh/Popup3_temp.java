@@ -29,7 +29,7 @@ public class Popup3_temp {
         dlg3.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg3.setContentView(R.layout.popup3);
+        dlg3.setContentView(R.layout.popup3_temp);
 
         //커스텀 다이얼로그를 노출한다.
         dlg3.show();

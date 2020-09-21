@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Popup2_humid {
@@ -29,7 +28,7 @@ public class Popup2_humid {
         dlg2.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg2.setContentView(R.layout.popup2);
+        dlg2.setContentView(R.layout.popup2_humid);
 
         // 커스텀 다이얼로그를 노출한다.
         dlg2.show();

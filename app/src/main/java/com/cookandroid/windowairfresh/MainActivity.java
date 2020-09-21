@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvdate = findViewById(R.id.tvdate);
         tvdate.setText(today);
 
-        //click -> popup
+        //click -> popup1_dust
         dustlayout = findViewById(R.id.dustlayout);
         myDialog = new Dialog(this);
         dustlayout.setOnClickListener(new View.OnClickListener() {
@@ -189,9 +189,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
 
-            case R.id.log_record:
-                Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
-                startActivity(intent3);
+           // case R.id.log_record:
+              //  Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
+              //  startActivity(intent3);
 
             case R.id.window:
                 Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);

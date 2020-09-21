@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.logging.Handler;
-
 public class Popup1_dust {
     private Context context;
     private String msmjsuchi;
@@ -31,7 +29,7 @@ public class Popup1_dust {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.popup);
+        dlg.setContentView(R.layout.popup1_dust);
 
         // 커스텀 다이얼로그를 노출한다.
         dlg.show();
