@@ -1,6 +1,7 @@
 package com.cookandroid.windowairfresh;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -11,16 +12,24 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.internal.ContextUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Device list.
@@ -28,88 +37,115 @@ import java.util.ArrayList;
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
  */
-public class DeviceListActivity extends Activity {
+
+
+public class DeviceListActivity extends AppCompatActivity {
+
+	//dhkim start ============================================
+	final int NEW_WINDOW_REQUEST=1234;
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+		if(resultCode==RESULT_OK && requestCode==NEW_WINDOW_REQUEST){
+			Log.d("dhkim", "전달받은 새로운 창문 이름 : " + data.getStringExtra("new_window_name"));
+			setResult(RESULT_OK, data);
+			//setResult(RESULT_CANCELED);
+			DeviceListActivity.this.finish();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	//dhkim end  ============================================
+
 	String[] WindowList = new String[7];
 	private ListView mListView, mListView2;
 	private DeviceListAdapter mAdapter,mAdapter2;
 	private ArrayList<BluetoothDevice> mDeviceList,mDeviceList2;
-	Handler handler2 = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			if (msg.what == 0) {   // Message id 가 0 이면
-				Intent intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
-				startActivity(intent);
-			}
-		}
-	};
+	Handler handler;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
-
 		setContentView(R.layout.activity_paired_devices);
 		//어느 페이지의 레이아웃인가요?
 
-		mDeviceList		= getIntent().getExtras().getParcelableArrayList("device.list");
-		mDeviceList2		= getIntent().getExtras().getParcelableArrayList("device.list2");
-		mListView		= (ListView) findViewById(R.id.lv_paired);
-		mListView2		= (ListView) findViewById(R.id.lv_paired2);
-		mAdapter		= new DeviceListAdapter(this);
-		mAdapter2		= new DeviceListAdapter(this);
+		//dhkim start =====================
+		int a=1;
+		if(a==1) {
 
-		mAdapter.setData(mDeviceList);
-		mAdapter2.setData(mDeviceList2);
-		mAdapter.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
-
-			@Override
-			public void onPairButtonClick(int position) {
-				//버튼을 클릭하면
-				BluetoothDevice device = mDeviceList.get(position);
-				if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-					//BOND_BONDED : 페어링 됐으면
-					unpairDevice(device);
-					//페어링 해제
-				} else {
-					showToast("연결중...");
-					pairDevice(device); //페어링
-					//	Address(device);
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();} //1초뒤 다이얼로그 띄우기
+					Intent intent = new Intent (DeviceListActivity.this, NewCustomDialog.class);
+					startActivityForResult(intent, NEW_WINDOW_REQUEST);
 				}
-			}
-		});
+			}).start();
 
-		mListView.setAdapter(mAdapter);
+		}
+		else {
+			//dhkim end =====================
 
-		mAdapter2.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
-			@Override
-			public void onPairButtonClick(int position) {
-				//버튼을 클릭하면
-				BluetoothDevice device = mDeviceList2.get(position);
-				if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-					//BOND_BONDED : 페어링 됐으면
-					unpairDevice(device);
-					//페어링 해제
-				} else {
-					showToast("연결중...");
-					pairDevice(device); //페어링
-					//	Address(device);
+			mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
+			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
+			mListView = (ListView) findViewById(R.id.lv_paired);
+			mListView2 = (ListView) findViewById(R.id.lv_paired2);
+			mAdapter = new DeviceListAdapter(this);
+			mAdapter2 = new DeviceListAdapter(this);
+
+			mAdapter.setData(mDeviceList);
+			mAdapter2.setData(mDeviceList2);
+			mAdapter.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
+
+				@Override
+				public void onPairButtonClick(int position) {
+					//버튼을 클릭하면
+					BluetoothDevice device = mDeviceList.get(position);
+					if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+						//BOND_BONDED : 페어링 됐으면
+						unpairDevice(device);
+						//페어링 해제
+					} else {
+						showToast("연결중...");
+						pairDevice(device); //페어링
+						//	Address(device);
+					}
 				}
-			}
-		});
+			});
 
-		mListView2.setAdapter(mAdapter2);
+			mListView.setAdapter(mAdapter);
 
+			mAdapter2.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
+				@Override
+				public void onPairButtonClick(int position) {
+					//버튼을 클릭하면
+					BluetoothDevice device = mDeviceList2.get(position);
+					if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+						//BOND_BONDED : 페어링 됐으면
+						unpairDevice(device);
+						//페어링 해제
+					} else {
+						showToast("연결중...");
+						pairDevice(device); //페어링
+						//	Address(device);
+					}
+				}
+			});
 
+			mListView2.setAdapter(mAdapter2);
 
+			registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
 
-		registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
+		}
+
 	}
 
 	@Override
 	public void onDestroy() {
-		unregisterReceiver(mPairReceiver);
-
+		//dhkim start ================================
+		//나중에 블루투스 연결하면 주석 풀것
+		//unregisterReceiver(mPairReceiver);
+		//dhkim end ==================================
 		super.onDestroy();
 	}
 
@@ -165,8 +201,6 @@ public class DeviceListActivity extends Activity {
 					customDialog.setAdapter(windowlistActivity.GetAdapter());
 					customDialog.callFunction(windowlistActivity.GetMainlabel());
 
-					// Intent Intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
-					//  startActivity(Intent);
 				} else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
 					showToast("연결해제됨");
 				}

@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -14,6 +15,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -43,6 +45,27 @@ public class WindowlistActivity extends AppCompatActivity {
 
     public ListViewAdapter GetAdapter(){return adapter;}
     public TextView GetMainlabel(){return main_label;}
+
+    //dhkim start ==============================================
+    final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (resultCode == RESULT_OK && requestCode==REQUESTCODE_DEVICELISTACTIVITY) {
+            String addedWindowName =  data.getStringExtra("new_window_name");
+            Log.d("dhkim", "WindowList로 데이터 도착 : " + addedWindowName);
+            if(adapter==null) {
+                Log.d("dhkim", "adapter is null ");
+            } else {
+                adapter.addItem(addedWindowName, true);
+                adapter.notifyDataSetChanged();
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    //dhkim end ==============================================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +79,11 @@ public class WindowlistActivity extends AppCompatActivity {
         tbtn=autotb.getTbtn();
 
         btn1 = findViewById(R.id.btn1);
-        final ListViewAdapter adapter;
+
+        //dhkim start ===========================  field가 아니라 지역변수에 객체 할당했음 삭제할 것
+//        final ListViewAdapter adapter;
+        //dhkim end =============================
+
         adapter = new ListViewAdapter();
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
@@ -94,10 +121,27 @@ public class WindowlistActivity extends AppCompatActivity {
             }
         });
 
-
         btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    @Override
+                    public void onClick(View v) {
+
+                //dhkim start ===============================
+                boolean dhkim_flag=true;
+                if(dhkim_flag){
+                    //로딩중 화면 사라짐
+                    Intent newIntent = new Intent(WindowlistActivity.this, DeviceListActivity.class);
+                    newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
+                    Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+                    ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();
+                    list.addAll(pairedDevices);
+                    //연결된 디바이스 목록을 리스트에 모두 추가합니다.
+                    newIntent.putParcelableArrayListExtra("device.list2", list);
+                    //추가된 값 저장하기
+                    startActivityForResult(newIntent, REQUESTCODE_DEVICELISTACTIVITY);
+                    return;
+                }
+                //dhkim end ===============================
+
                 if (mBluetoothAdapter != null) {
                     //블루투스 되는 기기이다.
                     //그렇다면 지금 현재 블루투스 기능이 켜져 있는지 체크 해야 한다.
@@ -108,7 +152,8 @@ public class WindowlistActivity extends AppCompatActivity {
                         startActivityForResult(intent, 1000);
                     }
                 }
-                mBluetoothAdapter.startDiscovery(); }
+                mBluetoothAdapter.startDiscovery();
+            }
         });
 
 
