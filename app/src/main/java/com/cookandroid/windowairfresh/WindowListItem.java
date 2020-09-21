@@ -1,6 +1,6 @@
 package com.cookandroid.windowairfresh;
 
-public class ListViewItem {
+public class WindowListItem {
     String name;
     Boolean check;
 

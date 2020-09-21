@@ -2,9 +2,6 @@ package com.cookandroid.windowairfresh;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -21,9 +18,9 @@ import android.widget.Toast;
 public class CustomDialog extends DeviceListActivity {
     private Context context;
     private ListView listview;
-    private ListViewAdapter adapter;
+    private WindowListAdapter adapter;
 
-    public void setAdapter(ListViewAdapter _adapter) {
+    public void setAdapter(WindowListAdapter _adapter) {
         adapter = _adapter;
     }
 
