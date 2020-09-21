@@ -2,17 +2,13 @@ package com.cookandroid.windowairfresh;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import java.sql.BatchUpdateException;
 
 public class Popup4_warning {
     private Context context;
@@ -36,7 +32,7 @@ public class Popup4_warning {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.popup);
+        dlg.setContentView(R.layout.popup1_dust);
 
         // 커스텀 다이얼로그를 노출한다.
         dlg.show();
