@@ -1,19 +1,16 @@
 package com.cookandroid.windowairfresh;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class NewCustomDialog extends Activity {
+public class WindowNameActivity extends Activity {
 
     private TextView mTextView;
 
@@ -33,7 +30,7 @@ public class NewCustomDialog extends Activity {
 
                 String inputText =  message.getText().toString();
                 if(!inputText.equals("")){
-                    Toast.makeText(NewCustomDialog.this, "\"" + message.getText().toString() + "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WindowNameActivity.this, "\"" + message.getText().toString() + "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent();
                     intent.putExtra("new_window_name", message.getText().toString());
@@ -41,14 +38,14 @@ public class NewCustomDialog extends Activity {
                     finish();
 
                 } else { //다이얼로그에 창문 이름은 안쓰고 OK한 경우 토스트
-                    Toast.makeText(NewCustomDialog.this, "창문의 이름을 입력하세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WindowNameActivity.this, "창문의 이름을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(NewCustomDialog.this, "취소 했습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WindowNameActivity.this, "취소 했습니다.", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_CANCELED);
                 finish();
             }

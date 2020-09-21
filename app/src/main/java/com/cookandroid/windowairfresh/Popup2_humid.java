@@ -8,11 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CustomDialog_popup2 {
+public class Popup2_humid {
     private Context context;
     private String temphum;
 
-    public CustomDialog_popup2(Context context){
+    public Popup2_humid(Context context){
         this.context = context;
     }
 

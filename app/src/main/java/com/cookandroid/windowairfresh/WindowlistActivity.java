@@ -17,13 +17,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -115,7 +112,7 @@ public class WindowlistActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (tbtn.isChecked()==true) {
-                    CustomDialog_popup4 customDialog_popup4 = new CustomDialog_popup4(WindowlistActivity.this);
+                    Popup4_warning customDialog_popup4 = new Popup4_warning(WindowlistActivity.this);
                     customDialog_popup4.callFunction();
                 }
             }

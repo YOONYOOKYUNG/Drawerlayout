@@ -14,9 +14,9 @@ import android.widget.ToggleButton;
 
 import java.sql.BatchUpdateException;
 
-public class CustomDialog_popup4 {
+public class Popup4_warning {
     private Context context;
-    public CustomDialog_popup4(Context context) {
+    public Popup4_warning(Context context) {
         this.context = context;
     }
     public void callFunction() {

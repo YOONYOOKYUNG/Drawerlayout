@@ -12,8 +12,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog_popup1 customDialogPopup1 = new CustomDialog_popup1(MainActivity.this);
+                Popup1_dust customDialogPopup1 = new Popup1_dust(MainActivity.this);
                 customDialogPopup1.setmsmjsuchi(micro.getText().toString());
                 customDialogPopup1.callFunction();
             }
@@ -148,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog_popup2 customDialogPopup2 = new CustomDialog_popup2(MainActivity.this);
+                Popup2_humid customDialogPopup2 = new Popup2_humid(MainActivity.this);
                 customDialogPopup2.setTemphum(thermometer.getText().toString());
                 customDialogPopup2.callHum();
             }
@@ -159,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         therlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog_popup3 customDialogPopup3 = new CustomDialog_popup3(MainActivity.this);
+                Popup3_temp customDialogPopup3 = new Popup3_temp(MainActivity.this);
                 customDialogPopup3.setTempersuchi(thermometer.getText().toString());
                 customDialogPopup3.callTemp();
             }

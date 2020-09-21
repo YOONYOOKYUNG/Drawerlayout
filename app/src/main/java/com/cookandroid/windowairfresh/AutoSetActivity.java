@@ -1,6 +1,5 @@
 package com.cookandroid.windowairfresh;
 
-import android.accessibilityservice.GestureDescription;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +15,6 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 public class AutoSetActivity extends AppCompatActivity {
     Button tpopen, tpclose, mmopen, mmclose;
     TextView tp_open, tp_close, mm_open, mm_close;
@@ -32,7 +29,7 @@ public class AutoSetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auto_set);
+        setContentView(R.layout.activity_ModeSetting);
 
         tpopen = findViewById(R.id.tpopen);
         tpclose = findViewById(R.id.tpclose);

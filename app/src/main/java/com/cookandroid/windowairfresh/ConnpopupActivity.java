@@ -31,7 +31,7 @@ public class ConnpopupActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
-        setContentView(R.layout.activity_connpopup);
+        setContentView(R.layout.activity_BluetoothOn);
         setTitle("Bluetooth 연결");
         btnok = findViewById(R.id.btnok);
         btnend = findViewById(R.id.btnend);

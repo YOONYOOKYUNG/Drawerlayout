@@ -1,9 +1,5 @@
 package com.cookandroid.windowairfresh;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,25 +7,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.internal.ContextUtils;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Device list.
@@ -77,7 +63,7 @@ public class DeviceListActivity extends AppCompatActivity {
 				@Override
 				public void run() {
 					try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();} //1초뒤 다이얼로그 띄우기
-					Intent intent = new Intent (DeviceListActivity.this, NewCustomDialog.class);
+					Intent intent = new Intent (DeviceListActivity.this, WindowNameActivity.class);
 					startActivityForResult(intent, NEW_WINDOW_REQUEST);
 				}
 			}).start();

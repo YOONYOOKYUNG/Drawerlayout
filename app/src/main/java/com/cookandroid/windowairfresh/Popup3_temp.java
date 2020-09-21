@@ -8,11 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CustomDialog_popup3 {
+public class Popup3_temp {
     private Context context;
     private String tempersuchi;
 
-    public CustomDialog_popup3(Context context) {
+    public Popup3_temp(Context context) {
         this.context = context;
     }
 

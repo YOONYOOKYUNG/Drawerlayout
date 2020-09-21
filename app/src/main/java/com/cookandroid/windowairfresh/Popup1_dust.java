@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import java.util.logging.Handler;
 
-public class CustomDialog_popup1 {
+public class Popup1_dust {
     private Context context;
     private String msmjsuchi;
 
-    public CustomDialog_popup1(Context context) {
+    public Popup1_dust(Context context) {
         this.context = context;
     }
     public void setmsmjsuchi(String _msmj){
