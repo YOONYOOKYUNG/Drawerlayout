@@ -29,7 +29,7 @@ public class AutoSetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ModeSetting);
+        setContentView(R.layout.activity_modesetting);
 
         tpopen = findViewById(R.id.tpopen);
         tpclose = findViewById(R.id.tpclose);
