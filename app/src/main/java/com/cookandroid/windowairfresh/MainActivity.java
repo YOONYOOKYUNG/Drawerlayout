@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     Handler handler;
+    ImageView update;
 
 
     @Override
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             };
         };
-
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();

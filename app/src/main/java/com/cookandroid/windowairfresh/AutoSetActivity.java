@@ -2,6 +2,7 @@ package com.cookandroid.windowairfresh;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AutoSetActivity extends AppCompatActivity {
     Button tpopen, tpclose, mmopen, mmclose;
-    TextView tp_open, tp_close, mm_open, mm_close;
+    TextView tp_open, tp_close, mm_open, mm_close,thermometer,humid,micro;
     LinearLayout suchi;
     ToggleButton tbtn;
+    Handler handler;
     public ToggleButton getTbtn(){return tbtn;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class AutoSetActivity extends AppCompatActivity {
         mm_close = findViewById(R.id.mm_close);
         suchi = findViewById(R.id.suchi);
         tbtn = findViewById(R.id.tbtn);
+        thermometer = findViewById(R.id.thermometer);
+
 
         suchi.setVisibility(View.INVISIBLE);
 
