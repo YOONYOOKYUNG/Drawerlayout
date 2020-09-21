@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListViewAdapter extends BaseAdapter {
-    public  ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+public class WindowListAdapter extends BaseAdapter {
+    public  ArrayList<WindowListItem> listViewItemList = new ArrayList<WindowListItem>() ;
     // ListViewAdapter의 생성자
-    public ListViewAdapter() {
+    public WindowListAdapter() {
     }
     @Override
     public int getCount() {
@@ -38,7 +38,7 @@ public class ListViewAdapter extends BaseAdapter {
         //리스트뷰 기본 배경색 지정
         //convertView.setBackgroundColor(Color.parseColor("#B7DBF4"));
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ListViewItem listViewItem = listViewItemList.get(position);
+        WindowListItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         titleTextView.setText(listViewItem.getName());
@@ -61,7 +61,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String name, Boolean check) {
-        ListViewItem item = new ListViewItem();
+        WindowListItem item = new WindowListItem();
 
         item.setName(name);
         item.setCheck(check);
@@ -73,7 +73,7 @@ public class ListViewAdapter extends BaseAdapter {
         listViewItemList.remove(position);
     }
 
-    public ArrayList<ListViewItem> getListViewItemList(){return listViewItemList;}
+    public ArrayList<WindowListItem> getListViewItemList(){return listViewItemList;}
 
 }
 
