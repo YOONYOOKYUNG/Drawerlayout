@@ -15,13 +15,10 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -204,7 +201,7 @@ public class WindowlistActivity extends AppCompatActivity {
                 //블루투스 디바이스 검색이 끝났을 때
                 mProgressDlg.dismiss();
                 //로딩중 화면 사라짐
-                Intent newIntent = new Intent(WindowlistActivity.this, DeviceListActivity.class);
+                Intent newIntent = new Intent(WindowlistActivity.this, BluetoothListActivity.class);
                 newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
                 Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
                 ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();

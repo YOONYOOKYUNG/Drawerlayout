@@ -1,8 +1,6 @@
 package com.cookandroid.windowairfresh;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,13 +9,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -28,15 +21,15 @@ import java.util.ArrayList;
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
  */
-public class DeviceListActivity extends Activity {
+public class BluetoothListActivity extends Activity {
 	// 핸들러
 	Handler aHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			Toast.makeText(DeviceListActivity.this, "데이터수신 했습니다.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(BluetoothListActivity.this, "데이터수신 했습니다.", Toast.LENGTH_SHORT).show();
 
 			if(msg.what == 0){
-					Intent Intent = new Intent(DeviceListActivity.this, WindowlistActivity.class);
+					Intent Intent = new Intent(BluetoothListActivity.this, WindowlistActivity.class);
 					startActivity(Intent);
 			}
 		}
@@ -166,7 +159,7 @@ public class DeviceListActivity extends Activity {
 				if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
 					showToast("연결됨");
 					final WindowlistActivity windowlistActivity = new WindowlistActivity();
-					CustomDialog customDialog = new CustomDialog(DeviceListActivity.this);
+					CustomDialog customDialog = new CustomDialog(BluetoothListActivity.this);
 					customDialog.setAdapter(windowlistActivity.GetAdapter());
 					customDialog.callFunction(windowlistActivity.GetMainlabel());
 

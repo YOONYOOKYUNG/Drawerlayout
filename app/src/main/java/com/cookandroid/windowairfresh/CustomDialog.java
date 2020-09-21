@@ -3,7 +3,6 @@ package com.cookandroid.windowairfresh;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
@@ -18,7 +17,7 @@ import android.widget.Toast;
  */
 
 
-public class CustomDialog extends DeviceListActivity {
+public class CustomDialog extends BluetoothListActivity {
     private Context context;
     private ListView listview;
     private ListViewAdapter adapter;
