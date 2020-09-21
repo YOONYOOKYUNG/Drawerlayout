@@ -17,7 +17,7 @@ public class WindowNameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_custom_dialog);
+        setContentView(R.layout.activity_windowname);
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
         final EditText message = (EditText) findViewById(R.id.messagse);

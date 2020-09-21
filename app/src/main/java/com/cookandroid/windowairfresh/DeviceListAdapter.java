@@ -52,7 +52,7 @@ public class DeviceListAdapter extends BaseAdapter{
 
 		if (convertView == null) {
 			//뷰가 하나도 없으면
-			convertView			=  mInflater.inflate(R.layout.list_item_device, null);
+			convertView			=  mInflater.inflate(R.layout.activity_devicelistitem, null);
 			//리스트 아이템 객체 생성
 			holder 				= new ViewHolder();
 
