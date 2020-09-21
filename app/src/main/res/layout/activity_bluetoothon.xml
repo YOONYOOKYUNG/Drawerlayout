@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_weight="3"
     android:layout_gravity="center"
-    tools:context=".ConnpopupActivity">
+    tools:context=".BluetoothOnActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

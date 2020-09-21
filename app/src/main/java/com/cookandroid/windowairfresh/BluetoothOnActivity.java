@@ -18,7 +18,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class ConnpopupActivity extends AppCompatActivity {
+public class BluetoothOnActivity extends AppCompatActivity {
     Button btnok, btnend;
     private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
@@ -31,7 +31,7 @@ public class ConnpopupActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
-        setContentView(R.layout.activity_BluetoothOn);
+        setContentView(R.layout.activity_bluetoothon);
         setTitle("Bluetooth 연결");
         btnok = findViewById(R.id.btnok);
         btnend = findViewById(R.id.btnend);
@@ -128,7 +128,7 @@ public class ConnpopupActivity extends AppCompatActivity {
                 //블루투스 디바이스 검색이 끝났을 때
                 mProgressDlg.dismiss();
                 //로딩중 화면 사라짐
-                Intent newIntent = new Intent(ConnpopupActivity.this, DeviceListActivity.class);
+                Intent newIntent = new Intent(BluetoothOnActivity.this, DeviceListActivity.class);
                 newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
                 Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
                 ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();

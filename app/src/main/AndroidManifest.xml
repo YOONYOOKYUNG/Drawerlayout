@@ -26,8 +26,7 @@
         android:theme="@android:style/Theme.Holo.Dialog"/>
         <!--dhkim end-->
 
-        <activity android:name=".ConnpopupActivity" />
-        <activity android:name=".SetalarmActivity" />
+        <activity android:name=".BluetoothOnActivity" />
         <activity android:name=".AlarmActivity" />
         <activity android:name=".AutoSetActivity" />
         <activity android:name=".MainActivity" />
