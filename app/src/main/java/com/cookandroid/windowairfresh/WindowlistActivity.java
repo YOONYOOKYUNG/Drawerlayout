@@ -57,7 +57,7 @@ public class WindowlistActivity extends AppCompatActivity {
             if(adapter==null) {
                 Log.d("dhkim", "adapter is null ");
             } else {
-                adapter.addItem(addedWindowName, true);
+                adapter.addItem(addedWindowName, true,"bluetoothaddress"); //세번째 블루투스어드레스는 주소값을 넣어주면됨
                 adapter.notifyDataSetChanged();
             }
             return;
@@ -91,7 +91,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
-        adapter.addItem("거실 창문1",true);
+        adapter.addItem("거실 창문1",false,"blueaddress"); ////세번째 블루투스어드레스는 주소값을 넣어주면됨
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다
