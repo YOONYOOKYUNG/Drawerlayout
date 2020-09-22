@@ -45,6 +45,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
     //dhkim start ==============================================
     final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -63,6 +64,9 @@ public class WindowlistActivity extends AppCompatActivity {
     }
     //dhkim end ==============================================
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +80,6 @@ public class WindowlistActivity extends AppCompatActivity {
         tbtn=autotb.getTbtn();
 
         btn1 = findViewById(R.id.btn1);
-
-        //dhkim start ===========================  field가 아니라 지역변수에 객체 할당했음 삭제할 것
-//        final ListViewAdapter adapter;
-        //dhkim end =============================
 
         adapter = new WindowListAdapter();
 
@@ -119,26 +119,8 @@ public class WindowlistActivity extends AppCompatActivity {
         });
 
         btn1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                //dhkim start ===============================
-                boolean dhkim_flag=true;
-                if(dhkim_flag){
-                    //로딩중 화면 사라짐
-                    Intent newIntent = new Intent(WindowlistActivity.this, DeviceListActivity.class);
-                    newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
-                    Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-                    ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();
-                    list.addAll(pairedDevices);
-                    //연결된 디바이스 목록을 리스트에 모두 추가합니다.
-                    newIntent.putParcelableArrayListExtra("device.list2", list);
-                    //추가된 값 저장하기
-                    startActivityForResult(newIntent, REQUESTCODE_DEVICELISTACTIVITY);
-                    return;
-                }
-                //dhkim end ===============================
-
+            @Override
+            public void onClick(View v) {
                 if (mBluetoothAdapter != null) {
                     //블루투스 되는 기기이다.
                     //그렇다면 지금 현재 블루투스 기능이 켜져 있는지 체크 해야 한다.
@@ -254,7 +236,8 @@ public class WindowlistActivity extends AppCompatActivity {
                 //연결된 디바이스 목록을 리스트에 모두 추가합니다.
                 newIntent.putParcelableArrayListExtra("device.list2", list);
                 //추가된 값 저장하기
-                startActivity(newIntent);
+                startActivityForResult(newIntent, REQUESTCODE_DEVICELISTACTIVITY);
+                return;
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //블루투스 디바이스가 검색되었을 때(디바이스 검색 결과)
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);

@@ -34,6 +34,9 @@ public class DeviceListActivity extends AppCompatActivity {
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		if(resultCode==RESULT_OK && requestCode==NEW_WINDOW_REQUEST){
 			Log.d("dhkim", "전달받은 새로운 창문 이름 : " + data.getStringExtra("new_window_name"));
+			WindowList[0]="안녕하세요";
+			//data.putExtra("new_window_address",WindowList[0]);
+
 			setResult(RESULT_OK, data);
 			//setResult(RESULT_CANCELED);
 			DeviceListActivity.this.finish();
@@ -41,6 +44,8 @@ public class DeviceListActivity extends AppCompatActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	//dhkim end  ============================================
+
+
 
 	String[] WindowList = new String[7];
 	private ListView mListView, mListView2;
@@ -54,23 +59,6 @@ public class DeviceListActivity extends AppCompatActivity {
 
 		setContentView(R.layout.activity_paired_devices);
 		//어느 페이지의 레이아웃인가요?
-
-		//dhkim start =====================
-		int a=1;
-		if(a==1) {
-
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();} //1초뒤 다이얼로그 띄우기
-					Intent intent = new Intent (DeviceListActivity.this, WindowNameActivity.class);
-					startActivityForResult(intent, NEW_WINDOW_REQUEST);
-				}
-			}).start();
-
-		}
-		else {
-			//dhkim end =====================
 
 			mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
 			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
@@ -94,7 +82,7 @@ public class DeviceListActivity extends AppCompatActivity {
 					} else {
 						showToast("연결중...");
 						pairDevice(device); //페어링
-						//	Address(device);
+					//	Address(device);
 					}
 				}
 			});
@@ -113,7 +101,7 @@ public class DeviceListActivity extends AppCompatActivity {
 					} else {
 						showToast("연결중...");
 						pairDevice(device); //페어링
-						//	Address(device);
+						//Address(device);
 					}
 				}
 			});
@@ -122,16 +110,12 @@ public class DeviceListActivity extends AppCompatActivity {
 
 			registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
 
-		}
 
 	}
 
 	@Override
 	public void onDestroy() {
-		//dhkim start ================================
-		//나중에 블루투스 연결하면 주석 풀것
-		//unregisterReceiver(mPairReceiver);
-		//dhkim end ==================================
+		unregisterReceiver(mPairReceiver);
 		super.onDestroy();
 	}
 
@@ -144,7 +128,7 @@ public class DeviceListActivity extends AppCompatActivity {
 		//주소 저장
 		for(int i=0;i<=9;i++){
 			if(WindowList[i]==""){
-				WindowList[i]=device.getAddress();
+				WindowList[i]= device.getAddress();
 				break;
 			}
 		}
@@ -182,10 +166,8 @@ public class DeviceListActivity extends AppCompatActivity {
 
 				if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
 					showToast("연결됨");
-					final WindowlistActivity windowlistActivity = new WindowlistActivity();
-					CustomDialog customDialog = new CustomDialog(DeviceListActivity.this);
-					customDialog.setAdapter(windowlistActivity.GetAdapter());
-					customDialog.callFunction(windowlistActivity.GetMainlabel());
+					Intent Windowintent = new Intent (DeviceListActivity.this, WindowNameActivity.class);
+					startActivityForResult(Windowintent, NEW_WINDOW_REQUEST);
 
 				} else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
 					showToast("연결해제됨");
