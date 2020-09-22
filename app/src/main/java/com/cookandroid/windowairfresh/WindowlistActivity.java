@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class WindowlistActivity extends AppCompatActivity {
+
+
     private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
     private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
@@ -250,6 +252,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+        finish();
         super.onBackPressed();
     }
 }
