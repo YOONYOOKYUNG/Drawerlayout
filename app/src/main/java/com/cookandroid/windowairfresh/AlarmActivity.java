@@ -27,11 +27,16 @@ public class AlarmActivity extends AppCompatActivity {
         final Switch swit_push, swit_setTime;
         TextView st_time;
 
-        SharedPreferences sf = getSharedPreferences(sharedName,0);
-
         swit_push = findViewById(R.id.swit_push);
         swit_setTime = findViewById(R.id.swit_setTime);
         st_time = findViewById(R.id.st_time);
+
+        SharedPreferences state = getSharedPreferences(sharedName,MODE_PRIVATE);
+        Boolean state1 = state.getBoolean("push_On",swit_push.isChecked());
+        Boolean state2 = state.getBoolean("setTime_ON",swit_setTime.isChecked());
+        swit_push.setChecked(state1);
+        swit_setTime.setChecked(state2);
+        //스위치값저장
 
         swit_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -70,11 +75,9 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void createNotifi(){
-//        PendingIntent mpendingIntent = PendingIntent.getActivity(MainActivity.this,
-//                0,
-//                new Intent(getApplicationContext(),
-//                        MainActivity.class),
-//                PendingIntent.FLAG_UPDATE_CURRENT);//노티피케이션을 클릭시 해당 클래스로 화면 이동.
+       //    PendingIntent mpendingIntent = PendingIntent.getActivity(, 0,
+       //         new Intent(getApplicationContext(), MainActivity.class),
+        //        PendingIntent.FLAG_UPDATE_CURRENT);//노티피케이션을 클릭시 해당 클래스로 화면 이동.
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
 
@@ -83,7 +86,6 @@ public class AlarmActivity extends AppCompatActivity {
         builder.setContentText("푸쉬 알림이 커졌습니다.");
 
         builder.setAutoCancel(true);
-        //builder.setContentIntent(mpendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
@@ -94,8 +96,8 @@ public class AlarmActivity extends AppCompatActivity {
         notificationManager.notify(1,builder.build());
     }
     private void alarmSetTime(){
-//        PendingIntent mpendingIntent = PendingIntent.getActivity(MainActivity.this, 0, new Intent(getApplicationContext(),
-//                MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);//노티피케이션을 클릭시 해당 클래스로 화면 이동.
+     // PendingIntent mpendingIntent = PendingIntent.getActivity(MainActivity.this, 0, new Intent(getApplicationContext(),
+      //         MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);//노티피케이션을 클릭시 해당 클래스로 화면 이동.
 
         NotificationCompat.Builder builder2 = new NotificationCompat.Builder(this, "alarm");
 
@@ -129,11 +131,12 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onStop(){
 
         Switch swit_push = (Switch)findViewById(R.id.swit_push);
-        Switch swit_timer = (Switch)findViewById(R.id.swit_setTime);
-        SharedPreferences sf = getSharedPreferences(sharedName, 0);//SharedPreference에 스위치 온오프값을 저장함.
-        SharedPreferences.Editor editor2 = sf.edit();//저장하려면 eidtor가 필요함.
+        Switch swit_setTime = (Switch)findViewById(R.id.swit_setTime);
+
+        SharedPreferences state = getSharedPreferences(sharedName, 0);//SharedPreference에 스위치 온오프값을 저장함.
+        SharedPreferences.Editor editor2 = state.edit();//저장하려면 eidtor가 필요함.
         editor2.putBoolean("push_ON",swit_push.isChecked());
-        editor2.putBoolean("setTime_ON",swit_timer.isChecked());
+        editor2.putBoolean("setTime_ON",swit_setTime.isChecked());
         editor2.commit();
 
         super.onStop();
