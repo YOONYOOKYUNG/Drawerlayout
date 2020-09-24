@@ -29,11 +29,13 @@ public class DeviceListActivity extends AppCompatActivity {
 
 	final int NEW_WINDOW_REQUEST=1234;
 	public static int page = 1;
+	public static String btaddress = "";
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		if(resultCode==RESULT_OK && requestCode==NEW_WINDOW_REQUEST){
 			Log.d("dhkim", "전달받은 새로운 창문 이름 : " + data.getStringExtra("new_window_name"));
+			Log.d("dhkim", "전달받은 새로운 창문 주소 : " + data.getStringExtra("btaddress"));
 			setResult(RESULT_OK, data);
 			DeviceListActivity.this.finish();
 		}
@@ -44,14 +46,12 @@ public class DeviceListActivity extends AppCompatActivity {
 	private ListView mListView, mListView2;
 	private DeviceListAdapter mAdapter,mAdapter2;
 	private ArrayList<BluetoothDevice> mDeviceList,mDeviceList2;
-	private ArrayList<String> btaddress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_paired_devices);
 		//어느 페이지의 레이아웃인가요?
-		 	btaddress = new ArrayList<>();
 			mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
 			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
 			mListView = (ListView) findViewById(R.id.lv_paired);
@@ -70,9 +70,10 @@ public class DeviceListActivity extends AppCompatActivity {
 						unpairDevice(device);
 						//페어링 해제
 					} else {
+						btaddress=device.getAddress();
+						Log.d("테스트", "처음으로 저장된 주소 : "+btaddress);
 						showToast("연결중...");
 						pairDevice(device); //페어링
-						btaddress.add(device.getAddress());
 					}
 				}
 			});
@@ -87,11 +88,12 @@ public class DeviceListActivity extends AppCompatActivity {
 					if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
 						//BOND_BONDED : 페어링 됐으면
 						unpairDevice(device);
-						//페어링 해제
+						//어링 해제
 					} else {
+						btaddress=device.getAddress();
+						Log.d("테스트", "처음으로 저장된 주소 : "+btaddress);
 						showToast("연결중...");
 						pairDevice(device); //페어링
-						btaddress.add(device.getAddress());
 					}
 				}
 			});
@@ -143,7 +145,6 @@ public class DeviceListActivity extends AppCompatActivity {
 
 				if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
 					showToast("연결됨");
-					Log.d("dhkim", "페이지 값"+page);
 					page++;
 					if(page==2||page==3)
 					{
@@ -151,8 +152,10 @@ public class DeviceListActivity extends AppCompatActivity {
 					}
 					if(page==4){
 					Intent windowintent = new Intent(DeviceListActivity.this, WindowNameActivity.class);
-						Log.d("dhkim", "안녕하세요");
+						Log.d("테스트", "인텐트 바로 보내기전 주소 : "+btaddress);
+						windowintent.putExtra("btaddress",btaddress);
 						startActivityForResult(windowintent, NEW_WINDOW_REQUEST);
+
 						page=1;}
 				}
 				else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {

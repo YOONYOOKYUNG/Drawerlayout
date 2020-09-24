@@ -55,11 +55,13 @@ public class WindowlistActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode==REQUESTCODE_DEVICELISTACTIVITY) {
             String addedWindowName =  data.getStringExtra("new_window_name");
-            Log.d("dhkim", "WindowList로 데이터 도착 : " + addedWindowName);
+            String addedbtaddress =  data.getStringExtra("btaddress");
+            Log.d("테스트", "WindowList로 창문이름 도착 : " + addedWindowName);
+            Log.d("dhkim", "WindowList로 주소 도착 : " + addedbtaddress);
             if(adapter==null) {
                 Log.d("dhkim", "adapter is null ");
             } else {
-                adapter.addItem(addedWindowName, true,"bluetoothaddress"); //세번째 블루투스어드레스는 주소값을 넣어주면됨
+                adapter.addItem(addedWindowName, true,addedbtaddress); //세번째 블루투스어드레스는 주소값을 넣어주면됨
                 adapter.notifyDataSetChanged();
             }
             return;
