@@ -13,9 +13,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -37,19 +39,19 @@ public class WindowlistActivity extends AppCompatActivity {
 
     ImageButton btn1;
     ImageView backarrow;
-    ToggleButton tbtn;
+    ListView listview;
 
     WindowListAdapter adapter;
     TextView main_label;
+    String sfName = "File";
+    String state="";
 
-    public WindowListAdapter GetAdapter(){return adapter;}
-    public TextView GetMainlabel(){return main_label;}
 
     //dhkim start ==============================================
     final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
 
         if (resultCode == RESULT_OK && requestCode==REQUESTCODE_DEVICELISTACTIVITY) {
             String addedWindowName =  data.getStringExtra("new_window_name");
@@ -74,12 +76,9 @@ public class WindowlistActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
-        final ListView listview;
-        AutoSetActivity autotb = new AutoSetActivity();
-        tbtn=autotb.getTbtn();
+
 
         btn1 = findViewById(R.id.btn1);
-
         adapter = new WindowListAdapter();
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
@@ -89,6 +88,18 @@ public class WindowlistActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
         adapter.addItem("거실 창문1",false,"blueaddress"); ////세번째 블루투스어드레스는 주소값을 넣어주면됨
+        SharedPreferences sf = getSharedPreferences(sfName, 0);
+        state = sf.getString("state", ""); // 키값으로
+        if (state=="auto"){
+            listview.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Intent intent = new Intent(WindowlistActivity.this,Popup4_warning.class);
+                    startActivity(intent);
+                    return false;
+                }
+            });
+        }
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다
@@ -107,15 +118,7 @@ public class WindowlistActivity extends AppCompatActivity {
         });
 
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (tbtn.isChecked()==true) {
-                    Popup4_warning customDialog_popup4 = new Popup4_warning(WindowlistActivity.this);
-                    customDialog_popup4.callFunction();
-                }
-            }
-        });
+
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override

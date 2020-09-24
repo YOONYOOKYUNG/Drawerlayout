@@ -1,6 +1,7 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,6 @@ public class AutoSetActivity extends AppCompatActivity {
     String state="";
 
 
-    public ToggleButton getTbtn(){return tbtn;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
