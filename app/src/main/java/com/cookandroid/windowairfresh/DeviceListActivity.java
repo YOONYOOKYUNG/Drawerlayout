@@ -29,7 +29,6 @@ public class DeviceListActivity extends AppCompatActivity {
 
 	final int NEW_WINDOW_REQUEST=1234;
 	public static int page = 1;
-	int finish = 1;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -45,20 +44,20 @@ public class DeviceListActivity extends AppCompatActivity {
 	private ListView mListView, mListView2;
 	private DeviceListAdapter mAdapter,mAdapter2;
 	private ArrayList<BluetoothDevice> mDeviceList,mDeviceList2;
-	Handler handler;
+	private ArrayList<String> btaddress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_paired_devices);
 		//어느 페이지의 레이아웃인가요?
+		 	btaddress = new ArrayList<>();
 			mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
 			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
 			mListView = (ListView) findViewById(R.id.lv_paired);
 			mListView2 = (ListView) findViewById(R.id.lv_paired2);
 			mAdapter = new DeviceListAdapter(this);
 			mAdapter2 = new DeviceListAdapter(this);
-
 			mAdapter.setData(mDeviceList);
 			mAdapter2.setData(mDeviceList2);
 			mAdapter.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
@@ -73,6 +72,7 @@ public class DeviceListActivity extends AppCompatActivity {
 					} else {
 						showToast("연결중...");
 						pairDevice(device); //페어링
+						btaddress.add(device.getAddress());
 					}
 				}
 			});
@@ -91,7 +91,7 @@ public class DeviceListActivity extends AppCompatActivity {
 					} else {
 						showToast("연결중...");
 						pairDevice(device); //페어링
-						//Address(device);
+						btaddress.add(device.getAddress());
 					}
 				}
 			});
@@ -151,9 +151,9 @@ public class DeviceListActivity extends AppCompatActivity {
 					}
 					if(page==4){
 					Intent windowintent = new Intent(DeviceListActivity.this, WindowNameActivity.class);
-					startActivityForResult(windowintent, NEW_WINDOW_REQUEST);
-					Log.d("dhkim", "안녕하세요");
-					page=1;}
+						Log.d("dhkim", "안녕하세요");
+						startActivityForResult(windowintent, NEW_WINDOW_REQUEST);
+						page=1;}
 				}
 				else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {
 						showToast("연결해제됨");

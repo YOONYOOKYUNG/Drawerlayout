@@ -10,20 +10,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class WindowNameActivity extends Activity {
 
     private TextView mTextView;
+    private ArrayList<String> btaddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_windowname);
-
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
         final EditText message = (EditText) findViewById(R.id.messagse);
         final Button okButton = (Button) findViewById(R.id.okButton);
         final Button cancelButton = (Button) findViewById(R.id.cancelButton);
+
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override

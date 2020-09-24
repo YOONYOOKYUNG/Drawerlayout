@@ -66,9 +66,6 @@ public class WindowlistActivity extends AppCompatActivity {
     }
     //dhkim end ==============================================
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
