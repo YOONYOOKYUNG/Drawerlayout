@@ -36,7 +36,7 @@ public class WindowNameActivity extends Activity {
                     Intent intent = new Intent();
                     intent.putExtra("new_window_name", message.getText().toString());
                     setResult(RESULT_OK, intent);
-                    finish();
+                    WindowNameActivity.this.finish();
 
                 } else { //다이얼로그에 창문 이름은 안쓰고 OK한 경우 토스트
                     Toast.makeText(WindowNameActivity.this, "창문의 이름을 입력하세요.", Toast.LENGTH_SHORT).show();

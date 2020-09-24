@@ -5,7 +5,6 @@
     android:versionName="1.0.0">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,15 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--dhkim start-->
+        <activity android:name=".AlarmReceiver"></activity>
+        <!-- dhkim start -->
         <activity
-        android:name=".WindowNameActivity"
-        android:theme="@android:style/Theme.Holo.Dialog"/>
-        <!--dhkim end-->
-
+            android:name=".WindowNameActivity"
+            android:theme="@android:style/Theme.Holo.Dialog" /> <!-- dhkim end -->
         <activity android:name=".BluetoothOnActivity" />
-        <activity android:name=".AlarmActivity" />
         <activity android:name=".AutoSetActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".WindowlistActivity" />
