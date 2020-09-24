@@ -21,7 +21,7 @@ public class AlarmActivity extends AppCompatActivity {
     final int pagenum = 1;
     String sharedName = "file";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
         final Switch swit_push, swit_setTime;
@@ -63,7 +63,7 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(swit_setTime.isChecked()==true) {
-                    Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                    Intent intent = new Intent(getApplicationContext(), AlarmSpinnerActivity.class);
                     int requestcode = 1;
                     startActivityForResult(intent,pagenum);
                 }

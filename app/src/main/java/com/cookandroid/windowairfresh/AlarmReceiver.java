@@ -25,7 +25,7 @@ import java.util.Locale;
 public class AlarmReceiver extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarmspinner);
         super.onCreate(savedInstanceState);
