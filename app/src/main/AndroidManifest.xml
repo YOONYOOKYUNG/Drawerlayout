@@ -21,12 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".ActlogActivity" />
+        <activity
+            android:name=".HelpActivity">
+        </activity>
+
         <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
         <activity
             android:name=".WindowNameActivity"
             android:theme="@android:style/Theme.Holo.Dialog" /> <!-- dhkim end -->
         <activity
-            android:name=".Popup4_warning"
+            android:name=".Popup_warning"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
            />
         <activity android:name=".BluetoothOnActivity" />
