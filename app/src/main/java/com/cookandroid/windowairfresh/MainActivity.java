@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onRefresh() {
                 ConnectedThread.write("1");
+                Log.d("a1","1");
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -89,17 +90,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         sb.delete(0, sb.length());
                         byte[] readBuf = (byte[]) msg.obj;
                         String strIncom = new String(readBuf, 0, msg.arg1);
+                        Log.d("a2",strIncom);
                         sb.append(strIncom);
                         int endOfLineIndex = sb.indexOf("\r\n");
+                        Log.d("a3", String.valueOf(endOfLineIndex));
                         if (endOfLineIndex > 0) {
                             String sbprint = sb.substring(0, endOfLineIndex);
+                            Log.d("a4",sbprint);
                             sb.delete(0, sb.length());
 
                             String[] array = sbprint.split("#");
+                            Log.d("a5",array[0]);
 
                             thermometer.setText(array[0]);
                             micro.setText(array[1]);
                             humid.setText(array[2]);
+                            Log.d("a6","값 띄움");
 
                             flag++;
                         }
@@ -307,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         ConnectedThread = new ConnectedThread(btSocket);
         ConnectedThread.start();
+
     }
 
 
