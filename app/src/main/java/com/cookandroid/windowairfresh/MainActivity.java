@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -61,17 +62,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     Handler handler;
     ImageView update;
-
-
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        swipeRefreshLayout = findViewById(R.id.swipefresh);
+
         thermometer = findViewById(R.id.thermometer);
         micro = findViewById(R.id.micro);
         humid = findViewById(R.id.humid);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ConnectedThread.write("1");
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -162,9 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
-
-
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
