@@ -9,6 +9,190 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B7DBF4">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:layout_gravity="left"
+            android:theme="?attr/actionBarTheme"
+            app:navigationIcon="@drawable/icon_menu" />
+    </RelativeLayout>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeFresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <ImageView
+                android:id="@+id/main_icon"
+                android:src="@drawable/waflogo"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:padding="20dp"/>
+
+            <TextView
+                android:id="@+id/tvdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorFont" />
+
+
+            <LinearLayout
+                android:id="@+id/therlayout"
+                android:layout_width="360dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:background="@drawable/shape"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:padding="15sp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/thermometer" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="온도"
+                    android:textColor="#5e5e5e"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/thermometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="55dp"
+                    android:text="00"
+                    android:textColor="@color/colorFont"
+                    android:textStyle="bold"
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:layout_width="13dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="℃"
+                    android:textColor="@color/colorFont"
+                    android:textSize="20dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dustlayout"
+                android:layout_width="360dp"
+                android:layout_height="80dp"
+                android:background="@drawable/shape"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_margin="7dp"
+                android:padding="15sp">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/dust"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="10dp"
+                    android:text="미세먼지"
+                    android:textColor="@color/colorFont"
+                    android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/micro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="35dp"
+                    android:text="00"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorFont"
+                    android:textSize="25dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="㎍/㎥"
+                    android:textColor="@color/colorFont"
+                    android:textSize="20dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/humidlayout"
+                android:layout_width="360dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/shape"
+                android:layout_margin="7dp"
+                android:padding="15sp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/drop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="습도"
+                    android:textColor="@color/colorFont"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/humid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorFont"
+                    android:textSize="25dp"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="%"
+                    android:textColor="@color/colorFont"
+                    android:textSize="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -16,178 +200,6 @@
         app:headerLayout="@layout/header"
         app:menu="@menu/main_menu"
         android:layout_gravity="start" >
-
     </com.google.android.material.navigation.NavigationView>
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:navigationIcon="@drawable/icon_menu" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <TextView
-         android:id="@+id/tvdate"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_gravity="center"
-         android:layout_margin="10dp"
-         android:gravity="center"
-         android:textColor="@color/colorFont" />
-
-
-        <ImageView
-            android:id="@+id/main_icon"
-            android:src="@drawable/waflogo"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:padding="20dp"/>
-
-        <LinearLayout
-            android:id="@+id/therlayout"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
-            android:layout_margin="7dp"
-            android:background="@drawable/shape"
-            android:layout_gravity="center"
-            android:padding="15sp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/thermometer" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginTop="10dp"
-                android:text="온도"
-                android:textColor="#5e5e5e"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/thermometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="55dp"
-                android:text="00"
-                android:textColor="@color/colorFont"
-                android:textStyle="bold"
-                android:textSize="25dp" />
-
-            <TextView
-                android:layout_width="13dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="℃"
-                android:textColor="@color/colorFont"
-                android:textSize="20dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/dustlayout"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
-            android:background="@drawable/shape"
-            android:layout_gravity="center"
-            android:layout_margin="7dp"
-            android:padding="15sp">
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/dust"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="10dp"
-                android:text="미세먼지"
-                android:textColor="@color/colorFont"
-                android:textSize="20dp" />
-            <TextView
-                android:id="@+id/micro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="35dp"
-                android:text="00"
-                android:textStyle="bold"
-                android:textColor="@color/colorFont"
-                android:textSize="25dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:text="㎍/㎥"
-                android:textColor="@color/colorFont"
-                android:textSize="20dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/humidlayout"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:background="@drawable/shape"
-            android:layout_margin="7dp"
-            android:padding="15sp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/drop" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginTop="10dp"
-                android:text="습도"
-                android:textColor="@color/colorFont"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/humid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textStyle="bold"
-                android:textColor="@color/colorFont"
-                android:textSize="25dp"
-                android:layout_marginLeft="55dp"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="%"
-                android:textColor="@color/colorFont"
-                android:textSize="20dp" />
-        </LinearLayout>
-     </LinearLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

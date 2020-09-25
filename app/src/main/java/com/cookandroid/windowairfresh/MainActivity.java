@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        swipeRefreshLayout = findViewById(R.id.swipefresh);
+        swipeRefreshLayout = findViewById(R.id.swipeFresh);
 
         thermometer = findViewById(R.id.thermometer);
         micro = findViewById(R.id.micro);
@@ -126,6 +127,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+//
+//        toolbar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(!drawerLayout.isDrawerOpen(Gravity.LEFT)){
+//                    drawerLayout.openDrawer(Gravity.LEFT);
+//
+//                }
+//            }
+//        });
         //navigation drawer menu
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
