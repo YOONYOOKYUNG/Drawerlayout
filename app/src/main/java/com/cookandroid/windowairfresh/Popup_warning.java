@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class Popup4_warning extends Activity {
+public class Popup_warning extends Activity {
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState){

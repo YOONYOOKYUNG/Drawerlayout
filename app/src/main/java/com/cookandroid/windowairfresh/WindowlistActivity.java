@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,15 +25,32 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 public class WindowlistActivity extends AppCompatActivity {
 
+    private static final String TAG = "bluetooth2";
+
+    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
+    private BluetoothSocket btSocket = null;
+    private StringBuilder sb = new StringBuilder();
+
+    private ConnectedThread ConnectedThread;
+
+    // SPP UUID service
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+
+    // MAC-address of Bluetooth module (you must edit this
+    private static String address = "98:D3:51:F9:28:05";
 
     private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
@@ -45,6 +64,7 @@ public class WindowlistActivity extends AppCompatActivity {
     TextView main_label;
     String sfName = "File";
     String state="";
+    Switch switch1;
 
 
     //dhkim start ==============================================
@@ -96,7 +116,7 @@ public class WindowlistActivity extends AppCompatActivity {
             listview.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    Intent intent = new Intent(WindowlistActivity.this,Popup4_warning.class);
+                    Intent intent = new Intent(WindowlistActivity.this, Popup_warning.class);
                     startActivity(intent);
                     return false;
                 }
@@ -118,9 +138,6 @@ public class WindowlistActivity extends AppCompatActivity {
                 //Cancel 버튼을 누르면 블루투스 찾기가 종료됩니다.
             }
         });
-
-
-
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +168,29 @@ public class WindowlistActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        switch1 = findViewById(R.id.switch1);
+        switch1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WindowListItem item=(WindowListItem)adapter.getItem(0);
+                address = item.getBlueaddress();
+
+
+                if(item.getCheck()==true){
+                    ConnectedThread.write("2");
+                }
+                else if(item.getCheck()==false){
+                    ConnectedThread.write("3");
+                }
+                else{
+                    Log.d("aa","오류");
+                }
+
+            }
+        });
+
+
 
 
         for(int i=0;i<adapter.getCount();i++){
@@ -206,6 +246,11 @@ public class WindowlistActivity extends AppCompatActivity {
                 //블루투스 검색 취소
             }
         }
+        try     {
+            btSocket.close();
+        } catch (IOException e2) {
+            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
+        }
 
         super.onPause();
     }
@@ -257,4 +302,85 @@ public class WindowlistActivity extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+
+
+
+    //블루투스
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        if(Build.VERSION.SDK_INT >= 10){
+            try {
+                final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
+                return (BluetoothSocket) m.invoke(device, MY_UUID);
+            } catch (Exception e) {
+                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
+            }
+        }
+        return  device.createRfcommSocketToServiceRecord(MY_UUID);
+    }
+
+    private void errorExit(String title, String message){
+        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    private class ConnectedThread extends Thread {
+        private final java.io.InputStream InputStream;
+        private final java.io.OutputStream OutputStream;
+
+        public ConnectedThread(BluetoothSocket socket) {
+            java.io.InputStream tmpIn = null;
+            java.io.OutputStream tmpOut = null;
+
+            try {
+                tmpIn = socket.getInputStream();
+                tmpOut = socket.getOutputStream();
+            } catch (IOException e) { }
+
+            InputStream = tmpIn;
+            OutputStream = tmpOut;
+        }
+        public void run() {
+            byte[] buffer = new byte[256];  // buffer store for the stream
+            int bytes; // bytes returned from read()
+
+        }
+        public void write(String message) {
+            Log.d(TAG, "...Data to send: " + message + "...");
+            byte[] msgBuffer = message.getBytes();
+            try {
+                OutputStream.write(msgBuffer);
+            } catch (IOException e) {
+                Log.d(TAG, "...Error data send: " + e.getMessage() + "...");
+            }
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+        try {
+            btSocket = createBluetoothSocket(device);
+        } catch (IOException e) {
+            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
+        }
+        mBluetoothAdapter.cancelDiscovery();
+        try {
+            btSocket.connect();
+
+        } catch (IOException e) {
+            try {
+                btSocket.close();
+            } catch (IOException e2) {
+                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+            }
+        }
+        ConnectedThread = new ConnectedThread(btSocket);
+        ConnectedThread.start();
+
+    }
+
+
+
 }

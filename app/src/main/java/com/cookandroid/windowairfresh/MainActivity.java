@@ -17,7 +17,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -155,40 +154,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvdate = findViewById(R.id.tvdate);
         tvdate.setText(today);
 
-        //click -> popup1_dust
-        dustlayout = findViewById(R.id.dustlayout);
-        myDialog = new Dialog(this);
-        dustlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Popup1_dust customDialogPopup1 = new Popup1_dust(MainActivity.this);
-                customDialogPopup1.setmsmjsuchi(micro.getText().toString());
-                customDialogPopup1.callFunction();
-            }
-        });
 
 
-        humidlayout = findViewById(R.id.humidlayout);
-        myDialog2 = new Dialog(this);
-        humidlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Popup2_humid customDialogPopup2 = new Popup2_humid(MainActivity.this);
-                customDialogPopup2.setTemphum(thermometer.getText().toString());
-                customDialogPopup2.callHum();
-            }
-        });
-
+        //click -> popup1_temp
         therlayout = findViewById(R.id.therlayout);
         myDialog3 = new Dialog(this);
         therlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup3_temp customDialogPopup3 = new Popup3_temp(MainActivity.this);
-                customDialogPopup3.setTempersuchi(thermometer.getText().toString());
-                customDialogPopup3.callTemp();
+                Popup customDialogPopup1 = new Popup(MainActivity.this);
+                customDialogPopup1.settemp(thermometer.getText().toString());
+                customDialogPopup1.calltemppopup();
             }
         });
+
+        //click -> popup2_dust
+        dustlayout = findViewById(R.id.dustlayout);
+        myDialog = new Dialog(this);
+        dustlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Popup customDialogPopup1 = new Popup(MainActivity.this);
+                customDialogPopup1.setdust(micro.getText().toString());
+                customDialogPopup1.calldustpopup();
+            }
+        });
+
+        //click -> popup3_humid
+        humidlayout = findViewById(R.id.humidlayout);
+        myDialog2 = new Dialog(this);
+        humidlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Popup customDialogPopup1 = new Popup(MainActivity.this);
+                customDialogPopup1.settemp(thermometer.getText().toString());
+                customDialogPopup1.sethumid(humid.getText().toString());
+                customDialogPopup1.callhumidpopup();
+            }
+        });
+
+
     }
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){

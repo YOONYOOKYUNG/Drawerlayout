@@ -3,7 +3,6 @@ package com.cookandroid.windowairfresh;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,11 +20,11 @@ public class SplashActivity extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, HelpActivity.class));
             }
         };
 
-        handler.postDelayed(runnable, 3000);
+        handler.postDelayed(runnable, 5000);
 
     }
     @Override

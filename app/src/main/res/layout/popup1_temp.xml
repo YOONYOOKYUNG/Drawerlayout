@@ -24,7 +24,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/con3"
+            android:id="@+id/con1"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="10dp"
@@ -79,7 +79,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/popup3_close"
+        android:id="@+id/popup1_close"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginTop="15dp"
