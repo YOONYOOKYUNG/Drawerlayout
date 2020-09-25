@@ -93,7 +93,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         String strIncom = new String(readBuf, 0, msg.arg1);
                         Log.d("a2",strIncom);
                         sb.append(strIncom);
-                        int endOfLineIndex = sb.indexOf("\r\n");
+                        Log.d("a2", String.valueOf(sb));
+
+                        int endOfLineIndex = sb.indexOf("/");
                         Log.d("a3", String.valueOf(endOfLineIndex));
                         if (endOfLineIndex > 0) {
                             String sbprint = sb.substring(0, endOfLineIndex);
