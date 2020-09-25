@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,18 +19,22 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
@@ -37,51 +42,44 @@ import java.util.UUID;
 
 public class WindowlistActivity extends AppCompatActivity {
 
-    private static final String TAG = "bluetooth2";
-
-    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
-    private BluetoothSocket btSocket = null;
-    private StringBuilder sb = new StringBuilder();
-
-    private ConnectedThread ConnectedThread;
-
-    // SPP UUID service
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-
-    // MAC-address of Bluetooth module (you must edit this
-    private static String address = "98:D3:51:F9:28:05";
-
     private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
     private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
-
+    //블투1
+    private static final String TAG = "bluetooth2";
+    Handler h;
+    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
+    private BluetoothSocket btSocket = null;
+    private StringBuilder sb = new StringBuilder();
+    private static int flag = 0;
+    private ConnectedThread mConnectedThread;
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static String address="98:D3:51:F9:26:E0";
+    //블투1
     ImageButton btn1;
     ImageView backarrow;
     ListView listview;
-
     WindowListAdapter adapter;
     TextView main_label;
     String sfName = "File";
-    String state="";
-    Switch switch1;
-
-
-    //dhkim start ==============================================
+    Boolean state;
+    String mode;
     final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
 
+    @SuppressLint("HandlerLeak")
     @Override
+
     protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
 
         if (resultCode == RESULT_OK && requestCode==REQUESTCODE_DEVICELISTACTIVITY) {
             String addedWindowName =  data.getStringExtra("new_window_name");
-            String addedbtaddress =  data.getStringExtra("btaddress");
+            String address =  data.getStringExtra("btaddress");
             Log.d("테스트", "WindowList로 창문이름 도착 : " + addedWindowName);
-            Log.d("dhkim", "WindowList로 주소 도착 : " + addedbtaddress);
+            Log.d("dhkim", "WindowList로 주소 도착 : " + address);
             if(adapter==null) {
                 Log.d("dhkim", "adapter is null ");
             } else {
-                adapter.addItem(addedWindowName, true,addedbtaddress); //세번째 블루투스어드레스는 주소값을 넣어주면됨
+                adapter.addItem(addedWindowName,address,false); //세번째 블루투스어드레스는 주소값을 넣어주면됨
                 adapter.notifyDataSetChanged();
             }
             return;
@@ -99,6 +97,27 @@ public class WindowlistActivity extends AppCompatActivity {
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
 
+        //블투2
+        h = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    case RECIEVE_MESSAGE:
+                        byte[] readBuf = (byte[]) msg.obj;
+                        String strIncom = new String(readBuf, 0, msg.arg1);
+                        sb.append(strIncom);
+                        int endOfLineIndex = sb.indexOf("\r\n");
+                        if (endOfLineIndex > 0) {
+                            String sbprint = sb.substring(0, endOfLineIndex);
+                            sb.delete(0, sb.length());
+                            // txtArduino.setText(sbprint);
+                            flag++;
+                        }
+                        break;
+                }
+            };
+        };
+        //블투2
+
 
         btn1 = findViewById(R.id.btn1);
         adapter = new WindowListAdapter();
@@ -109,19 +128,35 @@ public class WindowlistActivity extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
-        adapter.addItem("거실 창문1",false,"blueaddress"); ////세번째 블루투스어드레스는 주소값을 넣어주면됨
         SharedPreferences sf = getSharedPreferences(sfName, 0);
-        state = sf.getString("state", ""); // 키값으로
-        if (state=="auto"){
+        mode = sf.getString("state", ""); // 키값으로
+        if (mode=="auto"){
             listview.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    Intent intent = new Intent(WindowlistActivity.this, Popup_warning.class);
+                    Intent intent = new Intent(WindowlistActivity.this,Popup4_warning.class);
                     startActivity(intent);
                     return false;
                 }
             });
         }
+
+        adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
+            @Override
+            public void onWindowButtonClick(int pos) {
+                WindowListAdapter listViewItem = adapter.listViewItemList.get(pos);
+                address=listViewItem.getAddress();
+                state=listViewItem.getState();
+                //address="98:D3:51:F9:26:E0";
+                if(state)
+                {mConnectedThread.write("1");
+                listViewItem.setState(false);
+                }
+                else
+                {mConnectedThread.write("2");
+                listViewItem.setState(true); }
+            }
+        });
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다
@@ -139,12 +174,16 @@ public class WindowlistActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mBluetoothAdapter != null) {
                     //블루투스 되는 기기이다.
                     //그렇다면 지금 현재 블루투스 기능이 켜져 있는지 체크 해야 한다.
+
                     if (!mBluetoothAdapter.isEnabled()) {
                         //false이면
                         //블루투스 꺼져있는상태 -> 간단한 인텐드 이용하여 블루투스 켬.
@@ -153,6 +192,22 @@ public class WindowlistActivity extends AppCompatActivity {
                     }
                 }
                 mBluetoothAdapter.startDiscovery();
+
+                IntentFilter filter = new IntentFilter();
+                //IntentFilter란 다음 작업이 명시되지 않은 상태에서 보내진 intent에 대해
+                //어느 activity/sevice/broadcast가 받을 것인가를 찾는 Intent Resolution시
+                //참조하는 정보이다
+
+                filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+                //디바이스 연결상태 변경
+                filter.addAction(BluetoothDevice.ACTION_FOUND);
+                //블루투스 디바이스가 검색되었을 때(디바이스 검색 결과)
+                filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+                //블루투스 디바이스 검색 시작
+                filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+                //블루투스 디바이스 검색이 끝났을 때
+                registerReceiver(mReceiver, filter);
+                //receiver를 등록한다
             }
         });
 
@@ -161,7 +216,7 @@ public class WindowlistActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                WindowListItem item =(WindowListItem)adapter.getItem(0);
+                WindowListAdapter item =(WindowListAdapter)adapter.getItem(0);
                 Toast.makeText(getApplicationContext(),item.name+"삭제되었습니다.",Toast.LENGTH_LONG).show();
                 adapter.removeitem(0); //0번째가 삭제되게 임의로 설정
                 adapter.notifyDataSetChanged();
@@ -169,43 +224,9 @@ public class WindowlistActivity extends AppCompatActivity {
             }
         });
 
-        switch1 = findViewById(R.id.switch1);
-        switch1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WindowListItem item=(WindowListItem)adapter.getItem(0);
-                address = item.getBlueaddress();
-
-
-                if(item.getCheck()==true){
-                    ConnectedThread.write("2");
-                }
-                else if(item.getCheck()==false){
-                    ConnectedThread.write("3");
-                }
-                else{
-                    Log.d("aa","오류");
-                }
-
-            }
-        });
-
-
-
 
         for(int i=0;i<adapter.getCount();i++){
-            WindowListItem item=(WindowListItem)adapter.getItem(i);
-
-            if (item.getCheck()){
-                listview.setBackgroundColor(Color.parseColor("#ffffff"));
-                adapter.notifyDataSetChanged();
-            }
-            else {
-                listview.setBackgroundColor(Color.parseColor("#B7DBF4"));
-                adapter.notifyDataSetChanged();
-            }
-
-        }
+            WindowListAdapter item=(WindowListAdapter)adapter.getItem(i); }
 
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
@@ -215,25 +236,15 @@ public class WindowlistActivity extends AppCompatActivity {
             }
         });
 
-        IntentFilter filter = new IntentFilter();
-        //IntentFilter란 다음 작업이 명시되지 않은 상태에서 보내진 intent에 대해
-        //어느 activity/sevice/broadcast가 받을 것인가를 찾는 Intent Resolution시
-        //참조하는 정보이다
-
-        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        //디바이스 연결상태 변경
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        //블루투스 디바이스가 검색되었을 때(디바이스 검색 결과)
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        //블루투스 디바이스 검색 시작
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        //블루투스 디바이스 검색이 끝났을 때
-        registerReceiver(mReceiver, filter);
-        //receiver를 등록한다
     }
 
     @Override
     public void onPause() {
+        try     {
+            btSocket.close();
+        } catch (IOException e2) {
+            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
+        }
         if (mBluetoothAdapter != null) {
             //장치가 블루투스를 지원하는 경우
             ActivityCompat.requestPermissions(this,
@@ -246,12 +257,6 @@ public class WindowlistActivity extends AppCompatActivity {
                 //블루투스 검색 취소
             }
         }
-        try     {
-            btSocket.close();
-        } catch (IOException e2) {
-            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
-        }
-
         super.onPause();
     }
 
@@ -297,15 +302,7 @@ public class WindowlistActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public void onBackPressed(){
-        finish();
-        super.onBackPressed();
-    }
-
-
-
-    //블루투스
+    //블투 소켓 코드
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
         if(Build.VERSION.SDK_INT >= 10){
             try {
@@ -318,57 +315,35 @@ public class WindowlistActivity extends AppCompatActivity {
         return  device.createRfcommSocketToServiceRecord(MY_UUID);
     }
 
-    private void errorExit(String title, String message){
-        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-        finish();
-    }
-
-    private class ConnectedThread extends Thread {
-        private final java.io.InputStream InputStream;
-        private final java.io.OutputStream OutputStream;
-
-        public ConnectedThread(BluetoothSocket socket) {
-            java.io.InputStream tmpIn = null;
-            java.io.OutputStream tmpOut = null;
-
-            try {
-                tmpIn = socket.getInputStream();
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
-
-            InputStream = tmpIn;
-            OutputStream = tmpOut;
-        }
-        public void run() {
-            byte[] buffer = new byte[256];  // buffer store for the stream
-            int bytes; // bytes returned from read()
-
-        }
-        public void write(String message) {
-            Log.d(TAG, "...Data to send: " + message + "...");
-            byte[] msgBuffer = message.getBytes();
-            try {
-                OutputStream.write(msgBuffer);
-            } catch (IOException e) {
-                Log.d(TAG, "...Error data send: " + e.getMessage() + "...");
-            }
-        }
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.d(TAG, "...onResume - try connect...");
+
+        // Set up a pointer to the remote node using it's address.
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+
+        // Two things are needed to make a connection:
+        //   A MAC address, which we got above.
+        //   A Service ID or UUID.  In this case we are using the
+        //     UUID for SPP.
+
         try {
             btSocket = createBluetoothSocket(device);
         } catch (IOException e) {
             errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
         }
+
+        // Discovery is resource intensive.  Make sure it isn't going on
+        // when you attempt to connect and pass your message.
         mBluetoothAdapter.cancelDiscovery();
+
+        // Establish the connection.  This will block until it connects.
+        Log.d(TAG, "...Connecting...");
         try {
             btSocket.connect();
-
+            Log.d(TAG, "....Connection ok...");
         } catch (IOException e) {
             try {
                 btSocket.close();
@@ -376,11 +351,72 @@ public class WindowlistActivity extends AppCompatActivity {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
         }
-        ConnectedThread = new ConnectedThread(btSocket);
-        ConnectedThread.start();
 
+        // Create a data stream so we can talk to server.
+        Log.d(TAG, "...Create Socket...");
+
+        mConnectedThread = new WindowlistActivity.ConnectedThread(btSocket);
+        mConnectedThread.start();
     }
 
 
+    private void errorExit(String title, String message){
+        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
+        finish();
+    }
 
+    private class ConnectedThread extends Thread {
+        private final InputStream mmInStream;
+        private final OutputStream mmOutStream;
+
+        public ConnectedThread(BluetoothSocket socket) {
+            InputStream tmpIn = null;
+            OutputStream tmpOut = null;
+
+            // Get the input and output streams, using temp objects because
+            // member streams are final
+            try {
+                tmpIn = socket.getInputStream();
+                tmpOut = socket.getOutputStream();
+            } catch (IOException e) { }
+
+            mmInStream = tmpIn;
+            mmOutStream = tmpOut;
+        }
+
+        public void run() {
+            byte[] buffer = new byte[256];  // buffer store for the stream
+            int bytes; // bytes returned from read()
+
+            // Keep listening to the InputStream until an exception occurs
+            while (true) {
+                try {
+                    // Read from the InputStream
+                    bytes = mmInStream.read(buffer);        // Get number of bytes and message in "buffer"
+                    h.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                } catch (IOException e) {
+                    break;
+                }
+            }
+        }
+
+        /* Call this from the main activity to send data to the remote device */
+        public void write(String message) {
+            Log.d(TAG, "...Data to send: " + message + "...");
+            byte[] msgBuffer = message.getBytes();
+            try {
+                mmOutStream.write(msgBuffer);
+            } catch (IOException e) {
+                Log.d(TAG, "...Error data send: " + e.getMessage() + "...");
+            }
+        }
+    }
+    //블투 소켓 코드
+
+
+    @Override
+    public void onBackPressed(){
+        finish();
+        super.onBackPressed();
+    }
 }

@@ -36,22 +36,17 @@ import java.util.Calendar;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    //블루투스 관련 선언 시작(블투1)
     private static final String TAG = "bluetooth2";
-
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private StringBuilder sb = new StringBuilder();
     private static int flag = 0;
-
     private ConnectedThread ConnectedThread;
-
-    // SPP UUID service
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-    // MAC-address of Bluetooth module (you must edit this line)
     private static String address = "98:D3:51:F9:28:05";
+    //블루투스 관련 선언 종료(블투1)
 
     TextView tvdate,thermometer,humid,micro;
     LinearLayout therlayout, dustlayout, humidlayout;
@@ -116,8 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
         };
 
+        //(블투2)
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
+        //(블투2)
 
         //hooks
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -233,7 +230,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    //블루투스
+
+
+
+
+    //(블투3)
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
         if(Build.VERSION.SDK_INT >= 10){
             try {
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         finish();
     }
 
-    private class ConnectedThread extends Thread {
+    class ConnectedThread extends Thread {
         private final java.io.InputStream InputStream;
         private final java.io.OutputStream OutputStream;
 
@@ -308,7 +309,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -334,8 +334,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-
     @Override
     public void onPause() {
         super.onPause();
@@ -345,6 +343,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
-
+    //(블투3)
 
 }
