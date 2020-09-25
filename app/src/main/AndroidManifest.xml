@@ -27,7 +27,8 @@
             android:theme="@android:style/Theme.Holo.Dialog" /> <!-- dhkim end -->
         <activity
             android:name=".Popup4_warning"
-            android:theme="@android:style/Theme.Holo.Dialog" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+           />
         <activity android:name=".BluetoothOnActivity" />
         <activity android:name=".AutoSetActivity" />
         <activity android:name=".MainActivity" />
