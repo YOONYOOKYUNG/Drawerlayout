@@ -88,7 +88,7 @@ public class DeviceListActivity extends AppCompatActivity {
 					if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
 						//BOND_BONDED : 페어링 됐으면
 						unpairDevice(device);
-						//어링 해제
+						//페어링 해제
 					} else {
 						btaddress=device.getAddress();
 						Log.d("테스트", "처음으로 저장된 주소 : "+btaddress);

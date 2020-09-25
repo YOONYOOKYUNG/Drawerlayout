@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -36,9 +37,10 @@ public class BluetoothOnActivity extends AppCompatActivity {
         btnok = findViewById(R.id.btnok);
         btnend = findViewById(R.id.btnend);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다.
+        //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다
+
         btnok.setOnClickListener(new View.OnClickListener() {
-            @Override
+                @Override
             public void onClick(View v) {
                 if (mBluetoothAdapter != null) {
                     //블루투스 되는 기기이다.
@@ -47,21 +49,24 @@ public class BluetoothOnActivity extends AppCompatActivity {
                         //false이면
                         //블루투스 꺼져있는상태 -> 간단한 인텐드 이용하여 블루투스 켬.
                         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(intent, 1000);
+                        startActivity(intent);
                     }
+                    Intent nextintent = new Intent(BluetoothOnActivity.this,MainActivity.class);
+                    startActivity(nextintent);
                 }
-
-                         }
-                });
-
-                btnend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        moveTaskToBack(true);                // 태스크를 백그라운드로 이동
-                        finishAndRemoveTask();                        // 액티비티 종료 + 태스크 리스트에서 지우기
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        finish(); }});
-
             }
+        });
+
+        btnend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveTaskToBack(true);                // 태스크를 백그라운드로 이동
+                finishAndRemoveTask();                        // 액티비티 종료 + 태스크 리스트에서 지우기
+                android.os.Process.killProcess(android.os.Process.myPid());
+                finish();
+            }
+        });
+    }
+
 
 }
