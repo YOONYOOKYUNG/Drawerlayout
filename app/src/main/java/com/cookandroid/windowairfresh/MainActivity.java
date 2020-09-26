@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static int flag = 0;
     private ConnectedThread ConnectedThread;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private static String address = "98:D3:51:F9:28:05";
+    private static String address = "98:D3:51:F9:26:E0";
     //블루투스 관련 선언 종료(블투1)
 
     TextView tvdate,thermometer,humid,micro;

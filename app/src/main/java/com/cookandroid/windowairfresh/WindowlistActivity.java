@@ -134,7 +134,7 @@ public class WindowlistActivity extends AppCompatActivity {
             listview.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    Intent intent = new Intent(WindowlistActivity.this,Popup4_warning.class);
+                    Intent intent = new Intent(WindowlistActivity.this,Popup_warning.class);
                     startActivity(intent);
                     return false;
                 }
@@ -148,8 +148,9 @@ public class WindowlistActivity extends AppCompatActivity {
                 address=listViewItem.getAddress();
                 state=listViewItem.getState();
                 //address="98:D3:51:F9:26:E0";
+                Log.d("테스트", "주소 : " + address);
                 if(state)
-                {mConnectedThread.write("1");
+                {mConnectedThread.write("3");
                 listViewItem.setState(false);
                 }
                 else
