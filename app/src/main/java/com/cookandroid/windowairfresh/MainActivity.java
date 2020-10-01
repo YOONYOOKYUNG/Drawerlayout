@@ -1,6 +1,7 @@
 package com.cookandroid.windowairfresh;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,7 +33,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,9 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static int flag = 0;
     private ConnectedThread ConnectedThread;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private static String address = "98:D3:51:F9:26:E0";
+    private static String address = "90:D3:51:F9:26:E0";
     //블루투스 관련 선언 종료(블투1)
 
+    WindowListAdapter adapter;
     TextView tvdate,thermometer,humid,micro;
     LinearLayout therlayout, dustlayout, humidlayout;
     Button btnclose;
@@ -58,6 +62,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Handler handler;
     ImageView update;
     SwipeRefreshLayout swipeRefreshLayout;
+    final int WindowList_REQUEST = 2020;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode==RESULT_OK && requestCode==WindowList_REQUEST){
+            if(adapter.listViewItemList.isEmpty()) {
+                address = "90:D3:51:F9:26:E0";
+            }
+            else
+            {
+                WindowListAdapter listViewItem = adapter.listViewItemList.get(0);
+                address=listViewItem.getAddress();}
+            setResult(RESULT_OK, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +245,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.window:
                 Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);
-                startActivity(intent4);
+                startActivityForResult(intent4, WindowList_REQUEST);
+
         }
 
         return true;

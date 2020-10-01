@@ -132,17 +132,6 @@ public class DeviceListActivity extends AppCompatActivity {
 		btrefreshbutton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mBluetoothAdapter != null) {
-					//블루투스 되는 기기이다.
-					//그렇다면 지금 현재 블루투스 기능이 켜져 있는지 체크 해야 한다.
-
-					if (!mBluetoothAdapter.isEnabled()) {
-						//false이면
-						//블루투스 꺼져있는상태 -> 간단한 인텐드 이용하여 블루투스 켬.
-						Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-						startActivityForResult(intent, 1000);
-					}
-				}
 				mBluetoothAdapter.startDiscovery();
 
 				IntentFilter filter = new IntentFilter();
