@@ -1,13 +1,17 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -38,7 +42,7 @@ public class WindowListAdapter extends BaseAdapter {
     }
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
         // "activity_windowlistitem" Layout을 inflate하여 convertView 참조 획득.
@@ -49,7 +53,9 @@ public class WindowListAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView titleTextView = (TextView) convertView.findViewById(R.id.main_label) ;
         final TextView addressTextView = (TextView) convertView.findViewById(R.id.address);
-        final Button windowbutton = (Button) convertView.findViewById(R.id.windowbutton);
+        final ImageButton windowstate = (ImageButton) convertView.findViewById(R.id.windowstate);
+        final ImageButton windowdelete = (ImageButton) convertView.findViewById(R.id.windowdelete);
+        final FrameLayout windowbtnback = (FrameLayout) convertView.findViewById(R.id.windowbtnback);
 
         //리스트뷰 기본 배경색 지정
         //convertView.setBackgroundColor(Color.parseColor("#B7DBF4"));
@@ -60,18 +66,30 @@ public class WindowListAdapter extends BaseAdapter {
         addressTextView.setText(listViewItem.getAddress());
         state=listViewItem.getState();
 
-        windowbutton.setOnClickListener(new View.OnClickListener() {
+
+        windowstate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (wListener != null) {
-                    wListener.onWindowButtonClick(pos);
-                    windowbutton.setText((listViewItem.getState()? "닫기" : "열기"));
-                    Log.d("상태", "현재 창문 상태 : " + listViewItem.getState());
+            public void onClick(View view) {
+                if (state==true){
+                    windowstate.setImageResource(R.drawable.windowopen);
+                    windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                }else if (state==false){
+                    windowstate.setImageResource(R.drawable.windowclose);
+                    windowbtnback.setBackgroundColor(Color.parseColor("#B9BDBF"));
+                    windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
+                    windowdelete.setBackgroundColor(Color.parseColor("#B9BDBF"));
                 }
             }
         });
 
 
+        windowdelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeitem(position);
+                notifyDataSetChanged();
+            }
+        });
         return convertView;
     }
 

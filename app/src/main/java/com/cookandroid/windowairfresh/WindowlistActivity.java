@@ -25,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -58,7 +59,7 @@ public class WindowlistActivity extends AppCompatActivity {
     //블투1
     ImageButton btn1;
     ImageView backarrow;
-    ListView listview;
+    GridView gridView;
     WindowListAdapter adapter;
     TextView main_label;
     String sfName = "File";
@@ -125,13 +126,12 @@ public class WindowlistActivity extends AppCompatActivity {
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         main_label = (TextView) findViewById(R.id.main_label);
         //final Switch switch1 = findViewById(R.id.switch1);
-
-        listview = (ListView) findViewById(R.id.listview1);
-        listview.setAdapter(adapter);
+        gridView = findViewById(R.id.listview1);
+        gridView.setAdapter(adapter);
         SharedPreferences sf = getSharedPreferences(sfName, 0);
         mode = sf.getString("state", ""); // 키값으로
         if (mode=="auto"){
-            listview.setOnTouchListener(new View.OnTouchListener() {
+            gridView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     Intent intent = new Intent(WindowlistActivity.this,Popup_warning.class);
@@ -203,17 +203,6 @@ public class WindowlistActivity extends AppCompatActivity {
         });
 
 
-        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                WindowListAdapter item =(WindowListAdapter)adapter.getItem(0);
-                Toast.makeText(getApplicationContext(),item.name+"삭제되었습니다.",Toast.LENGTH_LONG).show();
-                adapter.removeitem(0); //0번째가 삭제되게 임의로 설정
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-        });
 
 
         for(int i=0;i<adapter.getCount();i++){
