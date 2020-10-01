@@ -60,12 +60,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     Handler handler;
-    ImageView update;
     SwipeRefreshLayout swipeRefreshLayout;
     final int WindowList_REQUEST = 2020;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
         if(resultCode==RESULT_OK && requestCode==WindowList_REQUEST){
             if(adapter.listViewItemList.isEmpty()) {
                 address = "90:D3:51:F9:26:E0";
@@ -84,6 +85,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        int a=1;
+        if(a==1) {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();} //1초뒤 다이얼로그 띄우기
+                    Intent intent = new Intent (MainActivity.this, HelpActivity.class);
+                    startActivity(intent);
+                }
+            }).start();
+
+        }
 
         swipeRefreshLayout = findViewById(R.id.swipeFresh);
 

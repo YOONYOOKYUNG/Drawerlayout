@@ -15,22 +15,21 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
+       handler = new Handler();
 
-        handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, HelpActivity.class));
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
         };
 
-        handler.postDelayed(runnable, 5000);
+        handler.postDelayed(runnable, 1000);
 
     }
-    @Override
+   @Override
     protected void onDestroy() {
         handler.removeCallbacks(runnable);
         super.onDestroy();
     }
-
 }
