@@ -77,6 +77,7 @@ public class WindowListAdapter extends BaseAdapter {
                 if (state==true){
                     windowstate.setImageResource(R.drawable.windowopen);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                    windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     notifyDataSetChanged();
                 }else if (state==false){
                     windowstate.setImageResource(R.drawable.windowclose);
