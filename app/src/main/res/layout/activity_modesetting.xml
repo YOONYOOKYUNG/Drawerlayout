@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    tools:context=".AutoSetActivity"
+    >
     <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
         android:background="#B7DBF4">
         <ImageView
             android:id="@+id/backarrow"
             android:src="@drawable/backarrow1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="10dp" />
+            android:layout_marginLeft="10dp" />
+
         <TextView
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="모드 설정"
+            android:text="알람 설정"
+            android:textColor="#FFF"
             android:textSize="22dp"
-            android:textColor="#ffff"
-            android:layout_centerInParent="true"/>
+            />
+
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv1"
         android:text="모드 설정"
         android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
         android:background="#EDEDED"
         android:padding="10dp"/>
     <RelativeLayout
+        android:id="@+id/rl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
         android:layout_margin="10dp">
         <TextView
             android:id="@+id/autoM"
@@ -54,22 +64,28 @@
             android:layout_height="wrap_content"
             android:text="설정한 수치에 의해 창문이 자동개폐됩니다." />
     </RelativeLayout>
-    <LinearLayout
+
+    <RelativeLayout
         android:id="@+id/suchi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@id/rl1">
         <TextView
+            android:id="@+id/text1"
             android:text="수치 설정"
             android:textSize="20dp"
             android:padding="10dp"
             android:background="#EDEDED"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
         <RelativeLayout
+            android:id="@+id/tempset"
+            android:layout_below="@id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
+
             <TextView
                 android:id="@+id/txt_tp"
                 android:text="온도"
@@ -81,26 +97,25 @@
                 android:layout_height="wrap_content"/>
 
             <View
+                android:id="@+id/view1"
                 android:layout_width="2dp"
                 android:layout_height="100dp"
                 android:background="#DDDDDD"
                 android:layout_toRightOf="@id/txt_tp"/>
 
-            <LinearLayout
-                android:id="@+id/setTemp"
-                android:layout_toRightOf="@+id/txt_tp"
+            <RelativeLayout
+                android:id="@+id/tempopen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:paddingLeft="30dp">
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/view1">
+
                 <Button
                     android:id="@+id/tpopen"
                     android:text="열기"
                     android:layout_gravity="center"
                     android:textSize="16dp"
-                    android:padding="10dp"
-                    android:layout_toRightOf="@+id/txt_tp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#00ff0000"/>
@@ -108,25 +123,27 @@
                     android:id="@+id/tp_open"
                     android:text="20℃"
                     android:textSize="25dp"
-                    android:padding="10dp"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tpopen"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/tempclose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:paddingRight="30dp">
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/tempopen">
+
                 <Button
                     android:id="@+id/tpclose"
                     android:text="닫기"
                     android:textSize="16dp"
-                    android:padding="10dp"
                     android:layout_gravity="center"
-                    android:layout_toRightOf="@+id/txt_tp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#00ff0000"/>
@@ -134,107 +151,108 @@
                     android:id="@+id/tp_close"
                     android:text="12℃"
                     android:textSize="25dp"
-                    android:padding="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-        </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tpclose"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
 
+        </RelativeLayout>
         <TextView
+            android:id="@+id/text2"
             android:textSize="4dp"
             android:padding="5dp"
             android:background="#EDEDED"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tempset"
+            />
 
         <RelativeLayout
-            android:id="@+id/rl_mm"
+            android:id="@+id/dustset"
+            android:layout_below="@id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/txt_mm"
+                android:text="미세먼지"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:padding="15dp"
-                android:text="미세먼지"
-                android:textSize="20dp" />
+                android:layout_centerVertical="true"/>
 
             <View
+                android:id="@+id/view2"
                 android:layout_width="2dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="0dp"
-                android:layout_toRightOf="@id/txt_mm"
                 android:background="#DDDDDD"
-                android:layout_centerInParent="true"/>
+                android:layout_toRightOf="@id/txt_mm"/>
 
-            <LinearLayout
-                android:id="@+id/setmm"
-                android:layout_toRightOf="@+id/txt_mm"
+            <RelativeLayout
+                android:id="@+id/dustopen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:paddingLeft="30dp">
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/view2">
+
                 <Button
                     android:id="@+id/mmopen"
-                    android:background="#00ff0000"
                     android:text="열기"
                     android:layout_gravity="center"
                     android:textSize="16dp"
-                    android:padding="10dp"
-                    android:layout_toRightOf="@+id/txt_mm"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:background="#00ff0000"/>
                 <TextView
                     android:id="@+id/mm_open"
                     android:text="31pm"
                     android:textSize="25dp"
-                    android:padding="10dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:paddingRight="30dp">
-                <Button
-                    android:id="@+id/mmclose"
-                    android:background="#00ff0000"
-                    android:text="닫기"
-                    android:textSize="16dp"
-                    android:padding="10dp"
-                    android:layout_gravity="center"
-                    android:layout_toRightOf="@+id/txt_mm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/mm_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="51pm"
-                    android:textSize="25dp" />
-            </LinearLayout>
-        </RelativeLayout>
+                    android:layout_below="@id/mmopen"
+                    android:layout_centerHorizontal="true"/>
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dustclose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/dustopen">
+
+                <Button
+                    android:id="@+id/mmclose"
+                    android:text="닫기"
+                    android:textSize="16dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00ff0000"/>
+                <TextView
+                    android:id="@+id/mm_close"
+                    android:text="51pm"
+                    android:textSize="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mmclose"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
         <TextView
             android:textSize="4dp"
             android:padding="5dp"
             android:background="#EDEDED"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dustset"/>
+    </RelativeLayout>
+</RelativeLayout>

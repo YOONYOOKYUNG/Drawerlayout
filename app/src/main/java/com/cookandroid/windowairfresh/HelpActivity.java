@@ -19,8 +19,8 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
 
-        cancel = findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
+       cancel = findViewById(R.id.cancel);
+       cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

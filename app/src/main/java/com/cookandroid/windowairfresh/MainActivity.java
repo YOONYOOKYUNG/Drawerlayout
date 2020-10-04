@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     WindowListAdapter adapter;
     TextView tvdate,thermometer,humid,micro;
-    LinearLayout therlayout, dustlayout, humidlayout;
-    Button btnclose;
+    RelativeLayout therlayout, dustlayout, humidlayout;
     Dialog myDialog, myDialog2, myDialog3;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
