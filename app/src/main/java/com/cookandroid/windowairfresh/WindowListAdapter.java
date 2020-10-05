@@ -1,6 +1,8 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +80,7 @@ public class WindowListAdapter extends BaseAdapter {
                     windowstate.setImageResource(R.drawable.windowopen);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                    windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     notifyDataSetChanged();
                 }else if (state==false){
                     windowstate.setImageResource(R.drawable.windowclose);
@@ -90,12 +93,29 @@ public class WindowListAdapter extends BaseAdapter {
             }
         });
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("창문삭제")        // 제목 설정
+                .setMessage("창문을 삭제하시겠습니까?")        // 메세지 설정
+                .setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
+                .setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                    // 확인 버튼 클릭시 설정, 오른쪽 버튼
+                    public void onClick(DialogInterface dialog, int whichButton){
+                        removeitem(position);
+                        notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener(){
+                    // 취소 버튼 클릭시 설정, 왼쪽
+                    public void onClick(DialogInterface dialog, int whichButton){
+                        dialog.dismiss();
+                    }
+                });
 
         windowdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeitem(position);
-                notifyDataSetChanged();
+
+                builder.show();
             }
         });
         return convertView;
