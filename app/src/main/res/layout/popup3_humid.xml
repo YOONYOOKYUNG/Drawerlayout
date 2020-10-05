@@ -21,7 +21,7 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
         android:text="보통"
         android:textColor="#000"
@@ -33,53 +33,85 @@
     <ImageView
         android:layout_toRightOf="@id/text1"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="15dp"
         android:id="@+id/con3"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/humidity" />
 
-
-    <TableLayout
-        android:id="@+id/table"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rl_good"
+        android:layout_width="67dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_below="@id/con3">
+        android:background="@drawable/condition_good"
+        android:layout_below="@+id/con3"
+        android:layout_marginLeft="10dp">
 
-        <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="낮음"
+            android:textSize="15dp"
+            android:textColor="#FFF" />
 
-            <TextView
-                android:layout_width="67dp"
-                android:background="@drawable/condition_good"
-                android:gravity="center"
-                android:text="낮음"
-                android:textColor="#FFF" />
-            <TextView
-                android:layout_width="67dp"
-                android:background="@drawable/condition_soso"
-                android:gravity="center"
-                android:text="보통"
-                android:textColor="#FFF" />
+    </RelativeLayout>
 
-            <TextView
-                android:layout_width="67dp"
-                android:background="@drawable/condition_littlebad"
-                android:gravity="center"
-                android:text="높음"
-                android:textColor="#FFF" />
+    <RelativeLayout
+        android:id="@+id/rl_soso"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/condition_soso"
+        android:layout_below="@+id/con3"
+        android:layout_toRightOf="@+id/rl_good">
 
-            <TextView
-                android:layout_width="67dp"
-                android:background="@drawable/condition_bad"
-                android:gravity="center"
-                android:text="매우높음"
-                android:textColor="#FFF" />
-        </TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="보통"
+            android:textSize="15dp"
+            android:textColor="#FFF" />
 
-    </TableLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_littlebad"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/condition_littlebad"
+        android:layout_below="@+id/con3"
+        android:layout_toRightOf="@id/rl_soso">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="높음"
+            android:textSize="15dp"
+            android:textColor="#FFF" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bad"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/condition_bad"
+        android:layout_below="@+id/con3"
+        android:layout_toRightOf="@id/rl_littlebad">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="매우높음"
+            android:textSize="15dp"
+            android:textColor="#FFF" />
+
+    </RelativeLayout>
+
 
     <ImageView
         android:id="@+id/pointgood"
@@ -88,7 +120,8 @@
         android:layout_gravity="center"
         android:layout_marginLeft="30dp"
         android:src="@drawable/triangle2"
-        android:layout_below="@id/table"/>
+        android:layout_below="@id/rl_good"
+        android:layout_alignBaseline="@id/rl_good"/>
 
     <ImageView
         android:id="@+id/pointsoso"
@@ -98,7 +131,7 @@
         android:layout_toRightOf="@id/pointgood"
         android:layout_marginLeft="44dp"
         android:src="@drawable/triangle2"
-        android:layout_below="@id/table"/>
+        android:layout_below="@id/rl_soso"/>
 
     <ImageView
         android:id="@+id/pointlittlebad"
@@ -106,9 +139,10 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointsoso"
+        android:layout_below="@id/rl_littlebad"
         android:layout_marginLeft="44dp"
-        android:src="@drawable/triangle2"
-        android:layout_below="@id/table"/>
+        android:src="@drawable/triangle2" />
+
     <ImageView
         android:id="@+id/pointbad"
         android:layout_width="24dp"
@@ -117,9 +151,7 @@
         android:layout_toRightOf="@id/pointlittlebad"
         android:layout_marginLeft="44dp"
         android:src="@drawable/triangle2"
-        android:layout_below="@id/table"/>
-
-
+        android:layout_below="@id/rl_bad"/>
 
     <TextView
         android:textSize="15dp"
@@ -148,10 +180,10 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/button1"
         android:text="닫기"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"/>
 
 
 </RelativeLayout>

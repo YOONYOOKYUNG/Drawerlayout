@@ -7,7 +7,6 @@
     android:layout_margin="30dp"
     android:layout_gravity="center">
 
-
     <TextView
         android:id="@+id/title2"
         android:text="미세먼지"
@@ -17,6 +16,7 @@
         android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TextView
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
@@ -37,14 +37,12 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/darksoso" />
-
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/con_good"
         android:layout_width="80dp"
         android:layout_height="30dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_below="@id/con2"
@@ -58,16 +56,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/suchigood"
             android:text="㎍/㎥"
             android:textColor="#FFF"/>
-    </LinearLayout>
-    <LinearLayout
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/con_soso"
         android:layout_width="80dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/con2"
         android:layout_toRightOf="@id/con_good"
         android:background="@drawable/condition_soso">
@@ -80,16 +79,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/suchisoso"
             android:text="㎍/㎥"
             android:textColor="#FFF"/>
-    </LinearLayout>
-    <LinearLayout
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/con_bad"
         android:layout_width="80dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/con2"
         android:layout_toRightOf="@id/con_soso"
         android:background="@drawable/condition_bad">
@@ -102,9 +102,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/suchibad"
             android:text="㎍/㎥"
             android:textColor="#FFF"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 
 
@@ -138,63 +139,99 @@
         android:layout_height="24dp"
         android:layout_marginTop="5dp"/>
 
-    <TableLayout
-        android:id="@+id/table"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/layoutgood"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/pointgood"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="5dp">
-        <TableRow>
-            <TextView
-                android:text="좋음"
-                android:textColor="#FFF"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:background="@drawable/condition_good" />
-            <TextView
-                android:text="보통"
-                android:textColor="#FFF"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:background="@drawable/condition_soso"/>
-
-            <TextView
-                android:text="나쁨"
-                android:textColor="#FFF"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:background="@drawable/condition_bad"/>
-        </TableRow>
-    </TableLayout>
-
-    <TextView
-        android:text="0"
         android:layout_marginLeft="20dp"
-        android:layout_below="@+id/table"
+        android:background="@drawable/condition_good">
+
+        <TextView
+            android:text="좋음"
+            android:textColor="#FFF"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutsoso"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pointsoso"
+        android:layout_toRightOf="@id/layoutgood"
+        android:background="@drawable/condition_soso">
+
+        <TextView
+            android:text="보통"
+            android:textColor="#FFF"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutbad"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pointbad"
+        android:layout_toRightOf="@id/layoutsoso"
+        android:background="@drawable/condition_bad">
+
+        <TextView
+            android:text="나쁨"
+            android:textColor="#FFF"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:text="0"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/layoutgood"
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TextView
-        android:text="30"
-        android:layout_marginLeft="95dp"
-        android:layout_below="@+id/table"
-        android:layout_marginTop="5dp"
+        android:id="@+id/tv2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:text="80"
-        android:layout_marginLeft="170dp"
-        android:layout_below="@+id/table"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutsoso"
+        android:layout_marginLeft="65dp"
         android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_toRightOf="@id/tv1"
+        android:text="30" />
+
     <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutbad"
+        android:layout_toRightOf="@id/tv2"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="5dp"
+        android:text="80" />
+
+    <TextView
+        android:id="@+id/tv4"
         android:text="151~"
-        android:layout_marginLeft="245dp"
-        android:layout_below="@+id/table"
+        android:layout_below="@+id/layoutbad"
+        android:layout_toRightOf="@id/tv3"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="55dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

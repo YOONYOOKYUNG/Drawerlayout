@@ -8,6 +8,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Popup {
@@ -114,9 +115,9 @@ public class Popup {
         final ImageView pointgood = dlg2.findViewById(R.id.pointgood);
         final ImageView pointsoso = dlg2.findViewById(R.id.pointsoso);
         final ImageView pointbad = dlg2.findViewById(R.id.pointbad);
-        final LinearLayout con_good = dlg2.findViewById(R.id.con_good);
-        final LinearLayout con_soso = dlg2.findViewById(R.id.con_soso);
-        final LinearLayout con_bad = dlg2.findViewById(R.id.con_bad);
+        final RelativeLayout con_good = dlg2.findViewById(R.id.con_good);
+        final RelativeLayout con_soso = dlg2.findViewById(R.id.con_soso);
+        final RelativeLayout con_bad = dlg2.findViewById(R.id.con_bad);
         final Button popup2_close = (Button) dlg2.findViewById(R.id.popup2_close);
 
         suchigood.setText(dust);
