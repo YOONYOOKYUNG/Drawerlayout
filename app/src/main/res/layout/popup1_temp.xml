@@ -1,92 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="300dp"
-    android:layout_height="200dp"
-    android:background="@drawable/shape"
+    android:layout_height="250dp"
     android:padding="10dp"
     android:layout_margin="30dp"
     android:layout_gravity="center">
 
     <TextView
-        android:layout_margin="10dp"
+        android:id="@+id/title1"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:text="기온별 옷차림 추천"
         android:textColor="#000"
         android:textSize="20dp"
         android:textStyle="bold"/>
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/con1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_below="@+id/title1"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/darksmile" />
+
+    <TextView
+        android:id="@+id/now_temp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_toRightOf="@+id/con1"
+        android:layout_below="@+id/title1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="현재 기온 : "
+        android:textColor="#000"
+        android:textSize="20dp" />
 
-        <ImageView
-            android:id="@+id/con1"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/darksmile" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/thermo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/now_temp"
+        android:layout_below="@+id/title1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="30dp"
+        android:text="00"
+        android:textColor="#000"
+        android:textSize="20dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toRightOf="@+id/thermo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/title1"
+        android:text=" ℃"
+        android:textColor="#000"
+        android:textSize="20dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="10dp"
-                    android:text="현재 기온 :"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/thermo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="00"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text=" ℃"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/recommend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="패딩, 기모, 목도리, 모자"
-                android:textColor="#000"
-                android:textSize="18dp" />
-        </LinearLayout>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/recommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/con1"
+        android:layout_below="@id/now_temp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="패딩, 기모, 목도리, 모자"
+        android:textColor="#000"
+        android:textSize="18dp" />
 
     <Button
         android:id="@+id/popup1_close"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center|bottom"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/button1"
         android:text="닫기"
         android:textColor="#FFF"/>
 
 
-</LinearLayout>
+</RelativeLayout>

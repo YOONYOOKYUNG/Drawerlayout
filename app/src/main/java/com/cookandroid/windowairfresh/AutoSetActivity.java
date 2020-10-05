@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -19,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AutoSetActivity extends AppCompatActivity {
     Button tpopen, tpclose, mmopen, mmclose;
     TextView tp_open, tp_close, mm_open, mm_close;
-    LinearLayout suchi;
+    RelativeLayout suchi;
     ToggleButton tbtn;
 
     String sfName = "File";

@@ -67,17 +67,25 @@ public class WindowListAdapter extends BaseAdapter {
         state=listViewItem.getState();
 
 
+
         windowstate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (wListener != null) {
+                    wListener.onWindowButtonClick(pos);
+                    Log.d("상태", "현재 창문 상태 : " + listViewItem.getState());
                 if (state==true){
                     windowstate.setImageResource(R.drawable.windowopen);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                    windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                    notifyDataSetChanged();
                 }else if (state==false){
                     windowstate.setImageResource(R.drawable.windowclose);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowdelete.setBackgroundColor(Color.parseColor("#B9BDBF"));
+                    notifyDataSetChanged();
+                  }
                 }
             }
         });

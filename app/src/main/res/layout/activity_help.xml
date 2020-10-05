@@ -1,53 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@android:color/transparent"
     tools:context=".HelpActivity">
 
-    <LinearLayout
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/cancel"
-            android:src="@drawable/cancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:textColor="#F44336"
-            android:layout_margin="30dp"
-            android:layout_gravity="center"
-            android:textSize="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="도움말\n화면입니다."/>
-
-        <TextView
-            android:layout_margin="30dp"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="버튼을 누르면 없어집니다."/>
-
-        <TextView
-            android:textColor="#FFFFFF"
-            android:layout_margin="30dp"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="투명화면으로\n흰색글씨만 넣어서\n디자인 예정"/>
-    </LinearLayout>
-
-
+    <ImageView
+        android:id="@+id/helpimg"
+        android:src="@drawable/help"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
