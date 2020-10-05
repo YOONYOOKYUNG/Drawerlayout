@@ -20,15 +20,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-
         <activity android:name=".ActlogActivity" />
-        <activity android:name=".HelpActivity"
-            android:theme="@style/AppTheme.help"> </activity>
-
-        <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
+        <activity
+            android:name=".HelpActivity"
+            android:theme="@style/AppTheme.help" >
+        </activity>
+        <activity android:name=".AlarmReceiver" />
         <activity
             android:name=".WindowNameActivity"
-            android:theme="@android:style/Theme.Holo.Dialog" /> <!-- dhkim end -->
+            android:theme="@android:style/Theme.Holo.Dialog" />
         <activity
             android:name=".Popup_warning"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -38,7 +38,6 @@
         <activity android:name=".WindowlistActivity" />
         <activity android:name=".AlarmActivity" />
         <activity android:name=".AlarmSpinnerActivity" />
-
         <activity
             android:name=".DeviceListActivity"
             android:label="@string/app_name" >
@@ -46,12 +45,12 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

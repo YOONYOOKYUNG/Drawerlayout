@@ -64,7 +64,6 @@ public class AlarmActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(swit_setTime.isChecked()==true) {
                     Intent intent = new Intent(getApplicationContext(), AlarmSpinnerActivity.class);
-                    int requestcode = 1;
                     startActivityForResult(intent,pagenum);
                 }
                 else{
@@ -132,11 +131,12 @@ public class AlarmActivity extends AppCompatActivity {
 
         Switch swit_push = (Switch)findViewById(R.id.swit_push);
         Switch swit_setTime = (Switch)findViewById(R.id.swit_setTime);
-
+        TextView st_time = (TextView)findViewById(R.id.st_time);
         SharedPreferences state = getSharedPreferences(sharedName, 0);//SharedPreference에 스위치 온오프값을 저장함.
         SharedPreferences.Editor editor2 = state.edit();//저장하려면 eidtor가 필요함.
         editor2.putBoolean("push_ON",swit_push.isChecked());
         editor2.putBoolean("setTime_ON",swit_setTime.isChecked());
+        editor2.putString("set_Time", (String) st_time.getText());
         editor2.commit();
 
         super.onStop();
