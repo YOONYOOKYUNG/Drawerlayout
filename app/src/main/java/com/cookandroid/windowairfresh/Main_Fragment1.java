@@ -29,6 +29,7 @@ public class Main_Fragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         int a=1;
         if(a==1) {
 

@@ -4,6 +4,7 @@
     android:layout_height="250dp"
     android:padding="10dp"
     android:layout_margin="30dp"
+    android:background="@drawable/shape_round"
     android:layout_gravity="center">
 
 
@@ -11,33 +12,34 @@
         android:id="@+id/title3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
         android:text="불쾌지수"
-        android:textColor="#000"
+        android:textColor="#3A3535"
         android:textSize="20dp" />
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:text="보통"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:text="21"
         android:textColor="#000"
-        android:textSize="20dp"
+        android:textSize="26dp"
         android:textStyle="bold"
         android:layout_toRightOf="@id/title3"/>
 
 
     <ImageView
-        android:layout_toRightOf="@id/text1"
-        android:layout_marginTop="5dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/con3"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
         android:src="@drawable/humidity" />
 
     <RelativeLayout
@@ -53,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="낮음"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:textColor="#FFF" />
 
     </RelativeLayout>
@@ -71,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="보통"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:textColor="#FFF" />
 
     </RelativeLayout>
@@ -89,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="높음"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:textColor="#FFF" />
 
     </RelativeLayout>
@@ -107,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="매우높음"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:textColor="#FFF" />
 
     </RelativeLayout>
@@ -115,47 +117,48 @@
 
     <ImageView
         android:id="@+id/pointgood"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="34dp"
         android:src="@drawable/triangle2"
         android:layout_below="@id/rl_good"
-        android:layout_alignBaseline="@id/rl_good"/>
+       />
 
     <ImageView
         android:id="@+id/pointsoso"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointgood"
-        android:layout_marginLeft="44dp"
+        android:layout_marginLeft="46dp"
         android:src="@drawable/triangle2"
         android:layout_below="@id/rl_soso"/>
 
     <ImageView
         android:id="@+id/pointlittlebad"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointsoso"
         android:layout_below="@id/rl_littlebad"
-        android:layout_marginLeft="44dp"
+        android:layout_marginLeft="46dp"
         android:src="@drawable/triangle2" />
 
     <ImageView
         android:id="@+id/pointbad"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointlittlebad"
-        android:layout_marginLeft="44dp"
+        android:layout_marginLeft="46dp"
         android:src="@drawable/triangle2"
         android:layout_below="@id/rl_bad"/>
 
     <TextView
+        android:textColor="#3A3535"
         android:textSize="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -165,22 +168,24 @@
 
     <TextView
         android:textSize="15dp"
+        android:textColor="#3A3535"
+        android:layout_marginTop="3dp"
         android:gravity="center"
-        android:layout_marginTop="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text2"
         android:id="@+id/text3"
         android:text="설명"/>
 
+
     <Button
         android:id="@+id/popup3_close"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
         android:background="@drawable/button1"
         android:text="닫기"
         android:textColor="#FFF"/>

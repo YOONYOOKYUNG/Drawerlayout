@@ -2,6 +2,8 @@ package com.cookandroid.windowairfresh;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -38,6 +40,7 @@ public class Popup {
         final Dialog dlg1 = new Dialog(context);
         //타이틀바 숨김
         dlg1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dlg1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //커스텀 다이얼로그의 레이아웃을 설정한다.
         dlg1.setContentView(R.layout.popup1_temp);
         //커스텀 다이얼로그를 노출한다.
@@ -52,7 +55,7 @@ public class Popup {
         thermo.setText(temp);
 
         if(Integer.parseInt(temp)<=4){
-            recommend.setText("패딩, 기모, 목도리 등 겨울 옷");
+            recommend.setText("패딩, 기모, 목도리 등 \n겨울 옷 추천");
             con1.setImageResource(R.drawable.cloth_4);
 
         } else if(Integer.parseInt(temp)<8){
@@ -100,6 +103,7 @@ public class Popup {
         final Dialog dlg2 = new Dialog(context);
         // 액티비티의 타이틀바를 숨긴다.
         dlg2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dlg2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
         dlg2.setContentView(R.layout.popup2_dust);
         // 커스텀 다이얼로그를 노출한다.
@@ -174,6 +178,7 @@ public class Popup {
         final Dialog dlg3 = new Dialog(context);
         // 액티비티의 타이틀바를 숨긴다.
         dlg3.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dlg3.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
         dlg3.setContentView(R.layout.popup3_humid);
         // 커스텀 다이얼로그를 노출한다.
@@ -201,6 +206,7 @@ public class Popup {
 
         if(thi_int<65){
             text2.setText("전원 쾌적함을 느끼는 수치입니다.");
+            text3.setText("야외활동시 가벼운 옷을 입고,\n수분을 충분히 섭취합니다.");
             pointsoso.setVisibility(View.INVISIBLE);
             pointlittlebad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);

@@ -4,6 +4,7 @@
     android:layout_width="300dp"
     android:layout_height="250dp"
     android:padding="10dp"
+    android:background="@drawable/shape_round"
     android:layout_margin="30dp"
     android:layout_gravity="center">
 
@@ -11,18 +12,18 @@
         android:id="@+id/title2"
         android:text="미세먼지"
         android:textSize="20dp"
-        android:textColor="#000"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
+        android:textColor="#3A3535"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="28dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="27dp"
         android:text="보통"
         android:textColor="#000"
-        android:textSize="20dp"
+        android:textSize="22dp"
         android:textStyle="bold"
         android:id="@+id/boldtext"
         android:layout_width="wrap_content"
@@ -34,15 +35,16 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/darksoso" />
+
     <RelativeLayout
         android:id="@+id/con_good"
         android:layout_width="80dp"
-        android:layout_height="30dp"
+        android:layout_height="23dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_below="@id/con2"
@@ -63,10 +65,10 @@
     <RelativeLayout
         android:id="@+id/con_soso"
         android:layout_width="80dp"
-        android:layout_height="30dp"
+        android:layout_height="23dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_below="@id/con2"
         android:layout_toRightOf="@id/con_good"
         android:background="@drawable/condition_soso">
@@ -86,10 +88,10 @@
     <RelativeLayout
         android:id="@+id/con_bad"
         android:layout_width="80dp"
-        android:layout_height="30dp"
+        android:layout_height="23dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_below="@id/con2"
         android:layout_toRightOf="@id/con_soso"
         android:background="@drawable/condition_bad">
@@ -197,6 +199,7 @@
     </RelativeLayout>
 
     <TextView
+        android:textSize="13dp"
         android:id="@+id/tv1"
         android:text="0"
         android:layout_marginLeft="15dp"
@@ -206,6 +209,7 @@
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:textSize="13dp"
         android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -216,6 +220,7 @@
         android:text="30" />
 
     <TextView
+        android:textSize="13dp"
         android:id="@+id/tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -226,6 +231,7 @@
         android:text="80" />
 
     <TextView
+        android:textSize="13dp"
         android:id="@+id/tv4"
         android:text="151~"
         android:layout_below="@+id/layoutbad"
@@ -238,14 +244,14 @@
 
     <Button
         android:id="@+id/popup2_close"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:background="@drawable/button1"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
+        android:background="@drawable/button1"
         android:text="닫기"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"/>
 
 </RelativeLayout>
