@@ -43,11 +43,11 @@
             android:id="@+id/btn1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignRight="@+id/listview1"
-            android:layout_below="@+id/listview1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:background="@android:color/transparent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
             android:src="@drawable/add1" />
 
 </RelativeLayout>
