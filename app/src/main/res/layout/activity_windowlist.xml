@@ -39,15 +39,15 @@
         android:id="@+id/listview1"
         android:numColumns="2" />
 
-        <ImageButton
-            android:id="@+id/btn1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/add1" />
+   <ImageButton
+    android:id="@+id/btn1"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    android:background="@android:color/transparent"
+    android:layout_marginRight="30dp"
+    android:layout_marginBottom="30dp"
+    android:src="@drawable/add1" />
 
 </RelativeLayout>

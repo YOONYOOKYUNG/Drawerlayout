@@ -1,8 +1,10 @@
 package com.cookandroid.windowairfresh;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,12 +27,19 @@ public class WindowListAdapter extends BaseAdapter {
     String name, address;
     Boolean state;
 
+    DatabaseManager databaseManager;
+
     //set
     public void setName(String name){
         this.name = name;
     }
     public void setAddress(String address){this.address=address;}
     public void setState(Boolean state){this.state=state;}
+
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
+
     //get
     public String getName() {
         return name;
@@ -141,12 +150,32 @@ public class WindowListAdapter extends BaseAdapter {
         item.setAddress(address);
         item.setState(state);
         listViewItemList.add(item);
+
+        if (databaseManager != null) {
+            ContentValues addRowValue = new ContentValues();
+
+            addRowValue.put("name", name);
+            addRowValue.put("address", address);
+            addRowValue.put("state", state.toString());
+
+            databaseManager.insert(addRowValue);
+        }
     }
 
 
 
-    public void removeitem(int position){
+    public void removeitem(int position) {
+        if (databaseManager != null) {
+           databaseManager.delete(listViewItemList.get(position).getName());
+        }
         listViewItemList.remove(position);
+    }
+
+    public void initialiseList()
+    {
+        if (databaseManager != null){
+            listViewItemList = databaseManager.getAll();
+        }
     }
 
 

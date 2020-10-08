@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String address = "90:D3:51:F9:26:E0";
     //블루투스 관련 선언 종료(블투1)
 
+    private DatabaseManager databaseManager;
     ViewPager viewpager;
     WindowListAdapter adapter;
     TextView tvdate,thermometer,humid,micro;
@@ -87,6 +88,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         viewpager = findViewById(R.id.viewpager);
+
+        databaseManager = DatabaseManager.getInstance(this);
+        adapter = new WindowListAdapter();
+        adapter.setDatabaseManager(databaseManager);
+        adapter.initialiseList();
 
         Main_SlideAdapter adapter = new Main_SlideAdapter(getSupportFragmentManager());
         viewpager.setAdapter(adapter);
