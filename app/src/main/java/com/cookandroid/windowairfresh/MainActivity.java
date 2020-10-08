@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -52,10 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String address = "90:D3:51:F9:26:E0";
     //블루투스 관련 선언 종료(블투1)
 
+    ViewPager viewpager;
     WindowListAdapter adapter;
     TextView tvdate,thermometer,humid,micro;
-    RelativeLayout therlayout, dustlayout, humidlayout;
-    Dialog myDialog, myDialog2, myDialog3;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -86,34 +86,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int a=1;
-        if(a==1) {
+        viewpager = findViewById(R.id.viewpager);
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();} //1초뒤 다이얼로그 띄우기
-                    Intent intent = new Intent (MainActivity.this, HelpActivity.class);
-                    startActivity(intent);
-                }
-            }).start();
+        Main_SlideAdapter adapter = new Main_SlideAdapter(getSupportFragmentManager());
+        viewpager.setAdapter(adapter);
 
-        }
-
-        swipeRefreshLayout = findViewById(R.id.swipeFresh);
 
         thermometer = findViewById(R.id.thermometer);
         micro = findViewById(R.id.micro);
         humid = findViewById(R.id.humid);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                ConnectedThread.write("1");
-                Log.d("a1","1");
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
 
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -162,16 +144,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-//
-//        toolbar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(!drawerLayout.isDrawerOpen(Gravity.LEFT)){
-//                    drawerLayout.openDrawer(Gravity.LEFT);
-//
-//                }
-//            }
-//        });
         //navigation drawer menu
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
@@ -180,53 +152,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-        cal.add(Calendar.DATE,0);
-        String today = sdf.format(cal.getTime());
-        tvdate = findViewById(R.id.tvdate);
-        tvdate.setText(today);
-
-
-
-        //click -> popup1_temp
-        therlayout = findViewById(R.id.therlayout);
-        myDialog3 = new Dialog(this);
-        therlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(MainActivity.this);
-                customDialogPopup1.settemp(thermometer.getText().toString());
-                customDialogPopup1.calltemppopup();
-            }
-        });
-
-        //click -> popup2_dust
-        dustlayout = findViewById(R.id.dustlayout);
-        myDialog = new Dialog(this);
-        dustlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(MainActivity.this);
-                customDialogPopup1.setdust(micro.getText().toString());
-                customDialogPopup1.calldustpopup();
-            }
-        });
-
-        //click -> popup3_humid
-        humidlayout = findViewById(R.id.humidlayout);
-        myDialog2 = new Dialog(this);
-        humidlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(MainActivity.this);
-                customDialogPopup1.settemp(thermometer.getText().toString());
-                customDialogPopup1.sethumid(humid.getText().toString());
-                customDialogPopup1.callhumidpopup();
-            }
-        });
-
 
     }
     public void onBackPressed(){
@@ -253,8 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
 
-
-           case R.id.log_record:
+            case R.id.log_record:
                 Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
                 startActivity(intent3);
 
@@ -266,10 +190,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
-
-
-
-
 
 
     //(블투3)
@@ -381,6 +301,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
-    //(블투3)
 
 }
