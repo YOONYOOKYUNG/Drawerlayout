@@ -4,18 +4,15 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -86,13 +83,13 @@ public class WindowListAdapter extends BaseAdapter {
                     wListener.onWindowButtonClick(pos);
                     Log.d("상태", "현재 창문 상태 : " + listViewItem.getState());
                 if (state==true){
-                    windowstate.setImageResource(R.drawable.windowopen);
+                    windowstate.setImageResource(R.drawable.windowlist_windowopen);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     notifyDataSetChanged();
                 }else if (state==false){
-                    windowstate.setImageResource(R.drawable.windowclose);
+                    windowstate.setImageResource(R.drawable.windowlist_windowclose);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowdelete.setBackgroundColor(Color.parseColor("#B9BDBF"));

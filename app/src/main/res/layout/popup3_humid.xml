@@ -4,7 +4,7 @@
     android:layout_height="250dp"
     android:padding="10dp"
     android:layout_margin="30dp"
-    android:background="@drawable/shape_round"
+    android:background="@drawable/main_popup_shape_round"
     android:layout_gravity="center">
 
 
@@ -40,13 +40,13 @@
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/con3"
-        android:src="@drawable/humidity" />
+        android:src="@drawable/main_popup_humidity" />
 
     <RelativeLayout
         android:id="@+id/rl_good"
         android:layout_width="67dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/condition_good"
+        android:background="@drawable/main_popup_color_condition_good"
         android:layout_below="@+id/con3"
         android:layout_marginLeft="10dp">
 
@@ -64,7 +64,7 @@
         android:id="@+id/rl_soso"
         android:layout_width="67dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/condition_soso"
+        android:background="@drawable/main_popup_color_condition_soso"
         android:layout_below="@+id/con3"
         android:layout_toRightOf="@+id/rl_good">
 
@@ -82,7 +82,7 @@
         android:id="@+id/rl_littlebad"
         android:layout_width="67dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/condition_littlebad"
+        android:background="@drawable/main_popup_color_condition_littlebad"
         android:layout_below="@+id/con3"
         android:layout_toRightOf="@id/rl_soso">
 
@@ -100,7 +100,7 @@
         android:id="@+id/rl_bad"
         android:layout_width="67dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/condition_bad"
+        android:background="@drawable/main_popup_color_condition_bad"
         android:layout_below="@+id/con3"
         android:layout_toRightOf="@id/rl_littlebad">
 
@@ -117,48 +117,48 @@
 
     <ImageView
         android:id="@+id/pointgood"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="34dp"
-        android:src="@drawable/triangle2"
+        android:layout_marginLeft="37dp"
+        android:src="@drawable/main_popup_triangle2"
         android:layout_below="@id/rl_good"
        />
 
     <ImageView
         android:id="@+id/pointsoso"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointgood"
-        android:layout_marginLeft="46dp"
-        android:src="@drawable/triangle2"
+        android:layout_marginLeft="52dp"
+        android:src="@drawable/main_popup_triangle2"
         android:layout_below="@id/rl_soso"/>
 
     <ImageView
         android:id="@+id/pointlittlebad"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointsoso"
         android:layout_below="@id/rl_littlebad"
-        android:layout_marginLeft="46dp"
-        android:src="@drawable/triangle2" />
+        android:layout_marginLeft="52dp"
+        android:src="@drawable/main_popup_triangle2" />
 
     <ImageView
         android:id="@+id/pointbad"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="center"
         android:layout_toRightOf="@id/pointlittlebad"
-        android:layout_marginLeft="46dp"
-        android:src="@drawable/triangle2"
+        android:layout_marginLeft="51dp"
+        android:src="@drawable/main_popup_triangle2"
         android:layout_below="@id/rl_bad"/>
 
     <TextView
         android:textColor="#3A3535"
         android:textSize="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

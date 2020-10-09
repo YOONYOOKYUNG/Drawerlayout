@@ -39,7 +39,7 @@
         <ImageButton
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/windowopen"
+            android:src="@drawable/windowlist_windowopen"
             android:id="@+id/windowstate"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
@@ -48,7 +48,7 @@
         <ImageButton
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/deleteicon"
+            android:src="@drawable/windowlist_deleteicon"
             android:id="@+id/windowdelete"
             android:background="#B7DBF4"
             android:layout_gravity="right"

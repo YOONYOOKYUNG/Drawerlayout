@@ -12,7 +12,7 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/alarm"
-            android:icon="@drawable/alaram"
+            android:icon="@drawable/alarm_alarm"
             android:title="알람 설정"/>
         <item
             android:id="@+id/auto_set"

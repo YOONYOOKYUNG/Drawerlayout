@@ -4,7 +4,7 @@
     android:layout_width="300dp"
     android:layout_height="250dp"
     android:padding="10dp"
-    android:background="@drawable/shape_round"
+    android:background="@drawable/main_popup_shape_round"
     android:layout_margin="30dp"
     android:layout_gravity="center">
 
@@ -37,18 +37,18 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="23dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/darksoso" />
+        android:src="@drawable/main_popup_darksoso" />
 
     <RelativeLayout
         android:id="@+id/con_good"
         android:layout_width="80dp"
-        android:layout_height="23dp"
+        android:layout_height="21dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="17dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_below="@id/con2"
-        android:background="@drawable/condition_good">
+        android:background="@drawable/main_popup_color_condition_good">
         <TextView
             android:id="@+id/suchigood"
             android:layout_width="wrap_content"
@@ -65,13 +65,13 @@
     <RelativeLayout
         android:id="@+id/con_soso"
         android:layout_width="80dp"
-        android:layout_height="23dp"
+        android:layout_height="21dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="17dp"
         android:layout_below="@id/con2"
         android:layout_toRightOf="@id/con_good"
-        android:background="@drawable/condition_soso">
+        android:background="@drawable/main_popup_color_condition_soso">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,13 +88,13 @@
     <RelativeLayout
         android:id="@+id/con_bad"
         android:layout_width="80dp"
-        android:layout_height="23dp"
+        android:layout_height="21dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="17dp"
         android:layout_below="@id/con2"
         android:layout_toRightOf="@id/con_soso"
-        android:background="@drawable/condition_bad">
+        android:background="@drawable/main_popup_color_condition_bad">
         <TextView
             android:id="@+id/suchibad"
             android:layout_width="wrap_content"
@@ -112,33 +112,33 @@
 
 
     <ImageView
-        android:src="@drawable/triangle"
+        android:src="@drawable/main_popup_triangle"
         android:layout_gravity="center"
-        android:layout_width="24dp"
+        android:layout_width="15dp"
         android:id="@+id/pointgood"
-        android:layout_height="24dp"
+        android:layout_height="15dp"
         android:layout_below="@id/con_good"
-        android:layout_marginLeft="48dp"
+        android:layout_marginLeft="52dp"
         android:layout_marginTop="5dp"/>
     <ImageView
-        android:src="@drawable/triangle"
+        android:src="@drawable/main_popup_triangle"
         android:layout_gravity="center"
-        android:layout_width="24dp"
-        android:layout_marginLeft="55dp"
+        android:layout_width="15dp"
+        android:layout_marginLeft="66dp"
         android:layout_below="@id/con_soso"
         android:layout_toRightOf="@id/pointgood"
         android:id="@+id/pointsoso"
-        android:layout_height="24dp"
+        android:layout_height="15dp"
         android:layout_marginTop="5dp"/>
     <ImageView
-        android:src="@drawable/triangle"
+        android:src="@drawable/main_popup_triangle"
         android:layout_gravity="center"
-        android:layout_width="24dp"
+        android:layout_width="15dp"
         android:id="@+id/pointbad"
         android:layout_below="@id/con_bad"
         android:layout_toRightOf="@id/pointsoso"
-        android:layout_marginLeft="58dp"
-        android:layout_height="24dp"
+        android:layout_marginLeft="66dp"
+        android:layout_height="15dp"
         android:layout_marginTop="5dp"/>
 
     <RelativeLayout
@@ -147,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pointgood"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/condition_good">
+        android:background="@drawable/main_popup_color_condition_good">
 
         <TextView
             android:text="좋음"
@@ -166,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pointsoso"
         android:layout_toRightOf="@id/layoutgood"
-        android:background="@drawable/condition_soso">
+        android:background="@drawable/main_popup_color_condition_soso">
 
         <TextView
             android:text="보통"
@@ -185,7 +185,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pointbad"
         android:layout_toRightOf="@id/layoutsoso"
-        android:background="@drawable/condition_bad">
+        android:background="@drawable/main_popup_color_condition_bad">
 
         <TextView
             android:text="나쁨"

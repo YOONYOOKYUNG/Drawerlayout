@@ -10,6 +10,6 @@
         android:layout_alignParentLeft="true"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/waflogo"/>
+        android:src="@drawable/waf"/>
 
 </RelativeLayout>
