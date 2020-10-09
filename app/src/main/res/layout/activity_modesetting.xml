@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AutoSetActivity"
-    >
+    tools:context=".AutoSetActivity">
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -26,10 +25,9 @@
             android:layout_height="wrap_content"
             android:text="알람 설정"
             android:textColor="#FFF"
-            android:textSize="22dp"
-            />
-
+            android:textSize="22dp"/>
     </RelativeLayout>
+
 
     <TextView
         android:id="@+id/tv1"
@@ -37,222 +35,218 @@
         android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
         android:background="#EDEDED"
+        android:layout_below="@id/toolbar"
         android:padding="10dp"/>
-    <RelativeLayout
-        android:id="@+id/rl1"
+    <Button
+        android:id="@+id/manual_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv1"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/autoM"
-            android:text="자동 모드"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ToggleButton
-            android:id="@+id/tbtn"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"/>
-        <TextView
-            android:layout_below="@+id/autoM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="설정한 수치에 의해 창문이 자동개폐됩니다." />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/suchi"
+        android:text="수동 모드"
+        android:layout_margin="10dp"
+        android:layout_toLeftOf="@+id/auto_mode"
+        android:background="@drawable/modebtn"/>
+    <Button
+        android:id="@+id/auto_mode"
+        android:text="자동 모드"
+        android:layout_margin="10dp"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl1">
+        android:layout_below="@id/tv1"
+        android:background="@drawable/modebtn"/>
+    <Button
+        android:text="커스텀 모드"
+        android:id="@+id/custom_mode"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/auto_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:background="@drawable/modebtn"/>
+    <View
+        android:id="@+id/view_2"
+        android:background="#EDEDED"
+        android:layout_below="@+id/custom_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"/>
+    <LinearLayout
+        android:id="@+id/manual_layout"
+        android:layout_below="@id/view_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible">
+
         <TextView
-            android:id="@+id/text1"
-            android:text="수치 설정"
-            android:textSize="20dp"
+            android:id="@+id/tv4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDEDED"
             android:padding="10dp"
-            android:background="#EDEDED"
+            android:text="커스텀 모드 설정"
+            android:textSize="15dp" />
+        <ImageView
+            android:id="@+id/window_img"
+            android:layout_below="@+id/view_2"
+            android:src="@drawable/window_open"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"/>
+        <TextView
+            android:text="수동 모드로 설정되었습니다. \n 창문 설정 화면에서 창문을 개폐하실 수 있습니다."
+            android:textSize="15dp"
+            android:gravity="center"
+            android:layout_below="@+id/window_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/auto_layout"
+        android:layout_below="@id/view_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible">
+        <TextView
+            android:id="@+id/tv3"
+            android:text="자동 모드 설정"
+            android:textSize="15dp"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDEDED"
+            android:padding="10dp" />
+        <TextView
+            android:text="자동 모드로 설정되었습니다.\n 창문을 자동으로 개폐합니다. 기준은 아래 사항을 참고해주세요."
+            android:textSize="15dp"
+            android:gravity="center"
+            android:layout_below="@+id/window_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
+        <ImageView
+            android:src="@drawable/altpajswl"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <RelativeLayout
-            android:id="@+id/tempset"
-            android:layout_below="@id/text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-
-            <TextView
-                android:id="@+id/txt_tp"
-                android:text="온도"
-                android:textSize="25dp"
-                android:padding="20dp"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:id="@+id/view1"
-                android:layout_width="2dp"
-                android:layout_height="100dp"
-                android:background="#DDDDDD"
-                android:layout_toRightOf="@id/txt_tp"/>
-
-            <RelativeLayout
-                android:id="@+id/tempopen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/view1">
-
-                <Button
-                    android:id="@+id/tpopen"
-                    android:text="열기"
-                    android:layout_gravity="center"
-                    android:textSize="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00ff0000"/>
-                <TextView
-                    android:id="@+id/tp_open"
-                    android:text="20℃"
-                    android:textSize="25dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tpopen"
-                    android:layout_centerHorizontal="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/tempclose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/tempopen">
-
-                <Button
-                    android:id="@+id/tpclose"
-                    android:text="닫기"
-                    android:textSize="16dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00ff0000"/>
-                <TextView
-                    android:id="@+id/tp_close"
-                    android:text="12℃"
-                    android:textSize="25dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tpclose"
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
-
-        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/custom_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_2"
+        android:visibility="invisible">
         <TextView
-            android:id="@+id/text2"
-            android:textSize="4dp"
-            android:padding="5dp"
-            android:background="#EDEDED"
+            android:id="@+id/tv2"
+            android:text="커스텀 모드 설정"
+            android:textSize="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tempset"
-            />
-
-        <RelativeLayout
-            android:id="@+id/dustset"
-            android:layout_below="@id/text2"
+            android:background="#EDEDED"
+            android:padding="10dp" />
+        <TextView
+            android:id="@+id/set_dust"
+            android:text="미세먼지 수치 설정하기"
+            android:layout_margin="8dp"
+            android:textSize="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-
-            <TextView
-                android:id="@+id/txt_mm"
-                android:text="미세먼지"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:padding="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"/>
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="2dp"
-                android:layout_height="100dp"
-                android:background="#DDDDDD"
-                android:layout_toRightOf="@id/txt_mm"/>
-
-            <RelativeLayout
-                android:id="@+id/dustopen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/view2">
-
-                <Button
-                    android:id="@+id/mmopen"
-                    android:text="열기"
-                    android:layout_gravity="center"
-                    android:textSize="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00ff0000"/>
-                <TextView
-                    android:id="@+id/mm_open"
-                    android:text="31pm"
-                    android:textSize="25dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/mmopen"
-                    android:layout_centerHorizontal="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/dustclose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/dustopen">
-
-                <Button
-                    android:id="@+id/mmclose"
-                    android:text="닫기"
-                    android:textSize="16dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00ff0000"/>
-                <TextView
-                    android:id="@+id/mm_close"
-                    android:text="51pm"
-                    android:textSize="25dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/mmclose"
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
-        </RelativeLayout>
-        <TextView
-            android:textSize="4dp"
-            android:padding="5dp"
-            android:background="#EDEDED"
-            android:layout_width="match_parent"
+            android:layout_below="@id/tv2"/>
+        <RelativeLayout
+            android:id="@+id/dustbtn"
+            android:layout_below="@id/set_dust"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/dustset"/>
+            android:background="@drawable/round"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/low_dust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="미세먼지 개폐 수치 설정하기"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/dust_txt"
+                android:textSize="30dp"
+                android:layout_below="@+id/low_dust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:gravity="center"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_below="@+id/dustbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="3dp"
+            android:background="#EDEDED"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/set_temp"
+            android:text="온도 설정하기"
+            android:layout_margin="8dp"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_3"/>
+
+        <RelativeLayout
+            android:id="@+id/tempLow_btn"
+            android:layout_below="@id/set_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/low_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최저 온도일 때 닫기"/>
+            <TextView
+                android:id="@+id/low_temp_txt"
+                android:textSize="30dp"
+                android:layout_below="@+id/low_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/tempHigh_btn"
+            android:layout_below="@id/set_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/tempLow_btn">
+            <TextView
+                android:id="@+id/high_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최고 온도일 때 닫기"/>
+            <TextView
+                android:id="@+id/high_temp_txt"
+                android:textSize="30dp"
+                android:layout_below="@+id/high_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

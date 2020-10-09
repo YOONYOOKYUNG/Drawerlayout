@@ -18,118 +18,124 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AutoSetActivity extends AppCompatActivity {
-    Button tpopen, tpclose, mmopen, mmclose;
-    TextView tp_open, tp_close, mm_open, mm_close;
-    RelativeLayout suchi;
-    ToggleButton tbtn;
-
-    String sfName = "File";
-    String state="";
-
-
+    Button manual_mode, auto_mode, custom_mode;
+    LinearLayout manual_layout,auto_layout;
+    RelativeLayout custom_layout,dustbtn,tempLow_btn,tempHigh_btn;
+    TextView high_temp_txt,low_temp_txt,dust_txt;
+    String suchi="file";
+    String state ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modesetting);
-
-        tpopen = findViewById(R.id.tpopen);
-        tpclose = findViewById(R.id.tpclose);
-        mmopen = findViewById(R.id.mmopen);
-        mmclose = findViewById(R.id.mmclose);
-        tp_open = findViewById(R.id.tp_open);
-        tp_close = findViewById(R.id.tp_close);
-        mm_open = findViewById(R.id.mm_open);
-        mm_close = findViewById(R.id.mm_close);
-        suchi = findViewById(R.id.suchi);
-        tbtn = findViewById(R.id.tbtn);
-
-        suchi.setVisibility(View.INVISIBLE);
-
-        SharedPreferences sf = getSharedPreferences(sfName, 0);
-        state = sf.getString("state", ""); // 키값으로
-
-        tp_open.setText( sf.getString("tp_open", ""));
-        tp_close.setText(sf.getString("tp_close", ""));
-        mm_open.setText( sf.getString("mm_open", ""));
-        mm_close.setText(sf.getString("mm_close", ""));
+        manual_mode = findViewById(R.id.manual_mode);
+        auto_mode = findViewById(R.id.auto_mode);
+        custom_mode = findViewById(R.id.custom_mode);
+        manual_layout = findViewById(R.id.manual_layout);
+        auto_layout = findViewById(R.id.auto_layout);
+        custom_layout = findViewById(R.id.custom_layout);
+        dustbtn = findViewById(R.id.dustbtn);
+        tempLow_btn = findViewById(R.id.tempLow_btn);
+        tempHigh_btn = findViewById(R.id.tempHigh_btn);
+        high_temp_txt = findViewById(R.id.high_temp_txt);
+        low_temp_txt = findViewById(R.id.low_temp_txt);
+        dust_txt = findViewById(R.id.dust_txt);
 
 
-        if(state=="auto"){
-            tbtn.setChecked(true);
-            suchi.setVisibility(View.VISIBLE);
+        SharedPreferences sp_suchi = getSharedPreferences(suchi,0);
+        state = sp_suchi.getString("state","");
+        high_temp_txt.setText(sp_suchi.getString("High_temp",""));
+        low_temp_txt.setText(sp_suchi.getString("Low_temp",""));
+        dust_txt.setText(sp_suchi.getString("compare_dust",""));
 
-        }else if(state=="nonauto"){
-            tbtn.setChecked(false);
-            suchi.setVisibility(View.INVISIBLE);
-
-        }
-
-
-        tbtn.setOnClickListener(new View.OnClickListener() {
+        manual_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tbtn.isChecked() == true) {
-                    suchi.setVisibility(View.VISIBLE);
-                    state="auto";
-                    Toast.makeText(getApplicationContext(), "자동모드가 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else if(tbtn.isChecked() == false){
-                    tbtn.setChecked(false);
-                    suchi.setVisibility(View.INVISIBLE);
-                    state="nonauto";
-                    Toast.makeText(getApplicationContext(), "수동모드가 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                }
+                manual_layout.setVisibility(View.VISIBLE);
+                auto_layout.setVisibility(View.INVISIBLE);
+                custom_layout.setVisibility(View.INVISIBLE);
+                manual_mode.setBackgroundResource(R.drawable.modebtn);
+                auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                custom_mode.setBackgroundResource(R.drawable.modeoffbtn);
             }
         });
-
-
-        tp_open.setOnClickListener(new View.OnClickListener() {
+        auto_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                windowOpen();
+                auto_layout.setVisibility(View.VISIBLE);
+                manual_layout.setVisibility(View.INVISIBLE);
+                custom_layout.setVisibility(View.INVISIBLE);
+                auto_mode.setBackgroundResource(R.drawable.modebtn);
+                manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                custom_mode.setBackgroundResource(R.drawable.modeoffbtn);
             }
         });
-        tp_close.setOnClickListener(new View.OnClickListener() {
+        custom_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                windowClose();
+                custom_layout.setVisibility(View.VISIBLE);
+                auto_layout.setVisibility(View.INVISIBLE);
+                manual_layout.setVisibility(View.INVISIBLE);
+                custom_mode.setBackgroundResource(R.drawable.modebtn);
+                manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
             }
         });
-        mm_open.setOnClickListener(new View.OnClickListener() {
+        tempLow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                miseopen();
+                temp_Low();
             }
         });
-        mm_close.setOnClickListener(new View.OnClickListener() {
+        tempHigh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                miseclose();
+                temp_High();
             }
         });
-
-        ImageView backarrow;
-        backarrow = findViewById(R.id.backarrow);
-        backarrow.setOnClickListener(new View.OnClickListener() {
+        dustbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onBackPressed();
+            public void onClick(View v) {
+                set_dust();
             }
         });
     }
-    void windowOpen()
+    void temp_High()
     {
         final EditText edittext = new EditText(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("열기");
-        builder.setMessage("창문을 열 기준치를 적어주세요.");
+        builder.setTitle("최고 온도 설정하기");
+        builder.setMessage("몇도 이상일때 창문을 열기를 원하시나요?");
         builder.setView(edittext);
-        builder.setPositiveButton("입력",
+        builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString() , Toast.LENGTH_LONG).show();
-                        tp_open.setText(edittext.getText()+" ℃");
+                        Toast.makeText(getApplicationContext(),edittext.getText().toString()+" ℃ 로 설정되었습니다." , Toast.LENGTH_LONG).show();
+                        high_temp_txt.setText(edittext.getText()+" ℃");
+                    }
+                });
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        set_dust();
+                    }
+                });
+        builder.show();
+    }
+    void temp_Low()
+    {
+        final EditText edittext = new EditText(this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("최저 온도 설정하기");
+        builder.setMessage("몇도 이하일때 창문을 닫기를 원하시나요?");
+        builder.setView(edittext);
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),edittext.getText().toString()+" ℃ 로 설정되었습니다." , Toast.LENGTH_LONG).show();
+                        low_temp_txt.setText(edittext.getText()+" ℃");
                     }
                 });
         builder.setNegativeButton("취소",
@@ -140,20 +146,19 @@ public class AutoSetActivity extends AppCompatActivity {
                 });
         builder.show();
     }
-
-    void windowClose()
+    void set_dust()
     {
         final EditText edittext = new EditText(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("닫기");
-        builder.setMessage("창문을 닫을 기준치를 적어주세요.");
+        builder.setTitle("미세먼지 개폐 수치 설정하기");
+        builder.setMessage("외부와 내부가 몇 pm 이상 차이날 때 닫을까요?");
         builder.setView(edittext);
-        builder.setPositiveButton("입력",
+        builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString() , Toast.LENGTH_LONG).show();
-                        tp_close.setText(edittext.getText()+" ℃");
+                        Toast.makeText(getApplicationContext(),edittext.getText().toString()+" pm 로 설정되었습니다." , Toast.LENGTH_LONG).show();
+                        dust_txt.setText(edittext.getText()+" pm");
                     }
                 });
         builder.setNegativeButton("취소",
@@ -164,70 +169,16 @@ public class AutoSetActivity extends AppCompatActivity {
                 });
         builder.show();
     }
-    void miseopen()
-    {
-        final EditText edittext = new EditText(this);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("열기");
-        builder.setMessage("창문을 열 기준치를 적어주세요.");
-        builder.setView(edittext);
-        builder.setPositiveButton("입력",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString() , Toast.LENGTH_LONG).show();
-                        mm_open.setText(edittext.getText()+"pm");
-                    }
-                });
-        builder.setNegativeButton("취소",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.show();
-    }
-    void miseclose()
-    {
-        final EditText edittext = new EditText(this);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("열기");
-        builder.setMessage("창문을 열 기준치를 적어주세요.");
-        builder.setView(edittext);
-        builder.setPositiveButton("입력",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString() , Toast.LENGTH_LONG).show();
-                        mm_close.setText(edittext.getText()+"pm");
-                    }
-                });
-        builder.setNegativeButton("취소",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.show();
-    }
-
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-    }
-
     protected void onStop(){
         super.onStop();
-
-        SharedPreferences sf = getSharedPreferences(sfName, 0);
-        SharedPreferences.Editor editor = sf.edit();//저장하려면 editor가 필요
-        editor.clear();
-        editor.putString("state", state); // 입력
-        editor.putString("tp_open",tp_open.toString());
-        editor.putString("tp_close",tp_close.toString());
-        editor.putString("mm_open",mm_open.toString());
-        editor.putString("mm_close",mm_close.toString());
-        editor.commit(); // 파일에 최종 반영함
-
+        SharedPreferences set_text = getSharedPreferences(suchi,0);
+        SharedPreferences.Editor editor_suchi =set_text.edit();
+        editor_suchi.clear();
+        editor_suchi.putString("state",state);
+        editor_suchi.putString("High_temp",high_temp_txt.toString());
+        editor_suchi.putString("Low_temp",low_temp_txt.toString());
+        editor_suchi.putString("compare_dust",dust_txt.toString());
+        editor_suchi.commit();
     }
+
 }
