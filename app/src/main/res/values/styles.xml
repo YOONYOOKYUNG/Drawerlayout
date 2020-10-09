@@ -9,11 +9,21 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
     <style name="AppTheme.help" parent="Theme.AppCompat.Light.NoActionBar">
+
+
         <item name="android:windowIsTranslucent">true</item>
+        <!--  백그라운드 투명 -->
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--  타이틀바의 그림자 제거 -->
         <item name="android:windowContentOverlay">@null</item>
+
+        <!--Titlebar 없애는 옵션   true : Titlebar x / false : Titlebar o -->
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
+
+
+
+        <!--  다이얼로그 외의 화면을 어둡게 할껀지 말껀지 -->
+        <!--   true - 반투명 검정 /  false - 완전 투명  -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>

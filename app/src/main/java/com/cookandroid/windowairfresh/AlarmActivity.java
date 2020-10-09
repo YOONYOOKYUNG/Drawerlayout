@@ -5,7 +5,6 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -80,7 +79,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
 
-        builder.setSmallIcon(R.drawable.alaram);
+        builder.setSmallIcon(R.drawable.alarm_alarm);
         builder.setContentTitle("WAF 푸쉬 알림");
         builder.setContentText("푸쉬 알림이 커졌습니다.");
 
@@ -100,7 +99,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder2 = new NotificationCompat.Builder(this, "alarm");
 
-        builder2.setSmallIcon(R.drawable.alaram)
+        builder2.setSmallIcon(R.drawable.alarm_alarm)
                 .setContentTitle("매 시간 알림이 켜졌습니다.")
                 .setContentText("설정한 시간에 따라 매 시간 알림을 보내드립니다.")
                 .setAutoCancel(false);

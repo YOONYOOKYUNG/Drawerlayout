@@ -1,17 +1,18 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,12 +24,19 @@ public class WindowListAdapter extends BaseAdapter {
     String name, address;
     Boolean state;
 
+    DatabaseManager databaseManager;
+
     //set
     public void setName(String name){
         this.name = name;
     }
     public void setAddress(String address){this.address=address;}
     public void setState(Boolean state){this.state=state;}
+
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
+
     //get
     public String getName() {
         return name;
@@ -75,12 +83,13 @@ public class WindowListAdapter extends BaseAdapter {
                     wListener.onWindowButtonClick(pos);
                     Log.d("상태", "현재 창문 상태 : " + listViewItem.getState());
                 if (state==true){
-                    windowstate.setImageResource(R.drawable.windowopen);
+                    windowstate.setImageResource(R.drawable.windowlist_windowopen);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
+                    windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     notifyDataSetChanged();
                 }else if (state==false){
-                    windowstate.setImageResource(R.drawable.windowclose);
+                    windowstate.setImageResource(R.drawable.windowlist_windowclose);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowdelete.setBackgroundColor(Color.parseColor("#B9BDBF"));
@@ -90,12 +99,29 @@ public class WindowListAdapter extends BaseAdapter {
             }
         });
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("창문삭제")        // 제목 설정
+                .setMessage("창문을 삭제하시겠습니까?")        // 메세지 설정
+                .setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
+                .setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                    // 확인 버튼 클릭시 설정, 오른쪽 버튼
+                    public void onClick(DialogInterface dialog, int whichButton){
+                        removeitem(position);
+                        notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener(){
+                    // 취소 버튼 클릭시 설정, 왼쪽
+                    public void onClick(DialogInterface dialog, int whichButton){
+                        dialog.dismiss();
+                    }
+                });
 
         windowdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeitem(position);
-                notifyDataSetChanged();
+
+                builder.show();
             }
         });
         return convertView;
@@ -121,12 +147,32 @@ public class WindowListAdapter extends BaseAdapter {
         item.setAddress(address);
         item.setState(state);
         listViewItemList.add(item);
+
+        if (databaseManager != null) {
+            ContentValues addRowValue = new ContentValues();
+
+            addRowValue.put("name", name);
+            addRowValue.put("address", address);
+            addRowValue.put("state", state.toString());
+
+            databaseManager.insert(addRowValue);
+        }
     }
 
 
 
-    public void removeitem(int position){
+    public void removeitem(int position) {
+        if (databaseManager != null) {
+           databaseManager.delete(listViewItemList.get(position).getName());
+        }
         listViewItemList.remove(position);
+    }
+
+    public void initialiseList()
+    {
+        if (databaseManager != null){
+            listViewItemList = databaseManager.getAll();
+        }
     }
 
 

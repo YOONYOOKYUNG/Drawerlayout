@@ -43,6 +43,7 @@ import java.util.UUID;
 
 public class WindowlistActivity extends AppCompatActivity {
 
+    private DatabaseManager databaseManager;
     private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
     private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
@@ -121,7 +122,11 @@ public class WindowlistActivity extends AppCompatActivity {
 
 
         btn1 = findViewById(R.id.btn1);
+
+        databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
+        adapter.setDatabaseManager(databaseManager);
+        adapter.initialiseList();
 
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         main_label = (TextView) findViewById(R.id.main_label);

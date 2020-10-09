@@ -22,7 +22,8 @@
         android:theme="@style/AppTheme" >
         <activity android:name=".ActlogActivity" />
         <activity
-            android:name=".HelpActivity">
+            android:name=".HelpActivity"
+            android:theme="@style/AppTheme.help">
         </activity>
 
         <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
