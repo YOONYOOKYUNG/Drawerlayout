@@ -52,7 +52,7 @@ public class Main_Fragment1 extends Fragment {
 
 
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_main_fragment1,null );
+        View view =  inflater.inflate(R.layout.activity_main_fragment1, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
 
 
