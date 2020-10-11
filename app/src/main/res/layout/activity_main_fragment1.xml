@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".Main_Fragment1">
+    tools:context=".Main_Fragment1"
+    android:id="@+id/frag"
+    >
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -61,7 +63,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/thermometer"
+                android:id="@+id/thermometer1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -77,7 +79,7 @@
                 android:layout_width="13dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/thermometer"
+                android:layout_toRightOf="@id/thermometer1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="℃"
@@ -119,7 +121,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/micro"
+                android:id="@+id/micro1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -135,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/micro"
+                android:layout_toRightOf="@id/micro1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="㎍/㎥"
@@ -178,7 +180,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/humid"
+                android:id="@+id/humid1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -194,14 +196,16 @@
                 android:layout_width="13dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/humid"
+                android:layout_toRightOf="@id/humid1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="%"
                 android:textColor="@color/colorFont"
                 android:textSize="19dp" />
 
+
         </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

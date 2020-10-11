@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -41,6 +44,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
     //블루투스 관련 선언 시작(블투1)
     private static final String TAG = "bluetooth2";
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
@@ -86,6 +91,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+       /* FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frag,new Main_Fragment1());
+        fragmentTransaction.commit();*/
+
+
+
+
 
         viewpager = findViewById(R.id.viewpager);
 
@@ -98,9 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewpager.setAdapter(adapter);
 
 
-        thermometer = findViewById(R.id.thermometer);
+
+        /*thermometer = findViewById(R.id.thermometer);
         micro = findViewById(R.id.micro);
-        humid = findViewById(R.id.humid);
+        humid = findViewById(R.id.humid);*/
 
 
         handler = new Handler() {
@@ -124,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String[] array = sbprint.split("#");
                             Log.d("a5",array[0]);
 
-                            thermometer.setText(array[0]);
+                           /* thermometer.setText(array[0]);
                             micro.setText(array[1]);
-                            humid.setText(array[2]);
+                            humid.setText(array[2]);*/
                             Log.d("a6","값 띄움");
 
                             flag++;
