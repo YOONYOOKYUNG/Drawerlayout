@@ -149,7 +149,7 @@ public class WindowlistActivity extends AppCompatActivity {
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
             @Override
             public void onWindowButtonClick(int pos) {
-                WindowListAdapter listViewItem = adapter.listViewItemList.get(pos);
+                WindowDetails listViewItem = adapter.listViewItemList.get(pos);
                 address=listViewItem.getAddress();
                 state=listViewItem.getState();
                 //address="98:D3:51:F9:26:E0";

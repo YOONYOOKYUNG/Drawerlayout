@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -17,32 +18,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class WindowListAdapter extends BaseAdapter {
-    public  ArrayList<WindowListAdapter> listViewItemList = new ArrayList<>() ;
+    public  ArrayList<WindowDetails> listViewItemList = new ArrayList<WindowDetails>() ;
     public WindowListAdapter() { }
     private OnWindowButtonClickListener wListener;
     public void setListener(OnWindowButtonClickListener listener) { wListener = listener; }
-    String name, address;
-    Boolean state;
 
-    DatabaseManager databaseManager;
-
-    //set
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setAddress(String address){this.address=address;}
-    public void setState(Boolean state){this.state=state;}
+    private DatabaseManager databaseManager;
 
     public void setDatabaseManager(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
     }
-
-    //get
-    public String getName() {
-        return name;
-    }
-    public String getAddress(){return address;}
-    public Boolean getState(){return state;}
 
     @Override
     public int getCount() {
@@ -68,11 +53,11 @@ public class WindowListAdapter extends BaseAdapter {
         //리스트뷰 기본 배경색 지정
         //convertView.setBackgroundColor(Color.parseColor("#B7DBF4"));
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        final WindowListAdapter listViewItem = listViewItemList.get(position);
+        final WindowDetails listViewItem = listViewItemList.get(position);
         // 아이템 내 각 위젯에 데이터 반영
         titleTextView.setText(listViewItem.getName());
         addressTextView.setText(listViewItem.getAddress());
-        state=listViewItem.getState();
+        final boolean state=listViewItem.getState();
 
 
 
@@ -142,7 +127,7 @@ public class WindowListAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String name, String address, Boolean state) {
-        WindowListAdapter item = new WindowListAdapter();
+        WindowDetails item = new WindowDetails();
         item.setName(name);
         item.setAddress(address);
         item.setState(state);
@@ -176,7 +161,7 @@ public class WindowListAdapter extends BaseAdapter {
     }
 
 
-    public ArrayList<WindowListAdapter> getListViewItemList(){return listViewItemList;}
+    public ArrayList<WindowDetails> getListViewItemList(){return listViewItemList;}
 
 
     public interface OnWindowButtonClickListener{

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             else
             {
-                WindowListAdapter listViewItem = adapter.listViewItemList.get(0);
+                WindowDetails listViewItem = adapter.listViewItemList.get(0);
                 address=listViewItem.getAddress();}
             setResult(RESULT_OK, data);
         }

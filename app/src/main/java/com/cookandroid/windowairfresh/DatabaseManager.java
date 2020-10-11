@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.view.Window;
 
 import java.util.ArrayList;
 
@@ -55,9 +56,9 @@ public class DatabaseManager {
                 "name = ?", new String[] { name });
     }
 
-    public ArrayList<WindowListAdapter> getAll()
+    public ArrayList<WindowDetails> getAll()
     {
-        ArrayList<WindowListAdapter> array_list = new ArrayList<WindowListAdapter>();
+        ArrayList<WindowDetails> array_list = new ArrayList<WindowDetails>();
 
         String sqlSelect = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = null;
@@ -65,7 +66,7 @@ public class DatabaseManager {
         cursor = mydatabase.rawQuery(sqlSelect, null);
 
         while (cursor.moveToNext()) {
-            WindowListAdapter newAdapter = new WindowListAdapter();
+            WindowDetails newAdapter = new WindowDetails();
 
             newAdapter.setName(cursor.getString(1));
             newAdapter.setAddress(cursor.getString(2));
