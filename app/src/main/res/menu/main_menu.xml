@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="none">
         <item
-            android:icon="@drawable/windowicon"
+            android:icon="@drawable/window_icon"
             android:id="@+id/window"
             android:title="창문 설정"/>
         <item
+            android:icon="@drawable/timeline"
             android:id="@+id/log_record"
             android:title="활동 기록"/>
     </group>
@@ -13,23 +14,27 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/alarm"
-            android:icon="@drawable/alarm_alarm"
+            android:icon="@drawable/alarm_icon2"
             android:title="알람 설정"/>
         <item
+            android:icon="@drawable/mode2"
             android:id="@+id/auto_set"
-            android:title="Auto 모드 설정" />
+            android:title="모드 설정" />
     </group>
 
     <group android:checkableBehavior="none">
         <item
+            android:icon="@drawable/share"
             android:id="@+id/share"
             android:title="공유하기"/>
         <item
+            android:icon="@drawable/question2"
             android:id="@+id/contact"
             android:title="문의하기"/>
     </group>
     <group android:checkableBehavior="none">
         <item
+            android:icon="@drawable/information2"
             android:id="@+id/info"
             android:title="정보"/>
     </group>

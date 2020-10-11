@@ -22,7 +22,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-class AlarmSpinnerActivity extends AppCompatActivity {
+public class AlarmSpinnerActivity extends AppCompatActivity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,7 @@ class AlarmSpinnerActivity extends AppCompatActivity {
         Date nextDate = nextNotify.getTime();
         String txt_date = new SimpleDateFormat("hh시 mm분", Locale.getDefault()).format(nextDate);
 
-        Toast.makeText(getApplicationContext(),txt_date+"으로 설정 되었습니다.",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),txt_date+"으로 설정 되었습니다.",Toast.LENGTH_SHORT).show();
 
         //이전 설정값으로 timepicker 초기화
         Date currentTime = nextNotify.getTime();
@@ -100,6 +101,7 @@ class AlarmSpinnerActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getSharedPreferences("daily alarm",MODE_PRIVATE).edit();
 
                 editor.putLong("nextNotifyTime",(long)calendar.getTimeInMillis());
+                editor.putString("ampm",ampm);
                 editor.apply();
 
                 dailyNotification(calendar);
@@ -112,7 +114,7 @@ class AlarmSpinnerActivity extends AppCompatActivity {
             }
         });
     }
-    void dailyNotification(Calendar calendar){
+    public void dailyNotification(Calendar calendar){
         Boolean dailyNotify = true;
         //무조건 알림을 허용
 

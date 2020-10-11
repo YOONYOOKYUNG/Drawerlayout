@@ -13,9 +13,9 @@
 
         <ImageView
             android:id="@+id/main_icon"
-            android:src="@drawable/waf"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
+            android:src="@drawable/inside2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_margin="10dp"
             android:layout_centerHorizontal="true"
             android:padding="10dp"/>

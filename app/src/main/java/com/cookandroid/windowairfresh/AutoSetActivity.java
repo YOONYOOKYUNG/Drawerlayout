@@ -1,19 +1,16 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +21,7 @@ public class AutoSetActivity extends AppCompatActivity {
     TextView high_temp_txt,low_temp_txt,dust_txt;
     String suchi="file";
     String state ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +45,8 @@ public class AutoSetActivity extends AppCompatActivity {
         high_temp_txt.setText(sp_suchi.getString("High_temp",""));
         low_temp_txt.setText(sp_suchi.getString("Low_temp",""));
         dust_txt.setText(sp_suchi.getString("compare_dust",""));
+
+        Log.d("kim","최고온도값"+high_temp_txt);
 
         manual_mode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,14 +171,15 @@ public class AutoSetActivity extends AppCompatActivity {
     }
     protected void onStop(){
         super.onStop();
+        String high_temp = high_temp_txt.toString();
+
         SharedPreferences set_text = getSharedPreferences(suchi,0);
         SharedPreferences.Editor editor_suchi =set_text.edit();
         editor_suchi.clear();
         editor_suchi.putString("state",state);
-        editor_suchi.putString("High_temp",high_temp_txt.toString());
+        editor_suchi.putString("High_temp",high_temp);
         editor_suchi.putString("Low_temp",low_temp_txt.toString());
         editor_suchi.putString("compare_dust",dust_txt.toString());
         editor_suchi.commit();
     }
-
 }

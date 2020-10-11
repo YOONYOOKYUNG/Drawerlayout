@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,20 +20,23 @@ import android.widget.Toast;
 public class AlarmActivity extends AppCompatActivity {
     final int pagenum = 1;
     String sharedName = "file";
+    TextView st_time;
+    RelativeLayout rl3;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
         final Switch swit_push, swit_setTime;
-        TextView st_time;
 
         swit_push = findViewById(R.id.swit_push);
         swit_setTime = findViewById(R.id.swit_setTime);
         st_time = findViewById(R.id.st_time);
+        rl3 = findViewById(R.id.rl3);
 
-        SharedPreferences state = getSharedPreferences(sharedName,MODE_PRIVATE);
-        Boolean state1 = state.getBoolean("push_On",swit_push.isChecked());
-        Boolean state2 = state.getBoolean("setTime_ON",swit_setTime.isChecked());
+
+        SharedPreferences state = getSharedPreferences(sharedName, MODE_PRIVATE);
+        Boolean state1 = state.getBoolean("push_On", swit_push.isChecked());
+        Boolean state2 = state.getBoolean("setTime_ON", swit_setTime.isChecked());
         swit_push.setChecked(state1);
         swit_setTime.setChecked(state2);
         //스위치값저장
@@ -40,7 +44,7 @@ public class AlarmActivity extends AppCompatActivity {
         swit_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked==true){
+                if (isChecked == true) {
                     createNotifi();
 
                 }
@@ -49,24 +53,21 @@ public class AlarmActivity extends AppCompatActivity {
         swit_setTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(swit_setTime.isChecked()==true){
+                if (swit_setTime.isChecked() == true) {
                     alarmSetTime();
-                }
-                else{
+                } else {
                 }
 
             }
         });
-
-        st_time.setOnClickListener(new View.OnClickListener() {
+        rl3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(swit_setTime.isChecked()==true) {
+            public void onClick(View view) {
+                if (swit_setTime.isChecked() == true) {
                     Intent intent = new Intent(getApplicationContext(), AlarmSpinnerActivity.class);
-                    startActivityForResult(intent,pagenum);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"매 시간 알림받기를 켜주세요!",Toast.LENGTH_SHORT).show();
+                    startActivityForResult(intent, pagenum);
+                } else {
+                    Toast.makeText(getApplicationContext(), "매 시간 알림받기를 켜주세요!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -79,7 +80,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
 
-        builder.setSmallIcon(R.drawable.alarm_alarm);
+        builder.setSmallIcon(R.drawable.alarm_icon);
         builder.setContentTitle("WAF 푸쉬 알림");
         builder.setContentText("푸쉬 알림이 커졌습니다.");
 
@@ -99,7 +100,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder2 = new NotificationCompat.Builder(this, "alarm");
 
-        builder2.setSmallIcon(R.drawable.alarm_alarm)
+        builder2.setSmallIcon(R.drawable.alarm_icon)
                 .setContentTitle("매 시간 알림이 켜졌습니다.")
                 .setContentText("설정한 시간에 따라 매 시간 알림을 보내드립니다.")
                 .setAutoCancel(false);

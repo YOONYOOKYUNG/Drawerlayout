@@ -13,7 +13,7 @@
 
         <ImageView
             android:id="@+id/main_icon"
-            android:src="@drawable/waf"
+            android:src="@drawable/outside3"
             android:layout_width="190dp"
             android:layout_height="190dp"
             android:layout_margin="10dp"

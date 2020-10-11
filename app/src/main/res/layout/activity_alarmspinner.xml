@@ -19,6 +19,5 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:layout_below="@id/timepicker"
-        android:layout_centerInParent="true"
-        />
+        android:layout_centerInParent="true" />
 </RelativeLayout>
