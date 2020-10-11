@@ -35,8 +35,6 @@ public class WindowNameActivity extends Activity {
 
                 String inputText =  message.getText().toString();
                 if(!inputText.equals("")){
-                    Toast.makeText(WindowNameActivity.this, "\"" + message.getText().toString() + "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent();
                     intent.putExtra("new_window_name", message.getText().toString());
                     intent.putExtra("btaddress", btaddress);

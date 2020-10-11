@@ -81,7 +81,7 @@ public class WindowlistActivity extends AppCompatActivity {
             if(adapter==null) {
                 Log.d("dhkim", "adapter is null ");
             } else {
-                adapter.addItem(addedWindowName,address,false); //세번째 블루투스어드레스는 주소값을 넣어주면됨
+                adapter.addItem(addedWindowName,address,true); //세번째 블루투스어드레스는 주소값을 넣어주면됨
                 adapter.notifyDataSetChanged();
             }
             return;
@@ -210,8 +210,8 @@ public class WindowlistActivity extends AppCompatActivity {
 
 
 
-        for(int i=0;i<adapter.getCount();i++){
-            WindowListAdapter item=(WindowListAdapter)adapter.getItem(i); }
+      for(int i=0;i<adapter.getCount();i++){
+      WindowDetails  item=(WindowDetails) adapter.getItem(i); }
 
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
@@ -259,7 +259,7 @@ public class WindowlistActivity extends AppCompatActivity {
             //각 action에 따른 반응
             if  (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //블루투스 디바이스 검색 시작
-                mDeviceList = new ArrayList<BluetoothDevice>();
+                mDeviceList = new ArrayList<>();
                 //블루투스 기기 목록 갱신
                 mProgressDlg.show();
                 //로딩중화면 표시

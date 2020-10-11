@@ -106,7 +106,7 @@ public class AutoSetActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("최고 온도 설정하기");
-        builder.setMessage("몇도 이상일때 창문을 열기를 원하시나요?");
+        builder.setMessage("몇도 이상일때 창문을 닫기를 원하시나요?");
         builder.setView(edittext);
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
