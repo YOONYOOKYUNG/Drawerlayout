@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
 
-        Main_SlideAdapter adapter = new Main_SlideAdapter(getSupportFragmentManager());
+        Main_SlideAdapter adapter = new Main_SlideAdapter(getSupportFragmentManager(), databaseManager);
         viewpager.setAdapter(adapter);
 
         indicator = findViewById(R.id.indicator);
@@ -280,23 +280,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
         try {
+            if(btSocket==null)
             btSocket = createBluetoothSocket(device);
         } catch (IOException e) {
             errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
         }
         btAdapter.cancelDiscovery();
         try {
-            btSocket.connect();
+            if(btSocket!=null){
+            btSocket.connect();}
 
         } catch (IOException e) {
             try {
-                btSocket.close();
+                if(btSocket!=null){
+                    btSocket.close();}
             } catch (IOException e2) {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
         }
-        ConnectedThread = new ConnectedThread(btSocket);
-        ConnectedThread.start();
+        if(btSocket!=null)
+        {ConnectedThread = new ConnectedThread(btSocket);
+        ConnectedThread.start();}
 
     }
 
@@ -304,7 +308,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onPause() {
         super.onPause();
         try     {
-            btSocket.close();
+            if(btSocket!=null){
+                btSocket.close();}
         } catch (IOException e2) {
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }

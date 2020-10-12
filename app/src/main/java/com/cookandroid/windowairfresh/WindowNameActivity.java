@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class WindowNameActivity extends Activity {
 
-    private TextView mTextView;
     private String btaddress;
 
     @Override

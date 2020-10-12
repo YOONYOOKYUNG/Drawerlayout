@@ -44,7 +44,7 @@ public class AlarmActivity extends AppCompatActivity {
         swit_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked == true) {
+                if (isChecked) {
                     createNotifi();
 
                 }
