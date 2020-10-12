@@ -1,17 +1,18 @@
 package com.cookandroid.windowairfresh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HelpActivity extends AppCompatActivity {
 
-
     ImageView cancel;
+    CheckBox checkbox1;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +21,23 @@ public class HelpActivity extends AppCompatActivity {
 
 
        cancel = findViewById(R.id.cancel);
+       checkbox1 = findViewById(R.id.checkbox1);
        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(checkbox1.isChecked()==true){
+                    SharedPreferences pref = getSharedPreferences("help", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("help_show", "1");
+                    editor.commit();
+                }
                 finish();
             }
         });
+
+
+
 
 
 }
