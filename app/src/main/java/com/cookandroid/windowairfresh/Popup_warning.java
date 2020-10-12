@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.cookandroid.windowairfresh.R;
+
 public class Popup_warning extends Activity {
     private Context context;
     @Override

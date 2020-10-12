@@ -16,22 +16,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -247,10 +242,19 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
-        //블루투스 연결을 끊거나 앱 종료 시 반드시 리시버를 해지 해야 한다.
-        super.onDestroy();
+        try {
+            unregisterReceiver(mReceiver);
+            //블루투스 연결을 끊거나 앱 종료 시 반드시 리시버를 해지 해야 한다.
+        } catch (IllegalArgumentException e){
+
+        } catch (Exception e) {
+
+        }finally {
+            super.onDestroy();
+        }
     }
+
+
 
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {

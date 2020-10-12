@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cookandroid.windowairfresh.R;
+
 import java.util.List;
 
 /**

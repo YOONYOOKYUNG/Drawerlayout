@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.cookandroid.windowairfresh.R;
+
 public class HelpActivity extends AppCompatActivity {
 
 

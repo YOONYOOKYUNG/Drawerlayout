@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cookandroid.windowairfresh.R;
+
 public class Popup {
     private Context context;
     public Popup(Context context) {
