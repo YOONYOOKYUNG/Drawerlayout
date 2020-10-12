@@ -28,6 +28,16 @@
             android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/indicator"
+            app:ci_drawable="@drawable/blue_radius"
+            app:ci_height="5dp"
+            app:ci_width="5dp"
+            app:ci_margin="4dp"
+            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_height="48dp"/>
     </RelativeLayout>
 
 

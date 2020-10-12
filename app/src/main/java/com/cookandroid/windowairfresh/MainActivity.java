@@ -43,6 +43,8 @@ import java.util.Calendar;
 import java.util.Set;
 import java.util.UUID;
 
+import me.relex.circleindicator.CircleIndicator;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DatabaseManager databaseManager;
     ViewPager viewpager;
+    CircleIndicator indicator;
     WindowListAdapter adapter;
     TextView tvdate,thermometer,humid,micro;
     DrawerLayout drawerLayout;
@@ -96,10 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.frag,new Main_Fragment1());
         fragmentTransaction.commit();*/
 
-
-
-
-
         viewpager = findViewById(R.id.viewpager);
 
         databaseManager = DatabaseManager.getInstance(this);
@@ -110,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Main_SlideAdapter adapter = new Main_SlideAdapter(getSupportFragmentManager());
         viewpager.setAdapter(adapter);
 
+        indicator = findViewById(R.id.indicator);
+        indicator.setViewPager(viewpager);
 
 
         /*thermometer = findViewById(R.id.thermometer);
