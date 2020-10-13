@@ -136,7 +136,7 @@ public class Main_Fragment1 extends Fragment {
         cal2.add(Calendar.DATE,0);
         String today = sdf2.format(cal2.getTime());
 
-        String queryUrl1= "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?serviceKey=pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D&numOfRows=10&pageNo=1&base_date=" +today+ "&base_time=0600&nx=55&ny=127";
+        String queryUrl1= "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?serviceKey=pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D&numOfRows=10&pageNo=1&base_date=" +today+ "&base_time=0000&nx=55&ny=127";
 
 
         try {

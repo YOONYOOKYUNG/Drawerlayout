@@ -50,7 +50,7 @@ public class WindowlistActivity extends AppCompatActivity {
     private StringBuilder sb = new StringBuilder();
     private static int flag = 0;
     private ConnectedThread mConnectedThread;
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    BluetoothDevice device;
     private static String address="98:D3:51:F9:26:E0";
     //블투1
     ImageButton btn1;
@@ -221,8 +221,7 @@ public class WindowlistActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         try     {
-            if(btSocket!=null){
-                btSocket.close();}
+                btSocket.close();
         } catch (IOException e2) {
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
@@ -294,6 +293,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
     //블투 소켓 코드
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        UUID MY_UUID = UUID.fromString(device.getUuids()[0].getUuid().toString());
         if(Build.VERSION.SDK_INT >= 10){
             try {
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
@@ -320,8 +320,7 @@ public class WindowlistActivity extends AppCompatActivity {
         //     UUID for SPP.
 
         try {
-            if(btSocket==null)
-            { btSocket = createBluetoothSocket(device);}
+            btSocket = createBluetoothSocket(device);
         } catch (IOException e) {
             errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
         }
@@ -333,13 +332,11 @@ public class WindowlistActivity extends AppCompatActivity {
         // Establish the connection.  This will block until it connects.
         Log.d(TAG, "...Connecting...");
         try {
-            if(btSocket!=null){
-                btSocket.connect();};
+                btSocket.connect();
             Log.d(TAG, "....Connection ok...");
         } catch (IOException e) {
             try {
-                if(btSocket!=null){
-                    btSocket.close();}
+                    btSocket.close();
             } catch (IOException e2) {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
@@ -347,10 +344,8 @@ public class WindowlistActivity extends AppCompatActivity {
 
         // Create a data stream so we can talk to server.
         Log.d(TAG, "...Create Socket...");
-        if(btSocket!=null)
-        { mConnectedThread = new WindowlistActivity.ConnectedThread(btSocket);
+         mConnectedThread = new WindowlistActivity.ConnectedThread(btSocket);
         mConnectedThread.start();}
-    }
 
 
     private void errorExit(String title, String message){
