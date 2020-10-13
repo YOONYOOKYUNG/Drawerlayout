@@ -19,10 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".AddressActivity"></activity>
         <activity android:name=".ActlogActivity" />
         <activity
             android:name=".HelpActivity"
-            android:theme="@style/AppTheme.help"/>
+            android:theme="@style/AppTheme.help" />
         <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
         <activity
             android:name=".WindowNameActivity"

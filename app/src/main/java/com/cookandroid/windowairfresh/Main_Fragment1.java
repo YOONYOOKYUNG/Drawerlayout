@@ -41,7 +41,6 @@ public class Main_Fragment1 extends Fragment {
         View view =  inflater.inflate(R.layout.activity_main_fragment1, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
 
-
         temp1 = view.findViewById(R.id.temp1);
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
@@ -69,7 +68,6 @@ public class Main_Fragment1 extends Fragment {
         });
 
         //click -> popup2_dust
-
         dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +78,6 @@ public class Main_Fragment1 extends Fragment {
         });
 
         //click -> popup3_humid
-
         humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +87,6 @@ public class Main_Fragment1 extends Fragment {
                 customDialogPopup1.callhumidpopup();
             }
         });
-
 
 
         new Thread(new Runnable() {
@@ -124,11 +120,11 @@ public class Main_Fragment1 extends Fragment {
                     Intent intent = new Intent(getContext(), HelpActivity.class);
                     startActivity(intent);
                 }
-
             }
         }).start();
         return view;
     }
+
 
 
 
@@ -232,8 +228,8 @@ public class Main_Fragment1 extends Fragment {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        tag= xpp.getName(); //태그 이름 얻어오기
-                        if(tag.equals("item")) ;// 첫번째 검색결과종료..줄바꿈
+                        tag= xpp.getName();
+                        if(tag.equals("item")) ;
                         break;
                 }
                 eventType= xpp.next();
@@ -242,7 +238,7 @@ public class Main_Fragment1 extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return buffer2.toString();//StringBuffer 문자열 객체 반환
+        return buffer2.toString(); //StringBuffer 문자열 객체 반환
     }
 
 }
