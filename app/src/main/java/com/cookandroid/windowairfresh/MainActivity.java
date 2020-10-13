@@ -1,15 +1,5 @@
 package com.cookandroid.windowairfresh;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -21,6 +11,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
        /* FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frag,new Main_Fragment1());
@@ -88,13 +89,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         viewpager = findViewById(R.id.viewpager);
 
+
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
 
+
         Main_SlideAdapter adapter = new Main_SlideAdapter(getSupportFragmentManager(), databaseManager);
         viewpager.setAdapter(adapter);
+
 
         indicator = findViewById(R.id.indicator);
         indicator.setViewPager(viewpager);
@@ -174,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
-
         switch (menuitem.getItemId()){
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, AutoSetActivity.class);
@@ -193,9 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.window:
                 Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);
                 startActivityForResult(intent4, WindowList_REQUEST);
-
         }
-
         return true;
     }
 
@@ -289,7 +290,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             if(btSocket!=null){
             btSocket.connect();}
-
         } catch (IOException e) {
             try {
                 if(btSocket!=null){
@@ -298,9 +298,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
         }
-        if(btSocket!=null)
-        {ConnectedThread = new ConnectedThread(btSocket);
-        ConnectedThread.start();}
+        if(btSocket!=null) {
+            ConnectedThread = new ConnectedThread(btSocket);
+            ConnectedThread.start();
+        }
 
     }
 
@@ -309,10 +310,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
         try     {
             if(btSocket!=null){
-                btSocket.close();}
+                btSocket.close();
+            }
+
         } catch (IOException e2) {
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
     }
-
 }
