@@ -1,6 +1,7 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,21 +36,6 @@ public class Main_Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        int a=1;
-        if(a==1) {
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();} //1초뒤 다이얼로그 띄우기
-                    Intent intent = new Intent (getContext(), HelpActivity.class);
-                    startActivity(intent);
-                }
-            }).start();
-
-        }
-
 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.activity_main_fragment1, container, false);
@@ -105,30 +91,39 @@ public class Main_Fragment1 extends Fragment {
             }
         });
 
+
+
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                // TODO Auto-generated method stub
-                data= getXmlData1();//아래 메소드를 호출하여 XML data를 파싱해서 String 객체로 얻어오기
+                data= getXmlData1();
 
+                // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
                 Start_index = data.indexOf("PTY:");
                 End_index = data.indexOf("/",Start_index);
                 String pty = data.substring(Start_index+4,End_index);
-
+                //습도 파싱
                 Start_index = data.indexOf("REH:");
                 End_index = data.indexOf("/",Start_index);
                 String reh = data.substring(Start_index+4,End_index);
-
+                //온도 파싱
                 Start_index = data.indexOf("T1H:");
                 End_index = data.indexOf("/",Start_index);
                 String t1h = data.substring(Start_index+4,End_index);
-
+                //미세먼지 파싱
                 data2=getXmlData2();
 
                 temp1.setText(t1h);
                 humid1.setText(reh);
                 micro1.setText(data2);
+
+                //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
+                SharedPreferences pf = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
+                if(pf.getBoolean("show", true)==true) {
+                    Intent intent = new Intent(getContext(), HelpActivity.class);
+                    startActivity(intent);
+                }
 
             }
         }).start();
@@ -244,11 +239,9 @@ public class Main_Fragment1 extends Fragment {
                 eventType= xpp.next();
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return buffer2.toString();//StringBuffer 문자열 객체 반환
     }
 
