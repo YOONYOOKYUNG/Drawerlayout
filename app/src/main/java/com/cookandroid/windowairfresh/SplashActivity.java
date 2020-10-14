@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mBluetoothAdapter.isEnabled()) {
-                    startActivity(new Intent(SplashActivity.this, AddressActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }
                 else{
