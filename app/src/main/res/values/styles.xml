@@ -12,6 +12,7 @@
 
 
         <item name="android:windowIsTranslucent">true</item>
+        
         <!--  백그라운드 투명 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!--  타이틀바의 그림자 제거 -->
