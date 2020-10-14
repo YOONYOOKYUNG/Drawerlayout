@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -23,10 +24,19 @@ public class AddressActivity extends AppCompatActivity {
     Workbook workbook = null;
     Sheet sheet = null;
 
+=======
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class AddressActivity extends AppCompatActivity {
+
+>>>>>>> master
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+<<<<<<< HEAD
 
         spinner1 = findViewById(R.id.spinner1);
         spinner2=findViewById(R.id.spinner2);
@@ -103,5 +113,7 @@ public class AddressActivity extends AppCompatActivity {
 
 
 
+=======
+>>>>>>> master
     }
 }

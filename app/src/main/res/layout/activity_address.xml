@@ -41,13 +41,20 @@
 
         <TextView
             android:id="@+id/tv1"
+<<<<<<< HEAD
             android:text=" 지역 1"
             android:textColor="#000000"
             android:textSize="25dp"
+=======
+            android:text=" 주소 1"
+            android:textColor="#000000"
+            android:textSize="20dp"
+>>>>>>> master
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp" />
 
+<<<<<<< HEAD
         <Spinner
             android:layout_toRightOf="@+id/tv1"
             android:layout_width="200dp"
@@ -55,6 +62,13 @@
             android:id="@+id/spinner1"
             android:entries="@array/address_array1"
             />
+=======
+        <EditText
+            android:layout_toRightOf="@+id/tv1"
+            android:hint="서울특별시"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+>>>>>>> master
     </RelativeLayout>
 
     <RelativeLayout
@@ -66,13 +80,20 @@
 
         <TextView
             android:id="@+id/tv2"
+<<<<<<< HEAD
             android:text=" 지역 2"
             android:textColor="#000000"
             android:textSize="25dp"
+=======
+            android:text=" 주소 2"
+            android:textColor="#000000"
+            android:textSize="20dp"
+>>>>>>> master
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp" />
 
+<<<<<<< HEAD
         <Spinner
             android:layout_toRightOf="@+id/tv2"
             android:layout_width="200dp"
@@ -91,4 +112,45 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"/>
 
+=======
+        <EditText
+            android:layout_toRightOf="@+id/tv2"
+            android:hint="성동구"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/add3"
+        android:layout_below="@+id/add2"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv3"
+            android:text=" 주소 3"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp" />
+
+        <EditText
+            android:layout_toRightOf="@+id/tv3"
+            android:hint="사근동"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <Button
+        android:layout_margin="25dp"
+        android:layout_centerInParent="true"
+        android:text="검색"
+        android:layout_below="@id/add3"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"/>
+
+
+
+>>>>>>> master
 </RelativeLayout>

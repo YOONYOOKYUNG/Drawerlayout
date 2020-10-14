@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class WindowListAdapter extends BaseAdapter {
-    public  ArrayList<WindowDetails> listViewItemList = new ArrayList<WindowDetails>() ;
+    public  ArrayList<WindowDetails> listViewItemList = new ArrayList<>() ;
     public WindowListAdapter() { }
     private OnWindowButtonClickListener wListener;
     public void setListener(OnWindowButtonClickListener listener) { wListener = listener; }
@@ -57,13 +57,13 @@ public class WindowListAdapter extends BaseAdapter {
         titleTextView.setText(listViewItem.getName());
         addressTextView.setText(listViewItem.getAddress());
         boolean state=listViewItem.getState();
-        if (state==true){
+        if (state){
             windowstate.setImageResource(R.drawable.windowlist_windowopen);
             windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
             windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
             windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
             notifyDataSetChanged();
-        }else if (state==false){
+        }else if (!state){
             windowstate.setImageResource(R.drawable.windowlist_windowclose);
             windowbtnback.setBackgroundColor(Color.parseColor("#B9BDBF"));
             windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
@@ -78,13 +78,13 @@ public class WindowListAdapter extends BaseAdapter {
                     wListener.onWindowButtonClick(pos);
                     boolean state=listViewItem.getState();
                     Log.d("상태", "현재 창문 상태 : " + listViewItem.getState());
-                if (state==true){
+                if (state){
                     windowstate.setImageResource(R.drawable.windowlist_windowopen);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     notifyDataSetChanged();
-                }else if (state==false){
+                }else if (!state){
                     windowstate.setImageResource(R.drawable.windowlist_windowclose);
                     windowbtnback.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
@@ -172,7 +172,7 @@ public class WindowListAdapter extends BaseAdapter {
     }
 
 
-   public ArrayList<WindowDetails> getListViewItemList(){return listViewItemList;}
+  // public ArrayList<WindowDetails> getListViewItemList(){return listViewItemList;}
 
 
     public interface OnWindowButtonClickListener{
