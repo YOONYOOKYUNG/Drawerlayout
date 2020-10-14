@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,13 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //fragment 관련
-        viewpager = findViewById(R.id.viewpager);
-        slideadapter = new Main_SlideAdapter(this, databaseManager);
-        viewpager.setAdapter(slideadapter);
-        indicator = findViewById(R.id.indicator);
-        indicator.setViewPager(viewpager);
-
 
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
@@ -95,6 +89,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             address = listViewItem.getAddress();
         }
 
+        //fragment 관련
+        viewpager = findViewById(R.id.viewpager);
+        slideadapter = new Main_SlideAdapter(this, databaseManager);
+        viewpager.setAdapter(slideadapter);
+        indicator = findViewById(R.id.indicator);
+        indicator.setViewPager(viewpager);
 
 
         /*thermometer = findViewById(R.id.thermometer);
@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.window:
                 startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
-                MainActivity.this.finish();
         }
         return true;
     }
@@ -278,6 +277,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResume() {
         super.onResume();
+        slideadapter = new Main_SlideAdapter(this, databaseManager);
+        slideadapter.notifyDataSetChanged();
+        viewpager.setAdapter(slideadapter);
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
         try {
             btSocket = createBluetoothSocket(device);

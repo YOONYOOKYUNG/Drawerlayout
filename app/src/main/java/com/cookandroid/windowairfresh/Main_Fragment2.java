@@ -9,13 +9,14 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Main_Fragment2 extends Fragment {
 
-    ViewPager viewpager;
+    ViewPager2 viewpager;
     TextView tvdate, thermometer, humid, micro;
     RelativeLayout therlayout, dustlayout, humidlayout;
 

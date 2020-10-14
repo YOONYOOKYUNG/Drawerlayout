@@ -404,7 +404,6 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        startActivity(new Intent(WindowlistActivity.this, MainActivity.class));
         finish();
         super.onBackPressed();
     }

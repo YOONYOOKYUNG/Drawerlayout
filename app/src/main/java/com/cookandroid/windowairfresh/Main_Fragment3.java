@@ -9,9 +9,10 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class Main_Fragment3 extends Fragment {
-    ViewPager viewpager;
+    ViewPager2 viewpager;
     private Button windowadd;
 
     public Main_Fragment3() {
