@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.cookandroid.windowairfresh.R;
 
 public class Popup_warning extends Activity {
     private Context context;

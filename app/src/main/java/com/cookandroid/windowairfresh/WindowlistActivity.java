@@ -294,14 +294,12 @@ public class WindowlistActivity extends AppCompatActivity {
     //블투 소켓 코드
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
         UUID MY_UUID = UUID.fromString(device.getUuids()[0].getUuid().toString());
-        if(Build.VERSION.SDK_INT >= 10){
             try {
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
                 return (BluetoothSocket) m.invoke(device, MY_UUID);
             } catch (Exception e) {
                 Log.e(TAG, "Could not create Insecure RFComm Connection",e);
             }
-        }
         return  device.createRfcommSocketToServiceRecord(MY_UUID);
     }
 
@@ -404,7 +402,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        finish();
+        WindowlistActivity.this.finish();
         super.onBackPressed();
     }
 }

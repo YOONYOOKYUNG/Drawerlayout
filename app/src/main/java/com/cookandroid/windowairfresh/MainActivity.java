@@ -201,14 +201,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //(블투3)
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        if(Build.VERSION.SDK_INT >= 10){
             try {
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
                 return (BluetoothSocket) m.invoke(device, MY_UUID);
             } catch (Exception e) {
                 Log.e(TAG, "Could not create Insecure RFComm Connection",e);
             }
-        }
+
         return  device.createRfcommSocketToServiceRecord(MY_UUID);
     }
 
