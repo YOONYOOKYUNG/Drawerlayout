@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -36,12 +38,14 @@ public class DatabaseManager {
         //DB Open
         mydatabase = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE,null);
 
+
         //창문 Table 생성
         mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Window_TABLE_NAME +
                 "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Name TEXT," +
                 "Address TEXT," +
                 "State Boolean);");
+
         //위치 Table 생성
         mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Location_TABLE_NAME +
                 "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -49,6 +53,7 @@ public class DatabaseManager {
                 "gu TEXT," +
                 "x TEXT," +
                 "y TEXT);");
+
     }
 
 
@@ -71,6 +76,20 @@ public class DatabaseManager {
         return mydatabase.insert(Location_TABLE_NAME, null, initialValues);
     }
 
+    public boolean isDbEmpty() {
+        try {
+            Cursor c = mydatabase.rawQuery("SELECT * FROM " + Location_TABLE_NAME, null);
+            if (c.moveToFirst()) {
+                Log.d("00", "isDbEmpty: not empty");
+                return false;
+            }
+            c.close();
+        } catch (SQLiteException e) {
+            Log.d("00", "isDbEmpty: doesn't exist");
+            return true;
+        }
+        return true;
+    }
 
     //창문추가
     public long insert(ContentValues addRowValue)
