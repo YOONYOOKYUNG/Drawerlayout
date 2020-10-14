@@ -1,25 +1,22 @@
 package com.cookandroid.windowairfresh;
 
-import android.util.Log;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
-public class Main_SlideAdapter extends FragmentPagerAdapter {
+public class Main_SlideAdapter extends FragmentStateAdapter {
     DatabaseManager databaseManager;
-    public Main_SlideAdapter(FragmentManager fm, DatabaseManager dm){
-        super(fm);
+    public Main_SlideAdapter(FragmentActivity fa, DatabaseManager dm){
+        super(fa);
         databaseManager =  dm;
     }
 
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         if (databaseManager != null){
             checklist = databaseManager.getAll();
         }
@@ -35,7 +32,7 @@ public class Main_SlideAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return 2;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -23,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Main_Fragment1 extends Fragment {
-    ViewPager viewpager;
+    ViewPager2 viewpager;
     TextView tvdate,temp1,humid1,micro1;
     RelativeLayout templayout, dustlayout, humidlayout;
     int Start_index,End_index;
@@ -39,7 +40,7 @@ public class Main_Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_main_fragment1, container, false);
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_main_fragment1, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
 
         temp1 = view.findViewById(R.id.temp1);

@@ -23,12 +23,12 @@
             android:layout_gravity="left"
             android:theme="?attr/actionBarTheme"
             app:navigationIcon="@drawable/main_navi_icon_menu" />
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <me.relex.circleindicator.CircleIndicator
+        <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             app:ci_drawable="@drawable/blue_radius"
             app:ci_height="5dp"

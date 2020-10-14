@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddressActivity"></activity>
+        <activity android:name=".AddressActivity"/>
         <activity android:name=".ActlogActivity" />
         <activity
             android:name=".HelpActivity"
