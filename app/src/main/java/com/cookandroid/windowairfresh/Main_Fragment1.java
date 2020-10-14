@@ -115,8 +115,8 @@ public class Main_Fragment1 extends Fragment {
                 micro1.setText(data2);
 
                 //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
-                SharedPreferences pf = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
-                if(pf.getBoolean("show", true)==true) {
+                SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
+                if(pf1.getBoolean("show", true)==true) {
                     Intent intent = new Intent(getContext(), HelpActivity.class);
                     startActivity(intent);
                 }
@@ -129,6 +129,11 @@ public class Main_Fragment1 extends Fragment {
 
 
     String getXmlData1(){
+
+        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
+        String address1 = pf2.getString("addr1","서울시");
+        String address2 = pf2.getString("addr2","성동구");
+
 
         StringBuffer buffer1=new StringBuffer();
         Calendar cal2 = Calendar.getInstance();
