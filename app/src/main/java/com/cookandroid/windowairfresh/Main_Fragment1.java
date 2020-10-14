@@ -3,7 +3,6 @@ package com.cookandroid.windowairfresh;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,44 +88,39 @@ public class Main_Fragment1 extends Fragment {
             }
         });
 
-        final Handler handler = new Handler();
+
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        data= getXmlData1();
+                data= getXmlData1();
 
-                        // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
-                        Start_index = data.indexOf("PTY:");
-                        End_index = data.indexOf("/",Start_index);
-                        String pty = data.substring(Start_index+4,End_index);
-                        //습도 파싱
-                        Start_index = data.indexOf("REH:");
-                        End_index = data.indexOf("/",Start_index);
-                        String reh = data.substring(Start_index+4,End_index);
-                        //온도 파싱
-                        Start_index = data.indexOf("T1H:");
-                        End_index = data.indexOf("/",Start_index);
-                        String t1h = data.substring(Start_index+4,End_index);
-                        //미세먼지 파싱
-                        data2=getXmlData2();
+                // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
+                Start_index = data.indexOf("PTY:");
+                End_index = data.indexOf("/",Start_index);
+                String pty = data.substring(Start_index+4,End_index);
+                //습도 파싱
+                Start_index = data.indexOf("REH:");
+                End_index = data.indexOf("/",Start_index);
+                String reh = data.substring(Start_index+4,End_index);
+                //온도 파싱
+                Start_index = data.indexOf("T1H:");
+                End_index = data.indexOf("/",Start_index);
+                String t1h = data.substring(Start_index+4,End_index);
+                //미세먼지 파싱
+                data2=getXmlData2();
 
-                        temp1.setText(t1h);
-                        humid1.setText(reh);
-                        micro1.setText(data2);
+                temp1.setText(t1h);
+                humid1.setText(reh);
+                micro1.setText(data2);
 
-                        //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
-                        SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
-                        if(pf1.getBoolean("show", true)==true) {
-                            Intent intent = new Intent(getContext(), HelpActivity.class);
-                            startActivity(intent);
-                    }
-                    }
-                });
+                //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
+                SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
+                if(pf1.getBoolean("show", true)==true) {
+                    Intent intent = new Intent(getContext(), HelpActivity.class);
+                    startActivity(intent);
                 }
+            }
         }).start();
         return view;
     }
