@@ -9,9 +9,10 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class Main_Fragment3 extends Fragment {
-    ViewPager viewpager;
+    ViewPager2 viewpager;
     private Button windowadd;
 
     public Main_Fragment3() {
@@ -22,7 +23,7 @@ public class Main_Fragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_main_fragment3, container, false);
+        ViewGroup view = (ViewGroup)  inflater.inflate(R.layout.activity_main_fragment3, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
         windowadd = (Button) view.findViewById(R.id.windowadd);
         windowadd.setOnClickListener(new View.OnClickListener() {

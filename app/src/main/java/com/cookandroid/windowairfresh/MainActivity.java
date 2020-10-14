@@ -1,17 +1,15 @@
 package com.cookandroid.windowairfresh;
 
-import android.Manifest;
-import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +18,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,9 +34,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import me.relex.circleindicator.CircleIndicator;
+import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,11 +53,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ConnectedThread ConnectedThread;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "90:D3:51:F9:26:E0";
+    public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
-    ViewPager viewpager;
-    CircleIndicator indicator;
+    ViewPager2 viewpager;
+    CircleIndicator3 indicator;
     WindowListAdapter adapter;
     TextView tvdate, thermometer, humid, micro;
     DrawerLayout drawerLayout;
@@ -61,37 +66,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     Handler handler;
     SwipeRefreshLayout swipeRefreshLayout;
-    final int WindowList_REQUEST = 2020;
-    Main_SlideAdapter slideadapter;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-
-        if (resultCode == RESULT_OK && requestCode == WindowList_REQUEST) {
-            if (adapter.listViewItemList.isEmpty()) {
-                address = "90:D3:51:F9:26:E0";
-            } else {
-                WindowDetails listViewItem = adapter.listViewItemList.get(0);
-                address = listViewItem.getAddress();
-            }
-            setResult(RESULT_OK, data);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
+    FragmentStateAdapter slideadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-       /* FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frag,new Main_Fragment1());
-        fragmentTransaction.commit();*/
-
-        viewpager = findViewById(R.id.viewpager);
 
 
         databaseManager = DatabaseManager.getInstance(this);
@@ -99,10 +79,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
 
-        slideadapter = new Main_SlideAdapter(getSupportFragmentManager(), databaseManager);
+        if (databaseManager != null){
+            checklist = databaseManager.getAll();
+        }
+        if (adapter.listViewItemList.isEmpty()) {
+            address = "90:D3:51:F9:26:E0";
+        } else {
+            WindowDetails listViewItem = adapter.listViewItemList.get(0);
+            address = listViewItem.getAddress();
+        }
+
+        //fragment 관련
+        viewpager = findViewById(R.id.viewpager);
+        slideadapter = new Main_SlideAdapter(this, databaseManager);
         viewpager.setAdapter(slideadapter);
-
-
         indicator = findViewById(R.id.indicator);
         indicator.setViewPager(viewpager);
 
@@ -176,7 +166,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (viewpager.getCurrentItem() == 0) {
+            super.onBackPressed();}
+            else{
+                // Otherwise, select the previous step.
+                viewpager.setCurrentItem(viewpager.getCurrentItem() - 1);
+            }
         }
     }
 
@@ -199,8 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent3);
 
             case R.id.window:
-                Intent intent4 = new Intent(MainActivity.this, WindowlistActivity.class);
-                startActivityForResult(intent4, WindowList_REQUEST);
+                startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
         }
         return true;
     }
@@ -283,6 +277,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResume() {
         super.onResume();
+        slideadapter = new Main_SlideAdapter(this, databaseManager);
+        slideadapter.notifyDataSetChanged();
+        viewpager.setAdapter(slideadapter);
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
         try {
             btSocket = createBluetoothSocket(device);
