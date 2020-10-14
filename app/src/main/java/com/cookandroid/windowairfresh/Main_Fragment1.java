@@ -131,7 +131,7 @@ public class Main_Fragment1 extends Fragment {
     String getXmlData1(){
 
         SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
-        String address1 = pf2.getString("addr1","서울시")+pf2.getString("addr2","성동구");
+        String address1 = pf2.getString("addr1","서울시");
         String address2 = pf2.getString("addr2","성동구");
 
 
