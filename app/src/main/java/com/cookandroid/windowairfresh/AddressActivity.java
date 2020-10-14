@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cookandroid.windowairfresh.R;
+
 public class AddressActivity extends AppCompatActivity {
 
     @Override
