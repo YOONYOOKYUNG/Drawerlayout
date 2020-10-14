@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,6 @@ public class Main_Fragment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         View view =  inflater.inflate(R.layout.activity_main_fragment2, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);

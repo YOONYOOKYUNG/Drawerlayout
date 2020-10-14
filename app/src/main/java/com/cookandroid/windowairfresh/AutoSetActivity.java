@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cookandroid.windowairfresh.R;
+
 public class AutoSetActivity extends AppCompatActivity {
     Button manual_mode, auto_mode, custom_mode;
     LinearLayout manual_layout,auto_layout;

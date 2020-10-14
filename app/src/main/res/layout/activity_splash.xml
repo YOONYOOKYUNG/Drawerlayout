@@ -25,5 +25,4 @@
         android:layout_below="@+id/waflogo"
         app:SpinKit_Color="#FFFFFF" />
 
-
 </RelativeLayout>

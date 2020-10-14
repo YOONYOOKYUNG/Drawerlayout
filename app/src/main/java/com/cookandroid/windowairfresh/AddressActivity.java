@@ -1,17 +1,14 @@
 package com.cookandroid.windowairfresh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-public class ActlogActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class AddressActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actlog);
-
-
-
+        setContentView(R.layout.activity_address);
     }
 }
