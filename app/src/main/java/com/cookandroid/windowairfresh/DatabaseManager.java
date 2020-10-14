@@ -58,12 +58,13 @@ public class DatabaseManager {
 
 
 
-    // 위도/경도 엑셀db화
+
     public static final String Address_si = "si";
     public static final String Address_gu = "gu";
     public static final String Location_x = "x";
     public static final String Location_y = "y";
 
+    //Location 항목 추가  (위도/경도 엑셀db화)
     public long createNote(String si, String gu, String x, String y) {
 
         ContentValues initialValues = new ContentValues();
@@ -76,6 +77,33 @@ public class DatabaseManager {
         return mydatabase.insert(Location_TABLE_NAME, null, initialValues);
     }
 
+
+    public String selectNote(String si, String gu) {
+
+        String location = null;
+        String sqlSelect = "SELECT * FROM " + Location_TABLE_NAME;
+        Cursor cursor = null;
+
+        cursor = mydatabase.rawQuery(sqlSelect, null);
+
+        while (cursor.moveToNext()) {
+
+            if(si.equals(cursor.getString(1))){
+                Log.d("00", "성공1 ");
+                if(gu.equals(cursor.getString(2))){
+                    location = cursor.getString(3)+","+cursor.getString(4);
+                    Log.d("00","location : "+location);
+                    break;
+                }
+
+            }
+        }
+        cursor.close();
+        return location;
+    }
+
+
+    //Location table 비어있는지 확인
     public boolean isDbEmpty() {
         try {
             Cursor c = mydatabase.rawQuery("SELECT * FROM " + Location_TABLE_NAME, null);
@@ -92,21 +120,18 @@ public class DatabaseManager {
     }
 
     //창문추가
-    public long insert(ContentValues addRowValue)
-    {
+    public long insert(ContentValues addRowValue) {
         return mydatabase.insert(Window_TABLE_NAME, null, addRowValue);
     }
 
     //창문삭제
-    public Integer delete (String name)
-    {
+    public Integer delete (String name) {
         return mydatabase.delete(Window_TABLE_NAME,
                 "name = ?", new String[] { name });
     }
 
     //창문db얻어오기
-    public ArrayList<WindowDetails> getAll()
-    {
+    public ArrayList<WindowDetails> getAll() {
         ArrayList<WindowDetails> array_list = new ArrayList<WindowDetails>();
 
         String sqlSelect = "SELECT * FROM " + Window_TABLE_NAME;
@@ -124,6 +149,7 @@ public class DatabaseManager {
             array_list.add(newAdapter);
         }
 
+        cursor.close();
         return array_list;
     }
 }

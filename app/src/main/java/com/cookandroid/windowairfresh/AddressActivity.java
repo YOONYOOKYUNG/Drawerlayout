@@ -16,9 +16,6 @@ import java.io.InputStream;
 import jxl.Sheet;
 import jxl.Workbook;
 
-
-import com.cookandroid.windowairfresh.R;
-
 public class AddressActivity extends AppCompatActivity {
 
     Spinner spinner1, spinner2;
@@ -26,6 +23,7 @@ public class AddressActivity extends AppCompatActivity {
     private DatabaseManager databaseManager;
     Workbook workbook = null;
     Sheet sheet = null;
+    String location;
 
 
     @Override
@@ -48,10 +46,18 @@ public class AddressActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String user_si = spinner1.getSelectedItem().toString();
+                String user_gu = spinner2.getSelectedItem().toString();
+
+
+                location = databaseManager.selectNote(user_si,user_gu);
+
+                String location2[] = location.split(",");
+
                 SharedPreferences pf = getSharedPreferences("address", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pf.edit();
-                editor.putString("addr1", spinner1.getSelectedItem().toString());
-                editor.putString("addr2", spinner2.getSelectedItem().toString());
+                editor.putString("addr1", location2[0]);
+                editor.putString("addr2", location2[1]);
                 editor.commit();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -69,8 +75,6 @@ public class AddressActivity extends AppCompatActivity {
         Log.w("ExcelToDatabase", "copyExcelDataToDatabase()");
 
         AssetManager am = getResources().getAssets();
-
-
 
         try {
             //assets폴더에 있는 엑셀파일을 가져옴.(폴더가 없다면 생성해야 함) xls 파일만 지원원

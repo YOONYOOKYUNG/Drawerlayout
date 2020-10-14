@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -95,39 +94,42 @@ public class Main_Fragment1 extends Fragment {
 
             public void run() {
 
-                data= getXmlData1();
-                data2=getXmlData2();
+            data= getXmlData1();
+            data2=getXmlData2();
             handler.post(new Runnable() {
-            @Override
-        public void run() {
-        Start_index = data.indexOf("PTY:");
-        End_index = data.indexOf("/",Start_index);
-        String pty = data.substring(Start_index+4,End_index);
-        //습도 파싱
-        Start_index = data.indexOf("REH:");
-        End_index = data.indexOf("/",Start_index);
-        String reh = data.substring(Start_index+4,End_index);
-        //온도 파싱
-        Start_index = data.indexOf("T1H:");
-        End_index = data.indexOf("/",Start_index);
-        String t1h = data.substring(Start_index+4,End_index);
-        //미세먼지 파싱
+                @Override
+                public void run() {
 
-        temp1.setText(t1h);
-        humid1.setText(reh);
-        micro1.setText(data2);
+                    // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
+                    Start_index = data.indexOf("PTY:");
+                    End_index = data.indexOf("/",Start_index);
+                    String pty = data.substring(Start_index+4,End_index);
+                    //습도 파싱
+                    Start_index = data.indexOf("REH:");
+                    End_index = data.indexOf("/",Start_index);
+                    String reh = data.substring(Start_index+4,End_index);
+                    //온도 파싱
+                    Start_index = data.indexOf("T1H:");
+                    End_index = data.indexOf("/",Start_index);
+                    String t1h = data.substring(Start_index+4,End_index);
+                    //미세먼지 파싱
 
-        //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
-        SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
-        if(pf1.getBoolean("show", true)==true) {
-            Intent intent = new Intent(getContext(), HelpActivity.class);
-            startActivity(intent);
-        }
-    }
-});
+                    temp1.setText(t1h);
+                    humid1.setText(reh);
+                    micro1.setText(data2);
+
+                    //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
+                    SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
+
+                    if(pf1.getBoolean("show", true)==true) {
+                        Intent intent = new Intent(getContext(), HelpActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
 
 
-                // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
+
 
             }
         }).start();
@@ -139,18 +141,42 @@ public class Main_Fragment1 extends Fragment {
 
     String getXmlData1(){
 
-        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
-        String address1 = pf2.getString("addr1","서울시");
-        String address2 = pf2.getString("addr2","성동구");
-
-
         StringBuffer buffer1=new StringBuffer();
-        Calendar cal2 = Calendar.getInstance();
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
-        cal2.add(Calendar.DATE,0);
-        String today = sdf2.format(cal2.getTime());
 
-        String queryUrl1= "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?serviceKey=pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D&numOfRows=10&pageNo=1&base_date=" +today+ "&base_time=0000&nx=55&ny=127";
+        // 온습도 api 서비스키
+        String serviceKey1 = "pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D";
+
+        // nx,ny 좌표
+        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
+        String address1 = pf2.getString("addr1","61"); //측정소 xy좌표 뽑아왔을때 null이면
+        String address2 = pf2.getString("addr2","127");  // 서울 성동구의 임의 값 넣어줌.
+
+        // today 날짜 , time 시간
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, 0);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("HH");
+        SimpleDateFormat sdf1_1 = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf1_2 = new SimpleDateFormat("mm");
+        String time1_hours = sdf1.format(cal1.getTime());
+        String time1_minute = sdf1_2.format(cal1.getTime());
+        String today1 = sdf1_1.format(cal1.getTime());
+        if (time1_hours.equals("00")){ //만약 시간이 오전 00시일 경우 ---> 날짜:전날, 시간:23:00로 바꿔줌.
+            cal1.add(Calendar.DATE,-1);
+            today1 = sdf1_1.format(cal1.getTime());
+            time1_hours="2300";
+        }else {                         //시간이 1~23시일 경우
+            if (Integer.parseInt(time1_minute) <= 40) { //40분 이하일 경우 --> 1시간 전 으로 바꿔줌
+                cal1.add(Calendar.HOUR, -1);// api 자체가 매시간 40분에 갱신됨.
+                time1_hours = sdf1.format(cal1.getTime());
+                time1_hours = time1_hours.concat("00");
+            }
+            if(time1_hours.length()<=2)
+                time1_hours = time1_hours.concat("00");
+        }
+
+        // 접속 url
+        String queryUrl1= "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?serviceKey="+serviceKey1+
+                "&numOfRows=10&pageNo=1&base_date=" +today1+ "&base_time="+time1_hours+"&nx=" +address1+ "&ny="+address2;
 
 
         try {
@@ -169,7 +195,6 @@ public class Main_Fragment1 extends Fragment {
             while( eventType != XmlPullParser.END_DOCUMENT ){
                 switch( eventType ){
                     case XmlPullParser.START_DOCUMENT:
-                        buffer1.append("파싱 시작...\n\n");
                         break;
 
                     case XmlPullParser.START_TAG:
@@ -248,7 +273,7 @@ public class Main_Fragment1 extends Fragment {
                 }
                 eventType= xpp.next();
             }
-            String ts = buffer2.substring(2,4);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
