@@ -16,22 +16,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +40,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
     private DatabaseManager databaseManager;
     private ProgressDialog mProgressDlg; //로딩중 화면
-    private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
+    private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<>(); //블루투스 주소를 여기에 저장
     private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
     //블투1
     private static final String TAG = "bluetooth2";
@@ -55,7 +50,7 @@ public class WindowlistActivity extends AppCompatActivity {
     private StringBuilder sb = new StringBuilder();
     private static int flag = 0;
     private ConnectedThread mConnectedThread;
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    BluetoothDevice device;
     private static String address="98:D3:51:F9:26:E0";
     //블투1
     ImageButton btn1;
@@ -81,7 +76,7 @@ public class WindowlistActivity extends AppCompatActivity {
             if(adapter==null) {
                 Log.d("dhkim", "adapter is null ");
             } else {
-                adapter.addItem(addedWindowName,address,false); //세번째 블루투스어드레스는 주소값을 넣어주면됨
+                adapter.addItem(addedWindowName,address,true); //세번째 블루투스어드레스는 주소값을 넣어주면됨
                 adapter.notifyDataSetChanged();
             }
             return;
@@ -135,7 +130,7 @@ public class WindowlistActivity extends AppCompatActivity {
         gridView.setAdapter(adapter);
         SharedPreferences sf = getSharedPreferences(sfName, 0);
         mode = sf.getString("state", ""); // 키값으로
-        if (mode=="auto"){
+        if (mode.equals("auto")){
             gridView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -149,7 +144,7 @@ public class WindowlistActivity extends AppCompatActivity {
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
             @Override
             public void onWindowButtonClick(int pos) {
-                WindowListAdapter listViewItem = adapter.listViewItemList.get(pos);
+                WindowDetails listViewItem = adapter.listViewItemList.get(pos);
                 address=listViewItem.getAddress();
                 state=listViewItem.getState();
                 //address="98:D3:51:F9:26:E0";
@@ -210,8 +205,8 @@ public class WindowlistActivity extends AppCompatActivity {
 
 
 
-        for(int i=0;i<adapter.getCount();i++){
-            WindowListAdapter item=(WindowListAdapter)adapter.getItem(i); }
+      for(int i=0;i<adapter.getCount();i++){
+      WindowDetails  item=(WindowDetails) adapter.getItem(i); }
 
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
@@ -226,7 +221,7 @@ public class WindowlistActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         try     {
-            btSocket.close();
+                btSocket.close();
         } catch (IOException e2) {
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
         }
@@ -247,10 +242,19 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
-        //블루투스 연결을 끊거나 앱 종료 시 반드시 리시버를 해지 해야 한다.
-        super.onDestroy();
+        try {
+            unregisterReceiver(mReceiver);
+            //블루투스 연결을 끊거나 앱 종료 시 반드시 리시버를 해지 해야 한다.
+        } catch (IllegalArgumentException e){
+
+        } catch (Exception e) {
+
+        }finally {
+            super.onDestroy();
+        }
     }
+
+
 
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -259,7 +263,7 @@ public class WindowlistActivity extends AppCompatActivity {
             //각 action에 따른 반응
             if  (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //블루투스 디바이스 검색 시작
-                mDeviceList = new ArrayList<BluetoothDevice>();
+                mDeviceList = new ArrayList<>();
                 //블루투스 기기 목록 갱신
                 mProgressDlg.show();
                 //로딩중화면 표시
@@ -289,14 +293,13 @@ public class WindowlistActivity extends AppCompatActivity {
 
     //블투 소켓 코드
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        if(Build.VERSION.SDK_INT >= 10){
+        UUID MY_UUID = UUID.fromString(device.getUuids()[0].getUuid().toString());
             try {
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
                 return (BluetoothSocket) m.invoke(device, MY_UUID);
             } catch (Exception e) {
                 Log.e(TAG, "Could not create Insecure RFComm Connection",e);
             }
-        }
         return  device.createRfcommSocketToServiceRecord(MY_UUID);
     }
 
@@ -327,11 +330,11 @@ public class WindowlistActivity extends AppCompatActivity {
         // Establish the connection.  This will block until it connects.
         Log.d(TAG, "...Connecting...");
         try {
-            btSocket.connect();
+                btSocket.connect();
             Log.d(TAG, "....Connection ok...");
         } catch (IOException e) {
             try {
-                btSocket.close();
+                    btSocket.close();
             } catch (IOException e2) {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
@@ -339,10 +342,8 @@ public class WindowlistActivity extends AppCompatActivity {
 
         // Create a data stream so we can talk to server.
         Log.d(TAG, "...Create Socket...");
-
-        mConnectedThread = new WindowlistActivity.ConnectedThread(btSocket);
-        mConnectedThread.start();
-    }
+         mConnectedThread = new WindowlistActivity.ConnectedThread(btSocket);
+        mConnectedThread.start();}
 
 
     private void errorExit(String title, String message){
@@ -401,7 +402,7 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        finish();
+        WindowlistActivity.this.finish();
         super.onBackPressed();
     }
 }

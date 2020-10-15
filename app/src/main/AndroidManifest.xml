@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cookandroid.windowairfresh"
-    android:versionCode="1"
-    android:versionName="1.0.0" >
+    package="com.cookandroid.windowairfresh">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -19,21 +18,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".AddressActivity"/>
         <activity android:name=".ActlogActivity" />
         <activity
             android:name=".HelpActivity"
-            android:theme="@style/AppTheme.help">
-        </activity>
-
+            android:theme="@style/AppTheme.help" />
         <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
         <activity
             android:name=".WindowNameActivity"
             android:theme="@android:style/Theme.Holo.Dialog" /> <!-- dhkim end -->
         <activity
             android:name=".Popup_warning"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-           />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".BluetoothOnActivity" />
         <activity android:name=".AutoSetActivity" />
         <activity android:name=".MainActivity" />
@@ -42,24 +40,23 @@
         <activity android:name=".AlarmSpinnerActivity" />
         <activity
             android:name=".DeviceListActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <receiver
             android:name=".DeviceBootReceiver"
-            android:enabled="false" >
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

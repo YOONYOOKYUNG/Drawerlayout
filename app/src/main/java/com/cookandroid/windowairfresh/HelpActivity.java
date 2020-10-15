@@ -1,15 +1,15 @@
 package com.cookandroid.windowairfresh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
-public class HelpActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.cookandroid.windowairfresh.R;
+
+public class HelpActivity extends AppCompatActivity {
 
     ImageView cancel;
 
@@ -18,14 +18,17 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-
-       cancel = findViewById(R.id.cancel);
-       cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+           cancel = findViewById(R.id.cancel);
+           cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences pf = getSharedPreferences("help", MODE_PRIVATE);
+                    SharedPreferences.Editor editor =pf.edit();
+                    editor.putBoolean("show", false); //First라는 key값으로 infoFirst 데이터를 저장한다.
+                    editor.commit();
+                    finish();
+                }
+            });
 
 
 }

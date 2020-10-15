@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HelpActivity"
+    android:background="@color/white"
+    >
+
+    <ImageView
+        android:id="@+id/nowindow"
+        android:layout_width="304dp"
+        android:layout_height="319dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="68dp"
+        android:src="@drawable/nowindow" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="등록된 창문이 없습니다."
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginTop="380dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:text="창문을 추가하고 집안의 상태를 확인하세요!"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/windowadd"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/textView2"
+        android:text="창문추가"
+        android:textSize="20dp"
+        android:background="@drawable/modebtn"/>
+
+
+</RelativeLayout >
