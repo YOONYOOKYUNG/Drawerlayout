@@ -46,8 +46,6 @@
             android:layout_alignParentBottom="true"
             android:padding="20dp">
 
-
-
             <RelativeLayout
                 android:id="@+id/therlayout"
                 android:layout_width="360dp"

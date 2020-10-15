@@ -12,7 +12,25 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/fragment2">
+
+            <RelativeLayout
+                android:layout_margin="20dp"
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/main_layout_shape">
+
+                <TextView
+                    android:id="@+id/location_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="서울시 성동구 사근동" />
+            </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/rl4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20dp"
@@ -24,7 +42,6 @@
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:textColor="@color/colorFont"
-            android:layout_below="@+id/main_icon"
             android:layout_centerHorizontal="true"/>
 
         <RelativeLayout
