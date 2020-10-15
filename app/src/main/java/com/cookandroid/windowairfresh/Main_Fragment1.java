@@ -56,7 +56,7 @@ public class Main_Fragment1 extends Fragment {
         viewpager = getActivity().findViewById(R.id.viewpager);
 
 
-        thermometer1 = view.findViewById(R.id.thermometer1);
+        thermometer1 = view.findViewById(R.id.temp1);
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
 
