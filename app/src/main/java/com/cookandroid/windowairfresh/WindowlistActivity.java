@@ -38,31 +38,20 @@ import java.util.UUID;
 
 public class WindowlistActivity extends AppCompatActivity {
 
+
     private DatabaseManager databaseManager;
     private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<>(); //블루투스 주소를 여기에 저장
     private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
-    //블투1
-    private static final String TAG = "bluetooth2";
-    Handler h;
-    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
-    private BluetoothSocket btSocket = null;
-    private StringBuilder sb = new StringBuilder();
-    private static int flag = 0;
-    private ConnectedThread mConnectedThread;
-    BluetoothDevice device;
-    private static String address="98:D3:51:F9:26:E0";
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    //블투1
     ImageButton btn1;
     ImageView backarrow;
     GridView gridView;
     WindowListAdapter adapter;
     TextView main_label;
     String sfName = "File";
-    Boolean state;
     String mode;
     final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
+
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -94,36 +83,11 @@ public class WindowlistActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
-
-        //블투2
-        h = new Handler() {
-            public void handleMessage(android.os.Message msg) {
-                switch (msg.what) {
-                    case RECIEVE_MESSAGE:
-                        byte[] readBuf = (byte[]) msg.obj;
-                        String strIncom = new String(readBuf, 0, msg.arg1);
-                        sb.append(strIncom);
-                        int endOfLineIndex = sb.indexOf("\r\n");
-                        if (endOfLineIndex > 0) {
-                            String sbprint = sb.substring(0, endOfLineIndex);
-                            sb.delete(0, sb.length());
-                            // txtArduino.setText(sbprint);
-                            flag++;
-                        }
-                        break;
-                }
-            };
-        };
-        //블투2
-
-
         btn1 = findViewById(R.id.btn1);
-
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
-
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         main_label = (TextView) findViewById(R.id.main_label);
         //final Switch switch1 = findViewById(R.id.switch1);
@@ -145,18 +109,7 @@ public class WindowlistActivity extends AppCompatActivity {
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
             @Override
             public void onWindowButtonClick(int pos) {
-                WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-                address=listViewItem.getAddress();
-                state=listViewItem.getState();
-                //address="98:D3:51:F9:26:E0";
-                Log.d("테스트", "주소 : " + address);
-                if(state)
-                {mConnectedThread.write("3");
-                listViewItem.setState(false);
-                }
-                else
-                {mConnectedThread.write("2");
-                listViewItem.setState(true); }
+                ((MainActivity)MainActivity.mContext).motor(pos);
             }
         });
 
@@ -221,11 +174,6 @@ public class WindowlistActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        try     {
-                btSocket.close();
-        } catch (IOException e2) {
-            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
-        }
         if (mBluetoothAdapter != null) {
             //장치가 블루투스를 지원하는 경우
             ActivityCompat.requestPermissions(this,
@@ -240,22 +188,6 @@ public class WindowlistActivity extends AppCompatActivity {
         }
         super.onPause();
     }
-
-    @Override
-    public void onDestroy() {
-        try {
-            unregisterReceiver(mReceiver);
-            //블루투스 연결을 끊거나 앱 종료 시 반드시 리시버를 해지 해야 한다.
-        } catch (IllegalArgumentException e){
-
-        } catch (Exception e) {
-
-        }finally {
-            super.onDestroy();
-        }
-    }
-
-
 
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -287,118 +219,9 @@ public class WindowlistActivity extends AppCompatActivity {
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 //추가된 값 받아오기
                 mDeviceList.add(device);
-
             }
         }
     };
-
-    //블투 소켓 코드
-    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-            try {
-                final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
-                return (BluetoothSocket) m.invoke(device, MY_UUID);
-            } catch (Exception e) {
-                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
-            }
-        return  device.createRfcommSocketToServiceRecord(MY_UUID);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Log.d(TAG, "...onResume - try connect...");
-
-        // Set up a pointer to the remote node using it's address.
-        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-
-        // Two things are needed to make a connection:
-        //   A MAC address, which we got above.
-        //   A Service ID or UUID.  In this case we are using the
-        //     UUID for SPP.
-
-        try {
-            btSocket = createBluetoothSocket(device);
-        } catch (IOException e) {
-            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
-        }
-
-        // Discovery is resource intensive.  Make sure it isn't going on
-        // when you attempt to connect and pass your message.
-        mBluetoothAdapter.cancelDiscovery();
-
-        // Establish the connection.  This will block until it connects.
-        Log.d(TAG, "...Connecting...");
-        try {
-                btSocket.connect();
-            Log.d(TAG, "....Connection ok...");
-        } catch (IOException e) {
-            try {
-                    btSocket.close();
-            } catch (IOException e2) {
-                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
-            }
-        }
-
-        // Create a data stream so we can talk to server.
-        Log.d(TAG, "...Create Socket...");
-         mConnectedThread = new WindowlistActivity.ConnectedThread(btSocket);
-        mConnectedThread.start();}
-
-
-    private void errorExit(String title, String message){
-        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-        finish();
-    }
-
-    private class ConnectedThread extends Thread {
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
-
-        public ConnectedThread(BluetoothSocket socket) {
-            InputStream tmpIn = null;
-            OutputStream tmpOut = null;
-
-            // Get the input and output streams, using temp objects because
-            // member streams are final
-            try {
-                tmpIn = socket.getInputStream();
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
-
-            mmInStream = tmpIn;
-            mmOutStream = tmpOut;
-        }
-
-        public void run() {
-            byte[] buffer = new byte[256];  // buffer store for the stream
-            int bytes; // bytes returned from read()
-
-            // Keep listening to the InputStream until an exception occurs
-            while (true) {
-                try {
-                    // Read from the InputStream
-                    bytes = mmInStream.read(buffer);        // Get number of bytes and message in "buffer"
-                    h.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
-                } catch (IOException e) {
-                    break;
-                }
-            }
-        }
-
-        /* Call this from the main activity to send data to the remote device */
-        public void write(String message) {
-            Log.d(TAG, "...Data to send: " + message + "...");
-            byte[] msgBuffer = message.getBytes();
-            try {
-                mmOutStream.write(msgBuffer);
-            } catch (IOException e) {
-                Log.d(TAG, "...Error data send: " + e.getMessage() + "...");
-            }
-        }
-    }
-    //블투 소켓 코드
-
 
     @Override
     public void onBackPressed(){

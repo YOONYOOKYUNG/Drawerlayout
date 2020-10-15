@@ -3,6 +3,7 @@ package com.cookandroid.windowairfresh;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "90:D3:51:F9:26:E0";
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
+    Boolean state;
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Handler handler;
     SwipeRefreshLayout swipeRefreshLayout;
     FragmentStateAdapter slideadapter;
+    public static Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
+        mContext=this;
     }
 
     public void onBackPressed() {
@@ -174,7 +177,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
-
+//창문설정
+    public void motor(int pos){
+        Log.d("유리", "실행된 : ");
+        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+        address=listViewItem.getAddress();
+        state=listViewItem.getState();
+        //address="98:D3:51:F9:26:E0";
+        if(state)
+        {ConnectedThread.write("3");
+            listViewItem.setState(false);
+        }
+        else
+        {ConnectedThread.write("2");
+            listViewItem.setState(true); }
+    }
     //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
@@ -299,13 +316,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ConnectedThread.start();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        try     {
-                btSocket.close();
-        } catch (IOException e2) {
-            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
-        }
-    }
 }

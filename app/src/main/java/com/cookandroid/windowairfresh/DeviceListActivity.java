@@ -59,7 +59,7 @@ public class DeviceListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_devicelist);
 		//어느 페이지의 레이아웃인가요?
-			mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
+		mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
 			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
 			mListView = (ListView) findViewById(R.id.lv_paired);
 			btrefreshbutton = (Button) findViewById(R.id.btrefresh);
@@ -248,4 +248,9 @@ public class DeviceListActivity extends AppCompatActivity {
 			}
 		}
 	};
+	@Override
+	public void onBackPressed(){
+		DeviceListActivity.this.finish();
+		super.onBackPressed();
+	}
 }
