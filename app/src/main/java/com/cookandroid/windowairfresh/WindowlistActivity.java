@@ -52,6 +52,7 @@ public class WindowlistActivity extends AppCompatActivity {
     private ConnectedThread mConnectedThread;
     BluetoothDevice device;
     private static String address="98:D3:51:F9:26:E0";
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     //블투1
     ImageButton btn1;
     ImageView backarrow;
@@ -293,7 +294,6 @@ public class WindowlistActivity extends AppCompatActivity {
 
     //블투 소켓 코드
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        UUID MY_UUID = UUID.fromString(device.getUuids()[0].getUuid().toString());
             try {
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
                 return (BluetoothSocket) m.invoke(device, MY_UUID);
