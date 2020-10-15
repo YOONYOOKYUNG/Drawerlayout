@@ -231,7 +231,9 @@ public class Main_Fragment1 extends Fragment {
     String getXmlData2(){
         StringBuffer buffer2=new StringBuffer();
 
-        String queryUrl2= "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=%EC%A2%85%EB%A1%9C%EA%B5%AC&dataTerm=DAILY&pageNo=1&numOfRows=1&ServiceKey=pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D&ver=1.3";
+        String queryUrl2= "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?" +
+                "stationName=%EA%B0%95%EB%82%A8%EA%B5%AC&dataTerm=DAILY&pageNo=1&numOfRows=1&" +
+                "ServiceKey=pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D&ver=1.3";
         try {
             URL url2= new URL(queryUrl2);//문자열로 된 요청 url을 URL 객체로 생성.
             InputStream is2= url2.openStream(); //url위치로 입력스트림 연결

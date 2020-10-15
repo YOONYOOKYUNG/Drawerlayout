@@ -207,11 +207,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Keep listening to the InputStream until an exception occurs
             while (true) {
                 try {
-
+                    Thread.sleep(1000);
                     bytes = InputStream.read(buffer);        // Get number of bytes and message in "buffer"
-                    if(bytes>4)
-                        handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
-                } catch (IOException e) {
+                    handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                } catch (IOException | InterruptedException e) {
                     break;
                 }
             }
@@ -255,29 +254,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
             ConnectedThread.write("1");
+
+
+            //handler.postDelayed(new Handler(),1000)
+
             handler = new Handler() {
                 public void handleMessage(android.os.Message msg) {
                     switch (msg.what) {
                         case RECIEVE_MESSAGE:
-                            sb.delete(0, sb.length());
                             byte[] readBuf = (byte[]) msg.obj;
+
                             String strIncom = new String(readBuf, 0, msg.arg1);
                             Log.d("a2", strIncom);
                             sb.append(strIncom);
-                            Log.d("a2", String.valueOf(sb));
+                            Log.d("a3", String.valueOf(sb));
 
                             int endOfLineIndex = sb.indexOf("\r\n");
-                            Log.d("a3", String.valueOf(endOfLineIndex));
+                            Log.d("a4", String.valueOf(endOfLineIndex));
                             if (endOfLineIndex > 0) {
                                 String sbprint = sb.substring(0, endOfLineIndex);
-                                Log.d("a4", sbprint);
+                                Log.d("a5", sbprint);
                                 sb.delete(0, sb.length());
 
                                 String[] array = sbprint.split("#");
-                                Log.d("a5", array[0]);
-                                Log.d("a5", array[1]);
-                                Log.d("a5", array[2]);
-                                Log.d("a5", array[3]);
+
+                                Log.d("a6", array[0]);
+                                Log.d("a6", array[1]);
+                                Log.d("a6", array[2]);
+                                Log.d("a6", array[3]);
 
                                 SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
                                 SharedPreferences.Editor editor =pf.edit();
@@ -291,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             break;
                     }
                 }
-        };
+            };
 
     }
 
