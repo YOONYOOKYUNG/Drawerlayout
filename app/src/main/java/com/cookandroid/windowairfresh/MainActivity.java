@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "90:D3:51:F9:26:E0";
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
-    Boolean state;
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
@@ -178,19 +177,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 //창문설정
-    public void motor(int pos){
-        Log.d("유리", "실행된 : ");
+    public void openwindow(int pos){
         WindowDetails listViewItem = adapter.listViewItemList.get(pos);
         address=listViewItem.getAddress();
-        state=listViewItem.getState();
-        //address="98:D3:51:F9:26:E0";
-        if(state)
-        {ConnectedThread.write("3");
-            listViewItem.setState(false);
-        }
-        else
-        {ConnectedThread.write("2");
-            listViewItem.setState(true); }
+        ConnectedThread.write("2");
+    }
+    //창문설정
+    public void closewindow(int pos){
+        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+        address=listViewItem.getAddress();
+        ConnectedThread.write("3");
     }
     //menu
     @Override

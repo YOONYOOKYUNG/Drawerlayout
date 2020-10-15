@@ -109,7 +109,19 @@ public class WindowlistActivity extends AppCompatActivity {
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
             @Override
             public void onWindowButtonClick(int pos) {
-                ((MainActivity)MainActivity.mContext).motor(pos);
+                WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+                Boolean state=listViewItem.getState();
+                ((MainActivity)MainActivity.mContext).openwindow(pos);
+                if(state)
+                {
+                    listViewItem.setState(false);
+                    ((MainActivity)MainActivity.mContext).closewindow(pos);
+                }
+                else
+                {
+                    listViewItem.setState(true);
+                    ((MainActivity)MainActivity.mContext).openwindow(pos);
+                }
             }
         });
 
