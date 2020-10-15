@@ -46,7 +46,7 @@
                 android:layout_centerHorizontal="true"/>
 
             <RelativeLayout
-                android:id="@+id/therlayout"
+                android:id="@+id/templayout"
                 android:layout_width="360dp"
                 android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
@@ -76,7 +76,7 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/thermometer"
+                    android:id="@+id/temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -94,7 +94,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/thermometer"
+                    android:layout_toRightOf="@id/temp"
                     android:text="℃"
                     android:textColor="@color/colorFont"
                     android:textSize="20dp" />
@@ -106,7 +106,7 @@
                 android:id="@+id/dustlayout"
                 android:layout_width="360dp"
                 android:layout_height="90dp"
-                android:layout_below="@id/therlayout"
+                android:layout_below="@id/templayout"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
                 android:background="@drawable/main_layout_shape">

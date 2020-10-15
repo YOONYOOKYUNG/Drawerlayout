@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.text.SimpleDateFormat;
@@ -17,8 +17,8 @@ import java.util.Calendar;
 public class Main_Fragment2 extends Fragment {
 
     ViewPager2 viewpager;
-    TextView tvdate, thermometer, humid, micro;
-    RelativeLayout therlayout, dustlayout, humidlayout;
+    TextView tvdate, temp, humid, micro;
+    RelativeLayout templayout, dustlayout, humidlayout;
 
     public Main_Fragment2() {
         // Required empty public constructor
@@ -34,7 +34,7 @@ public class Main_Fragment2 extends Fragment {
 
 
 
-        thermometer = view.findViewById(R.id.thermometer);
+        temp = view.findViewById(R.id.temp);
         micro = view.findViewById(R.id.micro);
         humid = view.findViewById(R.id.humid);
 
@@ -45,23 +45,27 @@ public class Main_Fragment2 extends Fragment {
         tvdate = view.findViewById(R.id.tvdate);
         tvdate.setText(today);
 
-        therlayout = view.findViewById(R.id.therlayout);
+        SharedPreferences pf1 = getContext().getSharedPreferences("fragment2",getContext().MODE_PRIVATE);
+        temp.setText(pf1.getString("temp","20"));
+        micro.setText(pf1.getString("dust","15"));
+        humid.setText(pf1.getString("humid","38"));
+
+        templayout = view.findViewById(R.id.templayout);
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
 
 
         //click -> popup1_temp
-        therlayout.setOnClickListener(new View.OnClickListener() {
+        templayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Popup customDialogPopup1 = new Popup(view.getContext());
-                customDialogPopup1.settemp(thermometer.getText().toString());
+                customDialogPopup1.settemp(temp.getText().toString());
                 customDialogPopup1.calltemppopup();
             }
         });
 
         //click -> popup2_dust
-
         dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,17 +76,15 @@ public class Main_Fragment2 extends Fragment {
         });
 
         //click -> popup3_humid
-
         humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Popup customDialogPopup1 = new Popup(view.getContext());
-                customDialogPopup1.settemp(thermometer.getText().toString());
+                customDialogPopup1.settemp(temp.getText().toString());
                 customDialogPopup1.sethumid(humid.getText().toString());
                 customDialogPopup1.callhumidpopup();
             }
         });
-
         return view;
     }
 }
