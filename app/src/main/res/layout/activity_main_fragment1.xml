@@ -6,7 +6,10 @@
     android:background="@color/colorPrimary"
     tools:context=".Main_Fragment1"
     android:id="@+id/frag">
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/bg"
         android:layout_width="wrap_content"
@@ -215,9 +218,8 @@
                 android:textColor="@color/colorFont"
                 android:textSize="19dp" />
 
-
+                </RelativeLayout>
+            </RelativeLayout>
         </RelativeLayout>
-
-        </RelativeLayout>
-    </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

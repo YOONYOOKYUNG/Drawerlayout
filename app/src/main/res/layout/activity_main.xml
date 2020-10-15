@@ -29,12 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <ImageView
-            android:src="@drawable/question3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:src="@drawable/question2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignEnd="@+id/toolbar"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_centerHorizontal="true"/>
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
