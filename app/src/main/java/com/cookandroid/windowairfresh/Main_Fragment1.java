@@ -113,7 +113,6 @@ public class Main_Fragment1 extends Fragment {
                     End_index = data.indexOf("/",Start_index);
                     String t1h = data.substring(Start_index+4,End_index);
                     //미세먼지 파싱
-
                     temp1.setText(t1h);
                     humid1.setText(reh);
                     micro1.setText(data2);
@@ -136,9 +135,7 @@ public class Main_Fragment1 extends Fragment {
         return view;
     }
 
-
-
-
+    
     String getXmlData1(){
 
         StringBuffer buffer1=new StringBuffer();
@@ -164,7 +161,7 @@ public class Main_Fragment1 extends Fragment {
             cal1.add(Calendar.DATE,-1);
             today1 = sdf1_1.format(cal1.getTime());
             time1_hours="2300";
-        }else {                         //시간이 1~23시일 경우
+        }else{                         //시간이 1~23시일 경우
             if (Integer.parseInt(time1_minute) <= 40) { //40분 이하일 경우 --> 1시간 전 으로 바꿔줌
                 cal1.add(Calendar.HOUR, -1);// api 자체가 매시간 40분에 갱신됨.
                 time1_hours = sdf1.format(cal1.getTime());

@@ -25,7 +25,6 @@ public class AddressActivity extends AppCompatActivity {
     Sheet sheet = null;
     String location;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

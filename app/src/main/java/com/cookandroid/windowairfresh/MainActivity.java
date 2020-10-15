@@ -5,27 +5,20 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -38,7 +31,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import me.relex.circleindicator.CircleIndicator;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static int flag = 0;
     private ConnectedThread ConnectedThread;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private static String address = "90:D3:51:F9:26:E0";
+    //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
+    private static String address = "98:D3:51:F9:28:05";
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
     Boolean state;
     //블루투스 관련 선언 종료(블투1)
@@ -62,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ViewPager2 viewpager;
     CircleIndicator3 indicator;
     WindowListAdapter adapter;
-    TextView tvdate, thermometer, humid, micro;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -86,7 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             checklist = databaseManager.getAll();
         }
         if (adapter.listViewItemList.isEmpty()) {
-            address = "90:D3:51:F9:26:E0";
+            //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
+            address = "98:D3:51:F9:28:05";
         } else {
             WindowDetails listViewItem = adapter.listViewItemList.get(0);
             address = listViewItem.getAddress();
@@ -99,46 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         indicator = findViewById(R.id.indicator);
         indicator.setViewPager(viewpager);
 
-
-        /*thermometer = findViewById(R.id.thermometer);
-        micro = findViewById(R.id.micro);
-        humid = findViewById(R.id.humid);*/
-
-
-        handler = new Handler() {
-            public void handleMessage(android.os.Message msg) {
-                switch (msg.what) {
-                    case RECIEVE_MESSAGE:
-                        sb.delete(0, sb.length());
-                        byte[] readBuf = (byte[]) msg.obj;
-                        String strIncom = new String(readBuf, 0, msg.arg1);
-                        Log.d("a2", strIncom);
-                        sb.append(strIncom);
-                        Log.d("a2", String.valueOf(sb));
-
-                        int endOfLineIndex = sb.indexOf("/");
-                        Log.d("a3", String.valueOf(endOfLineIndex));
-                        if (endOfLineIndex > 0) {
-                            String sbprint = sb.substring(0, endOfLineIndex);
-                            Log.d("a4", sbprint);
-                            sb.delete(0, sb.length());
-
-                            String[] array = sbprint.split("#");
-                            Log.d("a5", array[0]);
-
-                           /* thermometer.setText(array[0]);
-                            micro.setText(array[1]);
-                            humid.setText(array[2]);*/
-                            Log.d("a6", "값 띄움");
-
-                            flag++;
-                        }
-                        break;
-                }
-            }
-
-            ;
-        };
 
         //(블투2)
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
@@ -165,33 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mContext=this;
     }
 
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            if (viewpager.getCurrentItem() == 0) {
-            super.onBackPressed();}
-            else{
-                // Otherwise, select the previous step.
-                viewpager.setCurrentItem(viewpager.getCurrentItem() - 1);
-            }
-        }
-    }
-//창문설정
-    public void motor(int pos){
-        Log.d("유리", "실행된 : ");
-        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-        address=listViewItem.getAddress();
-        state=listViewItem.getState();
-        //address="98:D3:51:F9:26:E0";
-        if(state)
-        {ConnectedThread.write("3");
-            listViewItem.setState(false);
-        }
-        else
-        {ConnectedThread.write("2");
-            listViewItem.setState(true); }
-    }
     //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
@@ -227,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return  device.createRfcommSocketToServiceRecord(MY_UUID);
     }
-
     private void checkBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
         // Emulator doesn't support Bluetooth and will return null
@@ -244,11 +169,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void errorExit(String title, String message){
-        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-        finish();
+    //창문설정
+    public void motor(int pos){
+        Log.d("유리", "실행된 : ");
+        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+        address=listViewItem.getAddress();
+        state=listViewItem.getState();
+        //address="98:D3:51:F9:26:E0";
+        if(state)
+        {ConnectedThread.write("3");
+            listViewItem.setState(false);
+        }
+        else
+        {ConnectedThread.write("2");
+            listViewItem.setState(true); }
     }
 
+
+    // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
         private final java.io.InputStream InputStream;
         private final java.io.OutputStream OutputStream;
@@ -273,7 +211,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             while (true) {
                 try {
                     bytes = InputStream.read(buffer);        // Get number of bytes and message in "buffer"
-                    handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                    if(bytes>4)
+                        handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
                 } catch (IOException e) {
                     break;
                 }
@@ -289,6 +228,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
+
+
 
     @Override
     public void onResume() {
@@ -314,6 +256,63 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
+            ConnectedThread.write("1");
+            handler = new Handler() {
+                public void handleMessage(android.os.Message msg) {
+                    switch (msg.what) {
+                        case RECIEVE_MESSAGE:
+                            sb.delete(0, sb.length());
+                            byte[] readBuf = (byte[]) msg.obj;
+                            String strIncom = new String(readBuf, 0, msg.arg1);
+                            Log.d("a2", strIncom);
+                            sb.append(strIncom);
+                            Log.d("a2", String.valueOf(sb));
+
+                            int endOfLineIndex = sb.indexOf("\r\n");
+                            Log.d("a3", String.valueOf(endOfLineIndex));
+                            if (endOfLineIndex > 0) {
+                                String sbprint = sb.substring(0, endOfLineIndex);
+                                Log.d("a4", sbprint);
+                                sb.delete(0, sb.length());
+
+                                String[] array = sbprint.split("#");
+                                Log.d("a5", array[0]);
+                                Log.d("a5", array[1]);
+                                Log.d("a5", array[2]);
+
+                                SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
+                                SharedPreferences.Editor editor =pf.edit();
+                                editor.putString("temp", array[0]);
+                                editor.putString("dust", array[1]);
+                                editor.putString("humid", array[2]);
+                                editor.commit();
+                                flag++;
+                            }
+
+                            break;
+                    }
+                }
+        };
+
     }
 
+
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            if (viewpager.getCurrentItem() == 0) {
+                super.onBackPressed();}
+            else{
+                // Otherwise, select the previous step.
+                viewpager.setCurrentItem(viewpager.getCurrentItem() - 1);
+            }
+        }
+    }
+
+
+    private void errorExit(String title, String message){
+        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
+        finish();
+    }
 }
