@@ -11,14 +11,22 @@
     <RelativeLayout
         android:id="@+id/bg"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/fragment1">
+
             <RelativeLayout
                 android:layout_margin="20dp"
                 android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/main_layout_shape">
+                android:layout_width="220dp"
+                android:layout_height="35dp"
+                android:background="@drawable/address"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/location2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:id="@+id/location_address"
                     android:layout_width="wrap_content"
