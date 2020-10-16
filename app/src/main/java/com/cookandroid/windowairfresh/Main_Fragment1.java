@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -137,7 +138,6 @@ public class Main_Fragment1 extends Fragment {
             }
         }).start();
         return view;
-
     }
 
     
