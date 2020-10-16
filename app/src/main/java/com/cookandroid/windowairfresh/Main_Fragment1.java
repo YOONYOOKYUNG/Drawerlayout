@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class Main_Fragment1 extends Fragment {
     ViewPager2 viewpager;
     TextView tvdate,temp1,humid1,micro1;
-    RelativeLayout templayout, dustlayout, humidlayout;
+    RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
     String data, data2;
 
@@ -57,6 +57,7 @@ public class Main_Fragment1 extends Fragment {
         templayout = view.findViewById(R.id.templayout);
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
+        bg = view.findViewById(R.id.bg);
 
 
         //click -> popup1_temp
@@ -102,9 +103,10 @@ public class Main_Fragment1 extends Fragment {
                 public void run() {
 
                     // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
-                    Start_index = data.indexOf("PTY:");
+                    /*Start_index = data.indexOf("PTY:");
                     End_index = data.indexOf("/",Start_index);
-                    String pty = data.substring(Start_index+4,End_index);
+                    String pty = data.substring(Start_index+4,End_index);*/
+                    String pty = "1";
                     //습도 파싱
                     Start_index = data.indexOf("REH:");
                     End_index = data.indexOf("/",Start_index);
@@ -125,6 +127,9 @@ public class Main_Fragment1 extends Fragment {
                         Intent intent = new Intent(getContext(), HelpActivity.class);
                         startActivity(intent);
                     }
+                    if (Integer.parseInt(pty)!=0){
+                        bg.setBackgroundResource(R.drawable.fragment1_rain);
+                    }
                 }
             });
 
@@ -134,6 +139,7 @@ public class Main_Fragment1 extends Fragment {
             }
         }).start();
         return view;
+
     }
 
     
