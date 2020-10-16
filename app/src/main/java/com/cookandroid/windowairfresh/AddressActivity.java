@@ -148,14 +148,15 @@ public class AddressActivity extends AppCompatActivity {
 
                 location = databaseManager.selectNote_location(user_si,user_gu);
                 station = databaseManager.selectNote_station(user_si,user_gu);
+                String location2[] = location.split(",");
 
                 Log.d("00",location);
                 Log.d("00",station);
-
-                String location2[] = location.split(",");
+                location = user_si+ " "+user_gu;
 
                 SharedPreferences pf = getSharedPreferences("address", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pf.edit();
+                editor.putString("addr0",location);
                 editor.putString("addr1", location2[0]);
                 editor.putString("addr2", location2[1]);
                 editor.putString("station",station);
