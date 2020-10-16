@@ -6,6 +6,8 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -16,7 +18,17 @@ import java.io.InputStream;
 import jxl.Sheet;
 import jxl.Workbook;
 
+
+
+
+
+
 public class AddressActivity extends AppCompatActivity {
+
+
+    ArrayAdapter<CharSequence> addr_spin1, addr_spin2;
+    String choice_do="";
+    String choice_se="";
 
     Spinner spinner1, spinner2;
     Button btn;
@@ -38,8 +50,95 @@ public class AddressActivity extends AppCompatActivity {
             copyExcelDataToDatabase();
         }
 
+
+
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
+
+        addr_spin1 = ArrayAdapter.createFromResource(this,R.array.spinner_do,android.R.layout.simple_spinner_dropdown_item);
+        addr_spin1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(addr_spin1);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(addr_spin1.getItem(i).equals("서울특별시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_seoul, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("경기도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_gyunggi, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("인천광역시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_incheon, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("광주광역시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_gwangju, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("대구광역시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_daegu, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("대전광역시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_daejeon, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("부산광역시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_busan, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("울산광역시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_ulsan, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("강원도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_gangwon, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("경상남도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_gyeongsangnam, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("경상북도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_gyeongsangbuk, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("전라남도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_jeonlanam, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("전라북도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_jeonlabuk, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("충청남도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_chungcheongnam, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("충청북도")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_chungcheongbuk, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                } else if(addr_spin1.getItem(i).equals("세종특별자치시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_sejong, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                }else if(addr_spin1.getItem(i).equals("제주특별자치시")){
+                    addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_jeju, android.R.layout.simple_spinner_dropdown_item);
+                    addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(addr_spin2);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         btn = findViewById(R.id.btn_address_search);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +149,7 @@ public class AddressActivity extends AppCompatActivity {
 
 
                 location = databaseManager.selectNote(user_si,user_gu);
-
+                Log.d("00",location);
                 String location2[] = location.split(",");
 
                 SharedPreferences pf = getSharedPreferences("address", MODE_PRIVATE);
