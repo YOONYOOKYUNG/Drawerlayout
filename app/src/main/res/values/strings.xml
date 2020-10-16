@@ -49,8 +49,8 @@
         <item>전라북도</item>
         <item>충청남도</item>
         <item>충청북도</item>
-        <item>세종특별자치시</item>
-        <item>제주특별자치시</item>
+        <item>세종특별자치도</item>
+        <item>제주특별자치도</item>
     </string-array>
     <string-array name="spinner_do_seoul">
         <item>강남구</item>

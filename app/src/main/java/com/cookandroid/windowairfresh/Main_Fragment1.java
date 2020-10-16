@@ -25,8 +25,8 @@ import java.util.Calendar;
 
 public class Main_Fragment1 extends Fragment {
     ViewPager2 viewpager;
-    TextView tvdate,temp1,humid1,micro1;
-    RelativeLayout templayout, dustlayout, humidlayout;
+    TextView tvdate,temp1,humid1,micro1,location_address;
+    RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
     String data, data2;
 
@@ -43,6 +43,7 @@ public class Main_Fragment1 extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_main_fragment1, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
 
+
         temp1 = view.findViewById(R.id.temp1);
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
@@ -53,10 +54,15 @@ public class Main_Fragment1 extends Fragment {
         String today = sdf.format(cal.getTime());
         tvdate = view.findViewById(R.id.tvdate);
         tvdate.setText(today);
+        location_address = view.findViewById(R.id.location_address);
+        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
+        location_address.setText(pf2.getString("addr0","서울시 성동구"));
 
         templayout = view.findViewById(R.id.templayout);
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
+        bg = view.findViewById(R.id.bg);
+
 
 
         //click -> popup1_temp
@@ -96,7 +102,7 @@ public class Main_Fragment1 extends Fragment {
             public void run() {
 
             data= getXmlData1();
-            //data2=getXmlData2();
+            data2=getXmlData2();
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -105,6 +111,7 @@ public class Main_Fragment1 extends Fragment {
                     Start_index = data.indexOf("PTY:");
                     End_index = data.indexOf("/",Start_index);
                     String pty = data.substring(Start_index+4,End_index);
+                            //String pty = "1"; //억지로 비오는 설정 넣기
                     //습도 파싱
                     Start_index = data.indexOf("REH:");
                     End_index = data.indexOf("/",Start_index);
@@ -113,10 +120,16 @@ public class Main_Fragment1 extends Fragment {
                     Start_index = data.indexOf("T1H:");
                     End_index = data.indexOf("/",Start_index);
                     String t1h = data.substring(Start_index+4,End_index);
-                    //미세먼지 파싱
+                    int index = t1h.indexOf(".",0);
+                    t1h= t1h.substring(0,index);
+                    //보정값
+                        if (t1h=="-"){ t1h = "18";}
+                        if (reh=="-"){ t1h = "15";}
+                        if (data2=="-"){ t1h = "32";}
+
                     temp1.setText(t1h);
                     humid1.setText(reh);
-                   // micro1.setText(data2);
+                    micro1.setText(data2);
 
                     //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
                     SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
@@ -125,15 +138,17 @@ public class Main_Fragment1 extends Fragment {
                         Intent intent = new Intent(getContext(), HelpActivity.class);
                         startActivity(intent);
                     }
+                    if (Integer.parseInt(pty)!=0){
+                        bg.setBackgroundResource(R.drawable.fragment2_rain);
+                    }
                 }
             });
-
-
 
 
             }
         }).start();
         return view;
+
     }
 
     
@@ -177,13 +192,9 @@ public class Main_Fragment1 extends Fragment {
         Log.d("00",address1);
         Log.d("00",address2);
 
-
-
-
         // 접속 url
         String queryUrl1= "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?serviceKey="+serviceKey1+
-                "&numOfRows=10&pageNo=1&base_date=" +today1+ "&base_time="+time1_hours+"&nx=" +address1+ "&ny="+address2;
-
+                "&numOfRows=10&pageNo=1&base_date="+today1+"&base_time="+time1_hours+"&nx=" +address1+ "&ny="+address2;
 
         try {
             URL url1= new URL(queryUrl1);//문자열로 된 요청 url을 URL 객체로 생성.
@@ -240,9 +251,18 @@ public class Main_Fragment1 extends Fragment {
     String getXmlData2(){
         StringBuffer buffer2=new StringBuffer();
 
+        // 미세먼지 api 서비스키
+        String serviceKey2 = "pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D";
+
+        // 측정소 이름
+        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
+        String stationName = pf2.getString("station","성동구"); //측정소이름을 뽑아왔을때 null 이면 임의로 성동구로 넣어줌
+
+        Log.d("00",stationName);
+
         String queryUrl2= "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?" +
-                "stationName=%EA%B0%95%EB%82%A8%EA%B5%AC&dataTerm=DAILY&pageNo=1&numOfRows=1&" +
-                "ServiceKey=pbjfdUXNOnav6q2Tb%2BrkkjcxUA4dZZVfL2joSHTUXE32G6h%2Fj8ZabTsIin%2Bn7DQ%2BwJt676jVMiEEui560v3UZA%3D%3D&ver=1.3";
+                "stationName="+stationName+"&dataTerm=DAILY&pageNo=1&numOfRows=1&ServiceKey="+serviceKey2+"&ver=1.3";
+
         try {
             URL url2= new URL(queryUrl2);//문자열로 된 요청 url을 URL 객체로 생성.
             InputStream is2= url2.openStream(); //url위치로 입력스트림 연결

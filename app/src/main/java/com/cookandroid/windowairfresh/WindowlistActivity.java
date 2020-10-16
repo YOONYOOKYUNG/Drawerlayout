@@ -26,15 +26,8 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.UUID;
 
 public class WindowlistActivity extends AppCompatActivity {
 
@@ -111,7 +104,6 @@ public class WindowlistActivity extends AppCompatActivity {
             public void onWindowButtonClick(int pos) {
                 WindowDetails listViewItem = adapter.listViewItemList.get(pos);
                 Boolean state=listViewItem.getState();
-                ((MainActivity)MainActivity.mContext).openwindow(pos);
                 if(state)
                 {
                     listViewItem.setState(false);

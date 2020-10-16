@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
+    ImageView question2;
     ViewPager2 viewpager;
     CircleIndicator3 indicator;
     WindowListAdapter adapter;
@@ -116,6 +119,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
         mContext=this;
+
+        /*question2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(),HelpActivity2.class);
+                startActivity(intent1);
+            }
+        });*/
     }
 
     //menu
