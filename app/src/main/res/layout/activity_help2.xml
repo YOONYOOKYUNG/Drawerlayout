@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context=".HelpActivity">
+
+       <ImageView
+        android:layout_margin="20dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/cancel"
+        android:src="@drawable/help_cancel"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+        <ImageView
+            android:id="@+id/swipe"
+            android:src="@drawable/help_swipe"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/help_txt4"
+            android:text="메뉴바를 클릭하거나\n오른쪽으로 스와이프시\n메뉴가 나타납니다."
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/swipe"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/help_txt6"
+            android:text="아래로 슬라이드 시\n수치가 새로고침 됩니다."
+            android:layout_above="@+id/down"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/down"
+            android:src="@drawable/scroll"
+            android:layout_above="@+id/duplex"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="35dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+
+    <ImageView
+            android:id="@+id/duplex"
+            android:src="@drawable/help_arrow_duplex"
+            android:layout_above="@+id/help_txt5"
+            android:layout_centerHorizontal="true"
+            android:layout_width="52dp"
+            android:layout_height="52dp" />
+        <TextView
+            android:id="@+id/help_txt5"
+            android:text="외부의 수치와 내부의 수치를 슬라이드로 보여줍니다."
+            android:layout_above="@+id/help_txt1"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="58dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/help_txt1"
+            android:text="클릭시 온도에 맞는 옷차림을 추천드립니다."
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/help_txt2"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="90dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/touch1"
+            android:src="@drawable/help_touch"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/touch2"
+            android:layout_marginRight="68dp"
+            android:layout_marginBottom="70dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/help_txt2"
+            android:text="클릭시 미세먼지의 상세 수치가 나타납니다."
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/help_txt3"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="90dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/touch2"
+            android:src="@drawable/help_touch"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/touch3"
+            android:layout_marginRight="68dp"
+            android:layout_marginBottom="70dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+
+        <TextView
+            android:id="@+id/help_txt3"
+            android:text="클릭시 불쾌지수가 보여집니다."
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/touch3"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/touch3"
+            android:src="@drawable/help_touch"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/dontshow"
+            android:layout_marginRight="68dp"
+            android:layout_marginBottom="25dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+    <TextView
+            android:layout_marginBottom="23dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/checkbox1"
+            android:id="@+id/dontshow"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다시 보지 않기"/>
+
+        <CheckBox
+            android:buttonTint="#FFFFFF"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginRight="20dp"
+            android:visibility="invisible"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/checkbox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+</RelativeLayout>
