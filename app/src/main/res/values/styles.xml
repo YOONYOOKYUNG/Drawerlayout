@@ -8,22 +8,11 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
-    <!--타이틀바 투명하게 적용-->
-    <style name="TranslucentStatusBar" parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/TranslucentActionBar</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-        <style name="TranslucentActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-<!-- 끝 -->
     <style name="AppTheme.help" parent="Theme.AppCompat.Light.NoActionBar">
 
 
         <item name="android:windowIsTranslucent">true</item>
-        
+
         <!--  백그라운드 투명 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!--  타이틀바의 그림자 제거 -->
