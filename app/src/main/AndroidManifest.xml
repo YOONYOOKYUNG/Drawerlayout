@@ -28,7 +28,7 @@
         <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
         <activity
             android:name=".WindowNameActivity"
-            android:theme="@android:style/Theme.Holo.Dialog" /> <!-- dhkim end -->
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" /> <!-- dhkim end -->
         <activity
             android:name=".Popup_warning"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,7 @@ public class Main_Fragment1 extends Fragment {
             public void run() {
 
             data= getXmlData1();
-            data2=getXmlData2();
+            //data2=getXmlData2();
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -115,7 +116,7 @@ public class Main_Fragment1 extends Fragment {
                     //미세먼지 파싱
                     temp1.setText(t1h);
                     humid1.setText(reh);
-                    micro1.setText(data2);
+                   // micro1.setText(data2);
 
                     //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
                     SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
@@ -170,6 +171,14 @@ public class Main_Fragment1 extends Fragment {
             if(time1_hours.length()<=2)
                 time1_hours = time1_hours.concat("00");
         }
+
+        Log.d("00",today1);
+        Log.d("00",time1_hours);
+        Log.d("00",address1);
+        Log.d("00",address2);
+
+
+
 
         // 접속 url
         String queryUrl1= "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?serviceKey="+serviceKey1+

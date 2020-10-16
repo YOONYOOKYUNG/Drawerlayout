@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class BluetoothOnActivity extends AppCompatActivity {
     Button btnok, btnend;
-    private ProgressDialog mProgressDlg; //로딩중 화면
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>(); //블루투스 주소를 여기에 저장
     private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
 
