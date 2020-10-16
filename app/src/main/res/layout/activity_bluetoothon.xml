@@ -2,17 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="3"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
     android:layout_gravity="center"
+    android:padding="10dp"
+    android:background="@drawable/main_popup_shape_round"
     tools:context=".BluetoothOnActivity">
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="블루투스 연결이 필요합니다."
         android:textSize="20dp"/>
 
@@ -20,31 +22,44 @@
         android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/text1"
         android:layout_marginTop="10dp"
         android:text="연결하시겠습니까?"
         android:textSize="20dp"/>
 
-    <Button
-        android:id="@+id/btnok"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="확인"
-        android:textColor="#fff"
-        android:background="@drawable/button2"
-        android:layout_below="@id/text2"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="100dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/btnend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text2"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="200dp"
-        android:text="취소"
-        android:background="@drawable/button1"/>
+        <Button
+            android:id="@+id/btnok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/main_popup_shape_round"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+            android:text="확인"
+            android:textColor="#FFF"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btnend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="취소"
+            android:textColor="#FFF"
+            android:textSize="16dp"
+            android:background="@drawable/main_popup_shape_round"
+            android:backgroundTint="#CCCBCB"
+            android:layout_toRightOf="@id/okButton"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
 
 </RelativeLayout>
