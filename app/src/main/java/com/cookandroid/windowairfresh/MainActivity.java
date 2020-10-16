@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String address = "98:D3:51:F9:28:05";
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
     Boolean state;
+    String[] array;
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
@@ -66,10 +67,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentStateAdapter slideadapter;
     public static Context mContext;
 
+    SharedPreferences sf = getSharedPreferences("autoset", 0);
+    Boolean modestate = sf.getBoolean("state",false);
+    int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+    int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+    int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
+    float insidedust = Float.parseFloat(array[2]);
+    float outsidedust;
+    float outsidetemp;
+    float rain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //프레그먼트 데이터 갖고오기
 
 
         databaseManager = DatabaseManager.getInstance(this);
@@ -193,7 +206,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ConnectedThread.write("3");
     }
 
+    //창문자동설정 - 열기
+    public class AutoOpen extends Thread {
+        public void run() {
+            System.out.println("thread run.");
+            try {
+                Thread.sleep(60000);
+            } catch (Exception e) {
+            }
+        }
+    }
 
+    //창문자동설정 - 닫기
+    public class AutoClose extends Thread {
+        public void run() {
+            System.out.println("thread run.");
+            try {
+                Thread.sleep(60000);
+            } catch (Exception e) {
+            }
+        }
+    }
     // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
         private final java.io.InputStream InputStream;
@@ -287,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 Log.d("a5", sbprint);
                                 sb.delete(0, sb.length());
 
-                                String[] array = sbprint.split("#");
+                                array = sbprint.split("#");
 
                                 Log.d("a6", array[0]);
                                 Log.d("a6", array[1]);
