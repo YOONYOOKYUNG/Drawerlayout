@@ -42,7 +42,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/textView2"
-        android:text="창문추가"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center"
+        android:text="창문 추가하기"
         android:textSize="20dp"
         android:background="@drawable/modebtn"/>
 
