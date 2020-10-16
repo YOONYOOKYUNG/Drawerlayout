@@ -18,19 +18,18 @@ import java.io.InputStream;
 import jxl.Sheet;
 import jxl.Workbook;
 
+
 public class AddressActivity extends AppCompatActivity {
 
-
     ArrayAdapter<CharSequence> addr_spin1, addr_spin2;
-    String choice_do="";
-    String choice_se="";
-
     Spinner spinner1, spinner2;
     Button btn;
     private DatabaseManager databaseManager;
+    static final String Location_TABLE_NAME = "Location"; //Table 이름
+    static final String Station_TABLE_NAME = "Station"; //Table 이름
     Workbook workbook = null;
     Sheet sheet = null;
-    String location;
+    String location,station;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +38,19 @@ public class AddressActivity extends AppCompatActivity {
 
         databaseManager = DatabaseManager.getInstance(this);
 
-        Boolean state_empty = databaseManager.isDbEmpty();
+        Boolean state_empty_location = databaseManager.isDbEmpty(Location_TABLE_NAME);
         // Location DB가 비어있다면 엑셀파일을 읽어 추가시킴.
-        if (state_empty==Boolean.TRUE) {
-            copyExcelDataToDatabase();
+        if (state_empty_location==Boolean.TRUE) {
+            copyExcelDataToDatabase_location();
+        }
+        Boolean state_empty_station = databaseManager.isDbEmpty(Station_TABLE_NAME);
+        // Station DB가 비어있다면 엑셀파일을 읽어 추가시킴.
+        if (state_empty_station==Boolean.TRUE) {
+            copyExcelDataToDatabase_station();
         }
 
 
-
+        //시,도,구 에 맞춰 xml 변경
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
 
@@ -120,7 +124,7 @@ public class AddressActivity extends AppCompatActivity {
                     addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_sejong, android.R.layout.simple_spinner_dropdown_item);
                     addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(addr_spin2);
-                }else if(addr_spin1.getItem(i).equals("제주특별자치시")){
+                } else if(addr_spin1.getItem(i).equals("제주특별자치시")){
                     addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_jeju, android.R.layout.simple_spinner_dropdown_item);
                     addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(addr_spin2);
@@ -142,21 +146,23 @@ public class AddressActivity extends AppCompatActivity {
                 String user_si = spinner1.getSelectedItem().toString();
                 String user_gu = spinner2.getSelectedItem().toString();
 
+                location = databaseManager.selectNote_location(user_si,user_gu);
+                station = databaseManager.selectNote_station(user_si,user_gu);
 
-                location = databaseManager.selectNote(user_si,user_gu);
                 Log.d("00",location);
+                Log.d("00",station);
+
                 String location2[] = location.split(",");
 
                 SharedPreferences pf = getSharedPreferences("address", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pf.edit();
                 editor.putString("addr1", location2[0]);
                 editor.putString("addr2", location2[1]);
+                editor.putString("station",station);
                 editor.commit();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-
-                finish();
 
             }
         });
@@ -164,9 +170,7 @@ public class AddressActivity extends AppCompatActivity {
     }
 
 
-    private void copyExcelDataToDatabase() {
-        Log.w("ExcelToDatabase", "copyExcelDataToDatabase()");
-
+    private void copyExcelDataToDatabase_location() {
         AssetManager am = getResources().getAssets();
 
         try {
@@ -194,9 +198,8 @@ public class AddressActivity extends AppCompatActivity {
                         String Location_x = sheet.getCell(nColumnStartIndex + 2, nRow).getContents();
                         String Location_y = sheet.getCell(nColumnStartIndex + 3, nRow).getContents();
 
-                        databaseManager.createNote(Address_si, Address_gu, Location_x, Location_y);
+                        databaseManager.createNote_location(Address_si, Address_gu, Location_x, Location_y);
                     }
-
                 } else {
                     System.out.println("Sheet is null");
                 }
@@ -211,5 +214,47 @@ public class AddressActivity extends AppCompatActivity {
             }
         }
     }
+    private void copyExcelDataToDatabase_station() {
+        AssetManager am = getResources().getAssets();
 
+        try {
+            //assets폴더에 있는 엑셀파일을 가져옴.(폴더가 없다면 생성해야 함) xls 파일만 지원원
+            InputStream is = am.open("station.xls");
+            workbook = Workbook.getWorkbook(is); //엑셀파일 인식
+
+
+            if (workbook != null) { //엑셀파일이 있다면
+                sheet = workbook.getSheet(0); //엑셀파일에서 첫번째 sheet 인식
+
+                if (sheet != null) {
+                    int nRowStartIndex = 0; //실제 데이터가 시작되는 ROW 지점
+                    //주입할 column 갯수 (type,num,location) *rowid는
+                    // 테이블 생성시 자동 생성되므로 excel data row만 주입
+                    int nMaxColumn = 3;
+                    //실제 데이터가 끝나나는ROW 지점
+                    int nRowEndIndex = sheet.getColumn(nMaxColumn - 1).length - 1;
+                    int nColumnStartIndex = 0; //실제 데이터가 시작되는 Column 지점
+
+                    for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) { //DB 주입
+
+                        String Station_si = sheet.getCell(nColumnStartIndex, nRow).getContents();
+                        String Station_gu = sheet.getCell(nColumnStartIndex + 1, nRow).getContents();
+                        String Station_name = sheet.getCell(nColumnStartIndex + 2, nRow).getContents();
+
+                        databaseManager.createNote_station(Station_si, Station_gu, Station_name);
+                    }
+                } else {
+                    System.out.println("Sheet is null");
+                }
+            } else {
+                System.out.println("WorkBook is null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (workbook != null) {
+                workbook.close();
+            }
+        }
+    }
 }

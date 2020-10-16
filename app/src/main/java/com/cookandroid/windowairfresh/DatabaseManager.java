@@ -13,7 +13,8 @@ public class DatabaseManager {
     static final String DB_NAME = "Window.db";   //DB이름
     static final String Window_TABLE_NAME = "Windows"; //Table 이름
     static final String Location_TABLE_NAME = "Location"; //Table 이름
-    static final int DB_VERSION = 1;			//DB 버전
+    static final String Station_TABLE_NAME = "Station"; //Table 이름
+    static final int DB_VERSION = 1;         //DB 버전
 
     Context myContext = null;
 
@@ -54,8 +55,72 @@ public class DatabaseManager {
                 "x TEXT," +
                 "y TEXT);");
 
+        //측정소 Table 생성
+        mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Station_TABLE_NAME +
+                "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "si TEXT," +
+                "gu TEXT," +
+                "station TEXT);");
+
     }
 
+
+    //Location/Station table 비어있는지 확인
+    public boolean isDbEmpty(String TableName) {
+        try {
+            Cursor c = mydatabase.rawQuery("SELECT * FROM " + TableName, null);
+            if (c.moveToFirst()) {
+                Log.d("00", "isDbEmpty: not empty");
+                return false;
+            }
+            c.close();
+        } catch (SQLiteException e) {
+            Log.d("00", "isDbEmpty: doesn't exist");
+            return true;
+        }
+        return true;
+    }
+
+    public static final String Station_si = "si";
+    public static final String Station_gu = "gu";
+    public static final String Station_name = "station";
+
+    //Location 항목 추가 (위도/경도 엑셀db화)
+    public long createNote_station(String si, String gu, String name) {
+
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put(Station_si, si);
+        initialValues.put(Station_gu, gu);
+        initialValues.put(Station_name, name);
+
+        return mydatabase.insert(Station_TABLE_NAME, null, initialValues);
+    }
+
+
+    public String selectNote_station(String si, String gu) {
+
+        String station = null;
+        String sqlSelect = "SELECT * FROM " + Station_TABLE_NAME;
+        Cursor cursor = null;
+
+        cursor = mydatabase.rawQuery(sqlSelect, null);
+
+        while (cursor.moveToNext()) {
+
+            if(si.equals(cursor.getString(1))){
+                Log.d("00", "성공1 ");
+                if(gu.equals(cursor.getString(2))){
+                    station = cursor.getString(3);
+                    Log.d("00","location : "+station);
+                    break;
+                }
+
+            }
+        }
+        cursor.close();
+        return station;
+    }
 
 
 
@@ -64,8 +129,8 @@ public class DatabaseManager {
     public static final String Location_x = "x";
     public static final String Location_y = "y";
 
-    //Location 항목 추가  (위도/경도 엑셀db화)
-    public long createNote(String si, String gu, String x, String y) {
+    //Location 항목 추가 (위도/경도 엑셀db화)
+    public long createNote_location(String si, String gu, String x, String y) {
 
         ContentValues initialValues = new ContentValues();
 
@@ -78,7 +143,7 @@ public class DatabaseManager {
     }
 
 
-    public String selectNote(String si, String gu) {
+    public String selectNote_location(String si, String gu) {
 
         String location = null;
         String sqlSelect = "SELECT * FROM " + Location_TABLE_NAME;
@@ -103,22 +168,6 @@ public class DatabaseManager {
     }
 
 
-    //Location table 비어있는지 확인
-    public boolean isDbEmpty() {
-        try {
-            Cursor c = mydatabase.rawQuery("SELECT * FROM " + Location_TABLE_NAME, null);
-            if (c.moveToFirst()) {
-                Log.d("00", "isDbEmpty: not empty");
-                return false;
-            }
-            c.close();
-        } catch (SQLiteException e) {
-            Log.d("00", "isDbEmpty: doesn't exist");
-            return true;
-        }
-        return true;
-    }
-
     //창문추가
     public long insert(ContentValues addRowValue) {
         return mydatabase.insert(Window_TABLE_NAME, null, addRowValue);
@@ -141,7 +190,6 @@ public class DatabaseManager {
 
         while (cursor.moveToNext()) {
             WindowDetails newAdapter = new WindowDetails();
-
             newAdapter.setName(cursor.getString(1));
             newAdapter.setAddress(cursor.getString(2));
             newAdapter.setState(Boolean.parseBoolean(cursor.getString(3)));
