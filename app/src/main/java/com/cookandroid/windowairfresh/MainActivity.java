@@ -120,13 +120,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         mContext=this;
 
-        question2.setOnClickListener(new View.OnClickListener() {
+        /*question2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(getApplicationContext(),HelpActivity2.class);
                 startActivity(intent1);
             }
-        });
+        });*/
     }
 
     //menu

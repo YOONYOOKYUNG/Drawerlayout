@@ -36,8 +36,12 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
             android:layout_centerHorizontal="true"/>
-        <CircleIndicator3
+        <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
+            app:ci_drawable="@drawable/blue_radius"
+            app:ci_height="5dp"
+            app:ci_width="5dp"
+            app:ci_margin="4dp"
             android:layout_width="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
