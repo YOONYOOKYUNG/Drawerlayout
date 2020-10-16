@@ -1,12 +1,14 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,13 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.cookandroid.windowairfresh.R;
-
 public class AutoSetActivity extends AppCompatActivity {
-    Button manual_mode, custom_mode;
+    Button manual_mode, auto_mode, goWindowbtn;
     LinearLayout manual_layout;
-    RelativeLayout custom_layout,dustbtn,tempLow_btn,tempHigh_btn;
+    RelativeLayout dustbtn,tempLow_btn,tempHigh_btn,auto_layout;
     TextView high_temp_txt,low_temp_txt,dust_txt;
+    ImageView question, question2,backarrow;
     Boolean state;
     String shared_temp_high,shared_temp_low,shared_dust;
 
@@ -29,16 +30,19 @@ public class AutoSetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modesetting);
         manual_mode = findViewById(R.id.manual_mode);
-        custom_mode = findViewById(R.id.custom_mode);
+        auto_mode = findViewById(R.id.auto_mode);
         manual_layout = findViewById(R.id.manual_layout);
-        custom_layout = findViewById(R.id.custom_layout);
+        auto_layout = findViewById(R.id.auto_layout);
         dustbtn = findViewById(R.id.dustbtn);
         tempLow_btn = findViewById(R.id.tempLow_btn);
         tempHigh_btn = findViewById(R.id.tempHigh_btn);
         high_temp_txt = findViewById(R.id.high_temp_txt);
         low_temp_txt = findViewById(R.id.low_temp_txt);
         dust_txt = findViewById(R.id.dust_txt);
-
+        goWindowbtn = findViewById(R.id.goWindowbtn);
+        question = findViewById(R.id.question);
+        question2 = findViewById(R.id.question2);
+        backarrow = findViewById(R.id.backarrow);
 
         SharedPreferences sf = getSharedPreferences("autoset",0);
         state = sf.getBoolean("state",false);
@@ -50,39 +54,41 @@ public class AutoSetActivity extends AppCompatActivity {
         low_temp_txt.setText(shared_temp_low);
         dust_txt.setText(shared_dust);
 
+
+
         if (state==false){ // 모드값 저장이 수동일떄 = 0
             manual_mode.setBackgroundResource(R.drawable.modebtn);
-            custom_mode.setBackgroundResource(R.drawable.modeoffbtn);
+            auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
             manual_layout.setVisibility(View.VISIBLE);
-            custom_layout.setVisibility(View.INVISIBLE);
+            auto_layout.setVisibility(View.INVISIBLE);
         }else{                // 모드값 저장이 자동일떄 = 1
-            custom_layout.setVisibility(View.VISIBLE);
+            auto_layout.setVisibility(View.VISIBLE);
             manual_layout.setVisibility(View.INVISIBLE);
-            custom_mode.setBackgroundResource(R.drawable.modebtn);
+            auto_mode.setBackgroundResource(R.drawable.modebtn);
             manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
         };
         manual_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manual_mode.setBackgroundResource(R.drawable.modebtn);
-                custom_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 manual_layout.setVisibility(View.VISIBLE);
-                custom_layout.setVisibility(View.INVISIBLE);
+                auto_layout.setVisibility(View.INVISIBLE);
                 state = false; //수동버튼 누르면 0 저장
             }
         });
-        custom_mode.setOnClickListener(new View.OnClickListener() {
+        auto_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manual_layout.setVisibility(View.INVISIBLE);
-                custom_layout.setVisibility(View.VISIBLE);
+                auto_layout.setVisibility(View.VISIBLE);
                 manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
-                custom_mode.setBackgroundResource(R.drawable.modebtn);
+                auto_mode.setBackgroundResource(R.drawable.modebtn);
                 state = true; //자동버튼 누르면 1 저장
             }
         });
 
-        //수치 입력버튼 이벤트
+
         tempLow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,8 +107,36 @@ public class AutoSetActivity extends AppCompatActivity {
                 set_dust();
             }
         });
-    }
 
+        goWindowbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AutoSetActivity.this, WindowlistActivity.class);
+                startActivity(intent);
+            }
+        });
+        question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(getApplicationContext(), HelpMode1Activity.class);
+                startActivity(intent2);
+
+            }
+        });
+        question2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(getApplicationContext(), HelpMode2Activity.class);
+                startActivity(intent3);
+            }
+        });
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     // 미세먼지 창문닫기
     void set_dust() {
         final EditText edittext = new EditText(this);
@@ -178,10 +212,6 @@ public class AutoSetActivity extends AppCompatActivity {
                 });
         builder.show();
     }
-
-
-
-
     protected void onStop(){
         super.onStop();
         SharedPreferences sf = getSharedPreferences("autoset",0);

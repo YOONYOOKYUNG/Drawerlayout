@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 public class Main_Fragment1 extends Fragment {
     ViewPager2 viewpager;
-    TextView tvdate,temp1,humid1,micro1;
+    TextView tvdate,temp1,humid1,micro1,location_address;
     RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
     String data, data2;
@@ -44,6 +44,7 @@ public class Main_Fragment1 extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_main_fragment1, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
 
+
         temp1 = view.findViewById(R.id.temp1);
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
@@ -54,11 +55,15 @@ public class Main_Fragment1 extends Fragment {
         String today = sdf.format(cal.getTime());
         tvdate = view.findViewById(R.id.tvdate);
         tvdate.setText(today);
+        location_address = view.findViewById(R.id.location_address);
+        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
+        location_address.setText(pf2.getString("addr0","서울시 성동구"));
 
         templayout = view.findViewById(R.id.templayout);
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
         bg = view.findViewById(R.id.bg);
+
 
 
         //click -> popup1_temp
@@ -116,7 +121,13 @@ public class Main_Fragment1 extends Fragment {
                     Start_index = data.indexOf("T1H:");
                     End_index = data.indexOf("/",Start_index);
                     String t1h = data.substring(Start_index+4,End_index);
-                    //미세먼지 파싱
+                    int index = t1h.indexOf(".",0);
+                    t1h= t1h.substring(0,index);
+                    //보정값
+                        if (t1h=="-"){ t1h = "18";}
+                        if (reh=="-"){ t1h = "15";}
+                        if (data2=="-"){ t1h = "32";}
+
                     temp1.setText(t1h);
                     humid1.setText(reh);
                     micro1.setText(data2);

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context=".HelpMode2Activity">
+    <ImageView
+        android:id="@+id/cancel1"
+        android:src="@drawable/help_cancel"
+        android:layout_alignParentEnd="true"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
+    <ImageView
+        android:id="@+id/touch1"
+        android:src="@drawable/help_touch"
+        android:layout_toLeftOf="@+id/cancel1"
+        android:layout_marginRight="30dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="100dp"/>
+    <TextView
+        android:text="자동모드로 설정합니다."
+        android:layout_below="@id/touch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/cancel1"
+        android:layout_marginTop="5dp"/>
+    <ImageView
+        android:id="@+id/touch4"
+        android:src="@drawable/help_touch"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+    <TextView
+        android:text="누르면 수치를 설정할 수 있는 팝업 화면을 띄웁니다."
+        android:layout_marginTop="310dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/touch4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/touch5"
+        android:src="@drawable/help_touch"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+    <TextView
+        android:text="누르면 수치를 설정할 수 있는 팝업 화면을 띄웁니다."
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/touch5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/touch6"
+        android:src="@drawable/help_touch"
+        android:layout_marginTop="500dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+    <TextView
+        android:text="누르면 수치를 설정할 수 있는 팝업 화면을 띄웁니다."
+        android:layout_marginTop="510dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/touch4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
