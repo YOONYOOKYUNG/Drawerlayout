@@ -22,8 +22,8 @@ public class AutoSetActivity extends AppCompatActivity {
     RelativeLayout custom_layout,dustbtn,tempLow_btn,tempHigh_btn;
     TextView high_temp_txt,low_temp_txt,dust_txt;
     ImageView question, question2,backarrow;
-    String suchi="file";
-    String state ="";
+    Boolean state;
+    String shared_temp_high,shared_temp_low,shared_dust;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,32 +44,51 @@ public class AutoSetActivity extends AppCompatActivity {
         question2 = findViewById(R.id.question2);
         backarrow = findViewById(R.id.backarrow);
 
-        SharedPreferences sp_suchi = getSharedPreferences(suchi,0);
-        state = sp_suchi.getString("state","");
-        high_temp_txt.setText(sp_suchi.getString("High_temp",""));
-        low_temp_txt.setText(sp_suchi.getString("Low_temp",""));
-        dust_txt.setText(sp_suchi.getString("compare_dust",""));
+        SharedPreferences sf = getSharedPreferences("autoset",0);
+        state = sf.getBoolean("state",false);
+        shared_temp_high = sf.getString("High_temp","30 ℃");
+        shared_temp_low = sf.getString("Low_temp","0 ℃");
+        shared_dust = sf.getString("Compare_dust","20 pm");
+
+        high_temp_txt.setText(shared_temp_high);
+        low_temp_txt.setText(shared_temp_low);
+        dust_txt.setText(shared_dust);
 
 
+
+        if (state==false){ // 모드값 저장이 수동일떄 = 0
+            manual_mode.setBackgroundResource(R.drawable.modebtn);
+            auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
+            manual_layout.setVisibility(View.VISIBLE);
+            custom_layout.setVisibility(View.INVISIBLE);
+        }else{                // 모드값 저장이 자동일떄 = 1
+            custom_layout.setVisibility(View.VISIBLE);
+            manual_layout.setVisibility(View.INVISIBLE);
+            auto_mode.setBackgroundResource(R.drawable.modebtn);
+            manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
+        };
         manual_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manual_layout.setVisibility(View.VISIBLE);
-                custom_layout.setVisibility(View.INVISIBLE);
                 manual_mode.setBackgroundResource(R.drawable.modebtn);
                 auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                manual_layout.setVisibility(View.VISIBLE);
+                custom_layout.setVisibility(View.INVISIBLE);
+                state = false; //수동버튼 누르면 0 저장
             }
         });
-
-       auto_mode.setOnClickListener(new View.OnClickListener() {
+        auto_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manual_layout.setVisibility(View.INVISIBLE);
                 custom_layout.setVisibility(View.VISIBLE);
                 manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 auto_mode.setBackgroundResource(R.drawable.modebtn);
+                state = true; //자동버튼 누르면 1 저장
             }
         });
+
+
         tempLow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,8 +137,34 @@ public class AutoSetActivity extends AppCompatActivity {
             }
         });
     }
-    void temp_High()
-    {
+    // 미세먼지 창문닫기
+    void set_dust() {
+        final EditText edittext = new EditText(this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("미세먼지 개폐 수치 설정하기");
+        builder.setMessage("외부와 내부가 몇 pm 이상 차이날 때 닫을까요?");
+        builder.setView(edittext);
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        shared_dust=edittext.getText().toString()+" pm";
+                        Toast.makeText(getApplicationContext(),shared_dust+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
+                        dust_txt.setText(shared_dust);
+
+                    }
+                });
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+    }
+
+    //최고온도시 창문닫기
+    void temp_High() {
         final EditText edittext = new EditText(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -129,8 +174,9 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString()+" ℃ 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        high_temp_txt.setText(edittext.getText()+" ℃");
+                        shared_temp_high=edittext.getText().toString()+" ℃";
+                        Toast.makeText(getApplicationContext(),shared_temp_high+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
+                        high_temp_txt.setText(shared_temp_high);
                     }
                 });
         builder.setNegativeButton("취소",
@@ -141,8 +187,9 @@ public class AutoSetActivity extends AppCompatActivity {
                 });
         builder.show();
     }
-    void temp_Low()
-    {
+
+    //최저온도시 창문닫기
+    void temp_Low() {
         final EditText edittext = new EditText(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -152,31 +199,9 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString()+" ℃ 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        low_temp_txt.setText(edittext.getText()+" ℃");
-                    }
-                });
-        builder.setNegativeButton("취소",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.show();
-    }
-    void set_dust()
-    {
-        final EditText edittext = new EditText(this);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("미세먼지 개폐 수치 설정하기");
-        builder.setMessage("외부와 내부가 몇 pm 이상 차이날 때 닫을까요?");
-        builder.setView(edittext);
-        builder.setPositiveButton("확인",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString()+" pm 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        dust_txt.setText(edittext.getText()+" pm");
+                        shared_temp_low=edittext.getText().toString()+" ℃";
+                        Toast.makeText(getApplicationContext(),shared_temp_low+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
+                        low_temp_txt.setText(shared_temp_low);
                     }
                 });
         builder.setNegativeButton("취소",
@@ -189,19 +214,13 @@ public class AutoSetActivity extends AppCompatActivity {
     }
     protected void onStop(){
         super.onStop();
-        String high_temp = high_temp_txt.toString();
-
-        SharedPreferences set_text = getSharedPreferences(suchi,0);
-        SharedPreferences.Editor editor_suchi =set_text.edit();
-        editor_suchi.clear();
-        editor_suchi.putString("state",state);
-        editor_suchi.putString("High_temp",high_temp);
-        editor_suchi.putString("Low_temp",low_temp_txt.toString());
-        editor_suchi.putString("compare_dust",dust_txt.toString());
-        editor_suchi.commit();
-    }
-    public void onBackPressed(){
-        super.onBackPressed();
-           finish();
+        SharedPreferences sf = getSharedPreferences("autoset",0);
+        SharedPreferences.Editor editor =sf.edit();
+        editor.clear();
+        editor.putBoolean("state",state);
+        editor.putString("High_temp",shared_temp_high);
+        editor.putString("Low_temp",shared_temp_low);
+        editor.putString("Compare_dust",shared_dust);
+        editor.commit();
     }
 }
