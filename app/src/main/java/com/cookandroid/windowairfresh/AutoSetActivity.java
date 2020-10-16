@@ -1,12 +1,14 @@
 package com.cookandroid.windowairfresh;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,13 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.cookandroid.windowairfresh.R;
-
 public class AutoSetActivity extends AppCompatActivity {
-    Button manual_mode, auto_mode, custom_mode;
+    Button manual_mode, auto_mode, goWindowbtn;
     LinearLayout manual_layout,auto_layout;
     RelativeLayout custom_layout,dustbtn,tempLow_btn,tempHigh_btn;
     TextView high_temp_txt,low_temp_txt,dust_txt;
+    ImageView question, question2,backarrow;
     String suchi="file";
     String state ="";
 
@@ -30,9 +31,7 @@ public class AutoSetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modesetting);
         manual_mode = findViewById(R.id.manual_mode);
         auto_mode = findViewById(R.id.auto_mode);
-        custom_mode = findViewById(R.id.custom_mode);
         manual_layout = findViewById(R.id.manual_layout);
-        auto_layout = findViewById(R.id.auto_layout);
         custom_layout = findViewById(R.id.custom_layout);
         dustbtn = findViewById(R.id.dustbtn);
         tempLow_btn = findViewById(R.id.tempLow_btn);
@@ -40,7 +39,10 @@ public class AutoSetActivity extends AppCompatActivity {
         high_temp_txt = findViewById(R.id.high_temp_txt);
         low_temp_txt = findViewById(R.id.low_temp_txt);
         dust_txt = findViewById(R.id.dust_txt);
-
+        goWindowbtn = findViewById(R.id.goWindowbtn);
+        question = findViewById(R.id.question);
+        question2 = findViewById(R.id.question2);
+        backarrow = findViewById(R.id.backarrow);
 
         SharedPreferences sp_suchi = getSharedPreferences(suchi,0);
         state = sp_suchi.getString("state","");
@@ -48,39 +50,24 @@ public class AutoSetActivity extends AppCompatActivity {
         low_temp_txt.setText(sp_suchi.getString("Low_temp",""));
         dust_txt.setText(sp_suchi.getString("compare_dust",""));
 
-        Log.d("kim","최고온도값"+high_temp_txt);
 
         manual_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manual_layout.setVisibility(View.VISIBLE);
-                auto_layout.setVisibility(View.INVISIBLE);
                 custom_layout.setVisibility(View.INVISIBLE);
                 manual_mode.setBackgroundResource(R.drawable.modebtn);
                 auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
-                custom_mode.setBackgroundResource(R.drawable.modeoffbtn);
             }
         });
-        auto_mode.setOnClickListener(new View.OnClickListener() {
+
+       auto_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auto_layout.setVisibility(View.VISIBLE);
                 manual_layout.setVisibility(View.INVISIBLE);
-                custom_layout.setVisibility(View.INVISIBLE);
-                auto_mode.setBackgroundResource(R.drawable.modebtn);
-                manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
-                custom_mode.setBackgroundResource(R.drawable.modeoffbtn);
-            }
-        });
-        custom_mode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 custom_layout.setVisibility(View.VISIBLE);
-                auto_layout.setVisibility(View.INVISIBLE);
-                manual_layout.setVisibility(View.INVISIBLE);
-                custom_mode.setBackgroundResource(R.drawable.modebtn);
                 manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
-                auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                auto_mode.setBackgroundResource(R.drawable.modebtn);
             }
         });
         tempLow_btn.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +86,35 @@ public class AutoSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 set_dust();
+            }
+        });
+
+        goWindowbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AutoSetActivity.this, WindowlistActivity.class);
+                startActivity(intent);
+            }
+        });
+        question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(getApplicationContext(), HelpMode1Activity.class);
+                startActivity(intent2);
+
+            }
+        });
+        question2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(getApplicationContext(), HelpMode2Activity.class);
+                startActivity(intent3);
+            }
+        });
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -183,5 +199,9 @@ public class AutoSetActivity extends AppCompatActivity {
         editor_suchi.putString("Low_temp",low_temp_txt.toString());
         editor_suchi.putString("compare_dust",dust_txt.toString());
         editor_suchi.commit();
+    }
+    public void onBackPressed(){
+        super.onBackPressed();
+           finish();
     }
 }

@@ -25,16 +25,13 @@
             android:text="모드 설정"
             android:textColor="#FFF"
             android:textSize="22dp"/>
-        <ImageView
-            android:src="@drawable/question2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"/>
     </RelativeLayout>
 
-
+<RelativeLayout
+    android:id="@+id/rl"
+    android:layout_below="@id/toolbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tv1"
         android:text="모드 설정"
@@ -42,40 +39,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#EDEDED"
-        android:layout_below="@id/toolbar"
         android:padding="10dp"/>
-    <Button
-        android:id="@+id/manual_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv1"
-        android:text="수동 모드"
-        android:layout_margin="10dp"
-        android:layout_toLeftOf="@+id/auto_mode"
-        android:background="@drawable/modebtn"/>
-    <Button
-        android:id="@+id/auto_mode"
-        android:text="자동 모드"
-
-        android:layout_margin="10dp"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv1"
-        android:background="@drawable/modebtn"/>
-    <Button
-        android:text="커스텀 모드"
-        android:id="@+id/custom_mode"
-        android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/auto_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv1"
-        android:background="@drawable/modebtn"/>
+        <LinearLayout
+            android:layout_below="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/manual_mode"
+                android:text="수동 모드"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:background="@drawable/modebtn"/>
+            <Button
+                android:id="@+id/auto_mode"
+                android:text="자동 모드"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:background="@drawable/modebtn"
+                android:layout_toRightOf="@+id/manual_mode"/>
+        </LinearLayout>
+</RelativeLayout>
     <View
         android:id="@+id/view_2"
         android:background="#EDEDED"
-        android:layout_below="@+id/custom_mode"
+        android:layout_below="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="2dp"/>
     <LinearLayout
@@ -87,7 +80,9 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:visibility="invisible">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv4"
             android:layout_width="match_parent"
@@ -96,6 +91,15 @@
             android:padding="10dp"
             android:text="커스텀 모드 설정"
             android:textSize="15dp" />
+            <ImageView
+                android:id="@+id/question"
+                android:src="@drawable/question3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"/>
+        </RelativeLayout>
         <ImageView
             android:id="@+id/window_img"
             android:layout_below="@+id/view_2"
@@ -113,16 +117,24 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"/>
+        <Button
+            android:id="@+id/goWindowbtn"
+            android:text="창문 설정 하러가기"
+            android:background="@drawable/modebtn"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/auto_layout"
-        android:layout_below="@id/view_2"
+
+    <RelativeLayout
+        android:id="@+id/custom_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/view_2"
         android:visibility="invisible">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv3"
             android:text="자동 모드 설정"
@@ -131,50 +143,49 @@
             android:layout_height="wrap_content"
             android:background="#EDEDED"
             android:padding="10dp" />
+            <ImageView
+                android:id="@+id/question2"
+                android:src="@drawable/question3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"/>
+        </RelativeLayout>
         <TextView
-            android:text="자동 모드로 설정되었습니다.\n 창문을 자동으로 개폐합니다. 기준은 아래 사항을 참고해주세요."
+            android:id="@+id/txt4"
+            android:text="자동 모드로 설정되었습니다.\n 설정된 수치에 따라 창문을 자동 개폐합니다. \n자세한 방법을 알고싶으면 우측 상단 물음표 아이콘을 눌러주세요!"
             android:textSize="15dp"
             android:gravity="center"
-            android:layout_below="@+id/window_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"/>
-        <ImageView
-            android:src="@drawable/altpajswl"
+        <View
+            android:id="@+id/view_3"
+            android:layout_below="@+id/txt4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/custom_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view_2"
-        android:visibility="invisible">
-        <TextView
-            android:id="@+id/tv2"
-            android:text="커스텀 모드 설정"
-            android:textSize="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="3dp"
             android:background="#EDEDED"
-            android:padding="10dp" />
+            android:layout_marginTop="10dp"/>
         <TextView
             android:id="@+id/set_dust"
-            android:text="미세먼지 수치 설정하기"
+            android:text="수치 설정하기"
             android:layout_margin="8dp"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv2"/>
+            android:layout_below="@id/view_3"/>
         <RelativeLayout
             android:id="@+id/dustbtn"
             android:layout_below="@id/set_dust"
-            android:layout_width="300dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:background="@drawable/round"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center">
             <TextView
                 android:id="@+id/low_dust"
@@ -191,37 +202,23 @@
                 android:layout_marginLeft="50dp"
                 android:gravity="center"/>
         </RelativeLayout>
-
-        <View
-            android:id="@+id/view_3"
-            android:layout_below="@+id/dustbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-            android:background="#EDEDED"
-            android:layout_marginTop="10dp"/>
-        <TextView
-            android:id="@+id/set_temp"
-            android:text="온도 설정하기"
-            android:layout_margin="8dp"
-            android:textSize="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view_3"/>
-
         <RelativeLayout
             android:id="@+id/tempLow_btn"
-            android:layout_below="@id/set_temp"
-            android:layout_width="wrap_content"
+            android:layout_below="@id/dustbtn"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:background="@drawable/round"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:gravity="center">
             <TextView
                 android:id="@+id/low_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="최저 온도일 때 닫기"/>
+                android:text="최저 온도 설정하기"
+                android:gravity="center"/>
             <TextView
                 android:id="@+id/low_temp_txt"
                 android:textSize="30dp"
@@ -233,14 +230,15 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/tempHigh_btn"
-            android:layout_below="@id/set_temp"
-            android:layout_width="wrap_content"
+            android:layout_below="@id/tempLow_btn"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:background="@drawable/round"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/tempLow_btn">
+            android:layout_marginBottom="5dp"
+            android:gravity="center">
             <TextView
                 android:id="@+id/high_temp"
                 android:layout_width="wrap_content"
@@ -256,6 +254,4 @@
                 android:layout_marginLeft="10dp"/>
         </RelativeLayout>
     </RelativeLayout>
-
-
 </RelativeLayout>

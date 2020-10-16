@@ -33,7 +33,7 @@
     <string name="menu_slideshow">Slideshow</string>
 
 
-    <string-array name = "spinner_do">
+    <string-array name="spinner_do">
         <item>서울특별시</item>
         <item>경기도</item>
         <item>인천광역시</item>
@@ -52,7 +52,7 @@
         <item>세종특별자치시</item>
         <item>제주특별자치시</item>
     </string-array>
-    <string-array name = "spinner_do_seoul">
+    <string-array name="spinner_do_seoul">
         <item>강남구</item>
         <item>강동구</item>
         <item>강북구</item>
@@ -79,7 +79,7 @@
         <item>중구</item>
         <item>중랑구</item>
     </string-array>
-    <string-array name = "spinner_do_incheon">
+    <string-array name="spinner_do_incheon">
         <item>강화군</item>
         <item>계양구</item>
         <item>남동구</item>
@@ -91,7 +91,7 @@
         <item>옹진군</item>
         <item>중구</item>
     </string-array>
-    <string-array name = "spinner_do_gangwon">
+    <string-array name="spinner_do_gangwon">
         <item>강릉시</item>
         <item>고성군</item>
         <item>동해시</item>
@@ -111,7 +111,7 @@
         <item>화천군</item>
         <item>횡성군</item>
     </string-array>
-    <string-array name = "spinner_do_gyunggi">
+    <string-array name="spinner_do_gyunggi">
         <item>가평군</item>
         <item>고양시 덕양구</item>
         <item>고양시 일산동구</item>
@@ -154,7 +154,7 @@
         <item>하남시</item>
         <item>화성시</item>
     </string-array>
-    <string-array name = "spinner_do_chungcheongnam">
+    <string-array name="spinner_do_chungcheongnam">
         <item>계룡시</item>
         <item>공주시</item>
         <item>금산군</item>
@@ -172,7 +172,7 @@
         <item>태안군</item>
         <item>홍성군</item>
     </string-array>
-    <string-array name = "spinner_do_chungcheongbuk">
+    <string-array name="spinner_do_chungcheongbuk">
         <item>괴산군</item>
         <item>단양군</item>
         <item>보은군</item>
@@ -188,7 +188,7 @@
         <item>청주시 흥덕구</item>
         <item>충주시</item>
     </string-array>
-    <string-array name = "spinner_do_daegu">
+    <string-array name="spinner_do_daegu">
         <item>남구</item>
         <item>달서구</item>
         <item>달성구</item>
@@ -198,14 +198,14 @@
         <item>수성구</item>
         <item>중구</item>
     </string-array>
-    <string-array name = "spinner_do_daejeon">
+    <string-array name="spinner_do_daejeon">
         <item>대덕구</item>
         <item>동구</item>
         <item>서구</item>
         <item>유성구</item>
         <item>중구</item>
     </string-array>
-    <string-array name = "spinner_do_busan">
+    <string-array name="spinner_do_busan">
         <item>강서구</item>
         <item>금정구</item>
         <item>기장군</item>
@@ -223,21 +223,21 @@
         <item>중구</item>
         <item>해운대구</item>
     </string-array>
-    <string-array name = "spinner_do_ulsan">
+    <string-array name="spinner_do_ulsan">
         <item>남구</item>
         <item>동구</item>
         <item>북구</item>
         <item>울주군</item>
         <item>중구</item>
     </string-array>
-    <string-array name = "spinner_do_gwangju">
+    <string-array name="spinner_do_gwangju">
         <item>광산구</item>
         <item>남구</item>
         <item>동구</item>
         <item>북구</item>
         <item>서구</item>
     </string-array>
-    <string-array name = "spinner_do_gyeongsangnam">
+    <string-array name="spinner_do_gyeongsangnam">
         <item>거제시</item>
         <item>거창군</item>
         <item>고성군</item>
@@ -261,7 +261,7 @@
         <item>함양군</item>
         <item>합천군</item>
     </string-array>
-    <string-array name = "spinner_do_gyeongsangbuk">
+    <string-array name="spinner_do_gyeongsangbuk">
         <item>경산시</item>
         <item>경주시</item>
         <item>고령군</item>
@@ -287,7 +287,7 @@
         <item>포항시 남구</item>
         <item>포항시 북구</item>
     </string-array>
-    <string-array name = "spinner_do_jeonlanam">
+    <string-array name="spinner_do_jeonlanam">
         <item>강진군</item>
         <item>고흥군</item>
         <item>곡성군</item>
@@ -311,7 +311,7 @@
         <item>해남군</item>
         <item>화순군</item>
     </string-array>
-    <string-array name = "spinner_do_jeonlabuk">
+    <string-array name="spinner_do_jeonlabuk">
         <item>고창군</item>
         <item>군산시</item>
         <item>김제시</item>
@@ -328,10 +328,10 @@
         <item>정읍시</item>
         <item>진안군</item>
     </string-array>
-    <string-array name = "spinner_do_sejong">
+    <string-array name="spinner_do_sejong">
         <item>세종특별자치시</item>
     </string-array>
-    <string-array name = "spinner_do_jeju">
+    <string-array name="spinner_do_jeju">
         <item>서귀포시</item>
         <item>제주시</item>
     </string-array>
