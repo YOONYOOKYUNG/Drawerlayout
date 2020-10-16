@@ -18,8 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AutoSetActivity extends AppCompatActivity {
     Button manual_mode, auto_mode, goWindowbtn;
-    LinearLayout manual_layout,auto_layout;
-    RelativeLayout custom_layout,dustbtn,tempLow_btn,tempHigh_btn;
+    LinearLayout manual_layout;
+    RelativeLayout dustbtn,tempLow_btn,tempHigh_btn,auto_layout;
     TextView high_temp_txt,low_temp_txt,dust_txt;
     ImageView question, question2,backarrow;
     Boolean state;
@@ -32,7 +32,7 @@ public class AutoSetActivity extends AppCompatActivity {
         manual_mode = findViewById(R.id.manual_mode);
         auto_mode = findViewById(R.id.auto_mode);
         manual_layout = findViewById(R.id.manual_layout);
-        custom_layout = findViewById(R.id.custom_layout);
+        auto_layout = findViewById(R.id.auto_layout);
         dustbtn = findViewById(R.id.dustbtn);
         tempLow_btn = findViewById(R.id.tempLow_btn);
         tempHigh_btn = findViewById(R.id.tempHigh_btn);
@@ -60,9 +60,9 @@ public class AutoSetActivity extends AppCompatActivity {
             manual_mode.setBackgroundResource(R.drawable.modebtn);
             auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
             manual_layout.setVisibility(View.VISIBLE);
-            custom_layout.setVisibility(View.INVISIBLE);
+            auto_layout.setVisibility(View.INVISIBLE);
         }else{                // 모드값 저장이 자동일떄 = 1
-            custom_layout.setVisibility(View.VISIBLE);
+            auto_layout.setVisibility(View.VISIBLE);
             manual_layout.setVisibility(View.INVISIBLE);
             auto_mode.setBackgroundResource(R.drawable.modebtn);
             manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
@@ -73,7 +73,7 @@ public class AutoSetActivity extends AppCompatActivity {
                 manual_mode.setBackgroundResource(R.drawable.modebtn);
                 auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 manual_layout.setVisibility(View.VISIBLE);
-                custom_layout.setVisibility(View.INVISIBLE);
+                auto_layout.setVisibility(View.INVISIBLE);
                 state = false; //수동버튼 누르면 0 저장
             }
         });
@@ -81,7 +81,7 @@ public class AutoSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manual_layout.setVisibility(View.INVISIBLE);
-                custom_layout.setVisibility(View.VISIBLE);
+                auto_layout.setVisibility(View.VISIBLE);
                 manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 auto_mode.setBackgroundResource(R.drawable.modebtn);
                 state = true; //자동버튼 누르면 1 저장

@@ -127,7 +127,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/custom_layout"
+        android:id="@+id/auto_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_2"
