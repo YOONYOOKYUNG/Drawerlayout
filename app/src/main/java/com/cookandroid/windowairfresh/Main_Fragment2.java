@@ -20,6 +20,7 @@ public class Main_Fragment2 extends Fragment {
     TextView tvdate, temp, humid, micro;
     RelativeLayout templayout, dustlayout, humidlayout, bgbg;
     Boolean nowrain;
+    String pty;
 
     public Main_Fragment2() {
         // Required empty public constructor
@@ -47,10 +48,16 @@ public class Main_Fragment2 extends Fragment {
         tvdate = view.findViewById(R.id.tvdate);
         tvdate.setText(today);
 
+
+
         SharedPreferences pf1 = getContext().getSharedPreferences("fragment2",getContext().MODE_PRIVATE);
         temp.setText(pf1.getString("temp","20"));
         micro.setText(pf1.getString("dust","15"));
         humid.setText(pf1.getString("humid","38"));
+        pty=pf1.getString("pty","0");
+        if (Integer.parseInt(pty)!=0){
+            bgbg.setBackgroundResource(R.drawable.fragment1_rain);
+        }
 
         templayout = view.findViewById(R.id.templayout);
         dustlayout = view.findViewById(R.id.dustlayout);
@@ -87,11 +94,6 @@ public class Main_Fragment2 extends Fragment {
                 customDialogPopup1.callhumidpopup();
             }
         });
-        SharedPreferences rain = getContext().getSharedPreferences("rain",0);
-        nowrain=rain.getBoolean("rain",true);
-        if (nowrain){
-            bgbg.setBackgroundResource(R.drawable.fragment1_rain);
-        }
         return view;
 
 

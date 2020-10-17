@@ -115,10 +115,14 @@ public class Main_Fragment1 extends Fragment {
                 public void run() {
 
                     // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
-                    /*Start_index = data.indexOf("PTY:");
+                    Start_index = data.indexOf("PTY:");
                     End_index = data.indexOf("/",Start_index);
-                    String pty = data.substring(Start_index+4,End_index);*/
-                    String pty = "1"; //억지로 비오는 설정 넣기
+                    String pty = data.substring(Start_index+4,End_index);
+                    //String pty = "1"; //억지로 비오는 설정 넣기
+                    SharedPreferences sf = getContext().getSharedPreferences("fragment2",0);
+                    SharedPreferences.Editor editor =sf.edit();
+                    editor.putString("pty",pty);
+                    editor.commit();
                     //습도 파싱
                     Start_index = data.indexOf("REH:");
                     End_index = data.indexOf("/",Start_index);
@@ -159,7 +163,7 @@ public class Main_Fragment1 extends Fragment {
                     }
                     if (Integer.parseInt(pty)!=0){
                         bg.setBackgroundResource(R.drawable.fragment2_rain);
-                        SharedPreferences rain = getContext().getSharedPreferences("rain",0);
+
                     }
 
 
