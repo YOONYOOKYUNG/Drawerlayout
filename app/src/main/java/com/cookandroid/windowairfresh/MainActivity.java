@@ -3,6 +3,7 @@ package com.cookandroid.windowairfresh;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     float outsidetemp;
     int outsiderain;
     final int AutoSet_REQUEST = 2020;
+    static boolean btsocketstate=false;
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //프레그먼트 데이터 갖고오기
+        //자동시작
         AutoOpen autoOpen = new AutoOpen();
         autoOpen.start();
         AutoClose autoClose = new AutoClose();
@@ -230,12 +232,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void openwindow(int pos){
         WindowDetails listViewItem = adapter.listViewItemList.get(pos);
         address=listViewItem.getAddress();
+        if(!btsocketstate)
+        {opensocket();}
         ConnectedThread.write("2");
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
         WindowDetails listViewItem = adapter.listViewItemList.get(pos);
         address=listViewItem.getAddress();
+        if(!btsocketstate)
+        {opensocket();}
         ConnectedThread.write("3");
     }
 
@@ -253,7 +259,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {
                 for(int i=0;i<windownumber;i++) {
                     if(checklist.get(i).getState()==false)
-                    { openwindow(0); }
+                    {
+                        openwindow(i);
+                        adapter.listViewItemList.get(i).setState(true);
+                    }
             }
             }
             try {
@@ -262,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }}
         }}
     }
+
 
     //창문자동설정 - 닫기
     public class AutoClose extends Thread {
@@ -277,25 +287,62 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {for(int i=0;i<windownumber;i++)
             {
                 if(checklist.get(i).getState()==true)
-                {closewindow(0);}
+                {
+                    closewindow(i);
+                    adapter.listViewItemList.get(i).setState(false);
+                    dbcloseupdate(i);
+                }
             }}
             else if(outsidetemp<coldtemp||outsidetemp>hottemp)
             {for(int i=0;i<windownumber;i++)
             {
                 if(checklist.get(i).getState()==true)
-                {closewindow(0);}
+                {
+                    closewindow(i);
+                    adapter.listViewItemList.get(i).setState(false);
+                    dbcloseupdate(i);
+                }
             }}
             else if(dustresult<-comparedust)
             {for(int i=0;i<windownumber;i++)
             {
                 if(checklist.get(i).getState()==true)
-                {closewindow(0);}
+                {
+                    closewindow(i);
+                    adapter.listViewItemList.get(i).setState(false);
+                    dbcloseupdate(i);
+                }
             }}
             try {
                 Thread.sleep(60000);
             } catch (Exception e) {
             }}
         }}
+    }
+
+    //창문 db 닫기상태로 업데이트
+    void dbcloseupdate(int i)
+    {
+        if (databaseManager != null) {
+            ContentValues updateRowValue = new ContentValues();
+            updateRowValue.put("state", false);
+            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+        }
+    }
+
+    //소켓 닫혀있으면 여는 코드
+    void opensocket(){
+        try {
+            btSocket.connect();
+            btsocketstate=true;
+        } catch (IOException e) {
+            try {
+                btSocket.close();
+                btsocketstate=false;
+            } catch (IOException e2) {
+                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+            }
+        }
     }
     // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
@@ -358,15 +405,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btAdapter.cancelDiscovery();
         try {
             btSocket.connect();
+            btsocketstate=true;
         } catch (IOException e) {
             try {
                     btSocket.close();
+                btsocketstate=false;
             } catch (IOException e2) {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
         }
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
+              if(!btsocketstate)
+              {opensocket();}
             ConnectedThread.write("1");
 
 

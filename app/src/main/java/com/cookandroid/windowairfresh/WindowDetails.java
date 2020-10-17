@@ -11,7 +11,9 @@ public class WindowDetails {
         this.name = name;
     }
     public void setAddress(String address){this.address=address;}
-    public void setState(Boolean state){this.state=state;}
+    public void setState(Boolean state){
+        this.state=state;
+    }
 
     //get
     public String getName() { return name; }

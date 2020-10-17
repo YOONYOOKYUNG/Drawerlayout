@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,8 +42,7 @@ public class WindowlistActivity extends AppCompatActivity {
     GridView gridView;
     WindowListAdapter adapter;
     TextView main_label;
-    String sfName = "File";
-    String mode;
+    Boolean mode;
     final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
 
 
@@ -86,9 +86,9 @@ public class WindowlistActivity extends AppCompatActivity {
         //final Switch switch1 = findViewById(R.id.switch1);
         gridView = findViewById(R.id.listview1);
         gridView.setAdapter(adapter);
-        SharedPreferences sf = getSharedPreferences(sfName, 0);
-        mode = sf.getString("state", ""); // 키값으로
-        if (mode.equals("auto")){
+        SharedPreferences sf = getSharedPreferences("autoset", 0);
+        mode = sf.getBoolean("state", false); // 키값으로
+        if (mode){
             gridView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -108,11 +108,21 @@ public class WindowlistActivity extends AppCompatActivity {
                 {
                     listViewItem.setState(false);
                     ((MainActivity)MainActivity.mContext).closewindow(pos);
+                    if (databaseManager != null) {
+                        ContentValues updateRowValue = new ContentValues();
+                        updateRowValue.put("state", false);
+                        databaseManager.update(updateRowValue,listViewItem.getName());
+                    }
                 }
                 else
                 {
                     listViewItem.setState(true);
                     ((MainActivity)MainActivity.mContext).openwindow(pos);
+                    if (databaseManager != null) {
+                        ContentValues updateRowValue = new ContentValues();
+                        updateRowValue.put("state", true);
+                        databaseManager.update(updateRowValue,listViewItem.getName());
+                    }
                 }
             }
         });
