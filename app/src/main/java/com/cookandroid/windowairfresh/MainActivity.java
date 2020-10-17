@@ -432,6 +432,16 @@ public void opensocket(){
     }
 
 
+    //창문 자동설정 - 모두닫기
+    public void allwindowclose(int i)
+    {
+            if (checklist.get(i).getState() == true) {
+                closewindow(i);
+                adapter.listViewItemList.get(i).setState(false);
+                dbcloseupdate(i);
+            }
+    }
+
     //창문자동설정 - 닫기
     public class AutoClose extends Thread {
         public void run() {
@@ -450,31 +460,19 @@ public void opensocket(){
                             float dustresult = outsidedust - insidedust;
                             int windownumber = adapter.getCount();
                             if (outsiderain != 0) {
+                                Log.d("자동모드", "비와서 창문 닫았습니다");
                                 for (int i = 0; i < windownumber; i++) {
-                                    if (checklist.get(i).getState() == true) {
-                                        closewindow(i);
-                                        Log.d("자동모드", "비와서 창문 닫았습니다");
-                                        adapter.listViewItemList.get(i).setState(false);
-                                        dbcloseupdate(i);
-                                    }
+                                    allwindowclose(i);
                                 }
                             } else if (outsidetemp < coldtemp || outsidetemp > hottemp) {
+                                Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
                                 for (int i = 0; i < windownumber; i++) {
-                                    if (checklist.get(i).getState() == true) {
-                                        closewindow(i);
-                                        Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
-                                        adapter.listViewItemList.get(i).setState(false);
-                                        dbcloseupdate(i);
-                                    }
+                                    allwindowclose(i);
                                 }
                             } else if (dustresult < -comparedust) {
+                                Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
                                 for (int i = 0; i < windownumber; i++) {
-                                    if (checklist.get(i).getState() == true) {
-                                        closewindow(i);
-                                        Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
-                                        adapter.listViewItemList.get(i).setState(false);
-                                        dbcloseupdate(i);
-                                    }
+                                    allwindowclose(i);
                                 }
                             }
                             try {
