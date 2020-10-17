@@ -15,11 +15,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -35,7 +37,7 @@ import java.util.UUID;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Main_Fragment1.AutoWindowListener{
 
 
     //블루투스 관련 선언 시작(블투1)
@@ -66,16 +68,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SwipeRefreshLayout swipeRefreshLayout;
     FragmentStateAdapter slideadapter;
     public static Context mContext;
-
-    SharedPreferences sf = getSharedPreferences("autoset", 0);
-    Boolean modestate = sf.getBoolean("state",false);
-    int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
-    int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
-    int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
-    float insidedust = Float.parseFloat(array[2]);
+    static boolean modestate = false;
+    static int hottemp;
+    static int coldtemp;
+    static int comparedust;
+    float insidedust;
     float outsidedust;
     float outsidetemp;
-    float rain;
+    int outsiderain;
+    final int AutoSet_REQUEST = 2020;
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof Main_Fragment1) {
+            Main_Fragment1 mainFragment1 = (Main_Fragment1) fragment;
+            mainFragment1.setListener(this);
+        }
+    }
+
+    public void onAutoWindowSet(String temp, String dust, String rain) {
+        outsidetemp=Float.parseFloat(temp);
+        outsidedust=Float.parseFloat(dust);
+        outsiderain=Integer.parseInt(rain);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
+        if (resultCode == RESULT_OK && requestCode == AutoSet_REQUEST) {
+            SharedPreferences sf = getSharedPreferences("autoset", 0);
+            Boolean modestate = sf.getBoolean("state",false);
+            int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+            int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+            int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
+            setResult(RESULT_OK, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //프레그먼트 데이터 갖고오기
-
+        AutoOpen autoOpen = new AutoOpen();
+        autoOpen.start();
+        AutoClose autoClose = new AutoClose();
+        autoClose.start();
 
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
@@ -93,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (databaseManager != null){
             checklist = databaseManager.getAll();
         }
-        if (adapter.listViewItemList.isEmpty()) {
+        if (checklist.isEmpty()) {
             //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
             address = "98:D3:51:F9:28:05";
         } else {
@@ -148,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuitem.getItemId()) {
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, AutoSetActivity.class);
-                startActivity(intent1);
+                startActivityForResult(intent1, AutoSet_REQUEST);
                 break;
 
             case R.id.alarm:
@@ -209,23 +242,60 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //창문자동설정 - 열기
     public class AutoOpen extends Thread {
         public void run() {
-            System.out.println("thread run.");
+            if (databaseManager != null){
+                checklist = databaseManager.getAll();
+            }
+            if (!checklist.isEmpty()) {
+                if(modestate){
+            float dustresult = outsidedust-insidedust;
+            int windownumber = adapter.getCount();
+            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp && dustresult>comparedust)
+            {
+                for(int i=0;i<windownumber;i++) {
+                    if(checklist.get(i).getState()==false)
+                    { openwindow(0); }
+            }
+            }
             try {
                 Thread.sleep(60000);
             } catch (Exception e) {
-            }
-        }
+            }}
+        }}
     }
 
     //창문자동설정 - 닫기
     public class AutoClose extends Thread {
         public void run() {
-            System.out.println("thread run.");
+            if (databaseManager != null){
+                checklist = databaseManager.getAll();
+            }
+            if (!checklist.isEmpty()) {
+                if(modestate){
+            float dustresult = outsidedust-insidedust;
+            int windownumber = adapter.getCount();
+            if(outsiderain!=0)
+            {for(int i=0;i<windownumber;i++)
+            {
+                if(checklist.get(i).getState()==true)
+                {closewindow(0);}
+            }}
+            else if(outsidetemp<coldtemp||outsidetemp>hottemp)
+            {for(int i=0;i<windownumber;i++)
+            {
+                if(checklist.get(i).getState()==true)
+                {closewindow(0);}
+            }}
+            else if(dustresult<-comparedust)
+            {for(int i=0;i<windownumber;i++)
+            {
+                if(checklist.get(i).getState()==true)
+                {closewindow(0);}
+            }}
             try {
                 Thread.sleep(60000);
             } catch (Exception e) {
-            }
-        }
+            }}
+        }}
     }
     // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
@@ -331,8 +401,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 SharedPreferences.Editor editor =pf.edit();
                                 editor.putString("temp", array[1]);
                                 editor.putString("dust", array[2]);
+                                insidedust = Float.parseFloat(pf.getString("dust","0"));
                                 editor.putString("humid", array[3]);
                                 editor.commit();
+
                                 flag++;
                             }
 
@@ -340,7 +412,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             };
-
     }
 
 

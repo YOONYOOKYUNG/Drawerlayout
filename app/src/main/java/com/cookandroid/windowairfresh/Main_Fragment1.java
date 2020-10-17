@@ -31,6 +31,8 @@ public class Main_Fragment1 extends Fragment {
     int Start_index,End_index;
     String data, data2;
 
+    AutoWindowListener callback;
+
     public Main_Fragment1() {
         // Required empty public constructor
     }
@@ -132,6 +134,8 @@ public class Main_Fragment1 extends Fragment {
                     humid1.setText(reh);
                     micro1.setText(data2);
 
+                    callback.onAutoWindowSet(pty,data2,t1h);
+
                     //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
                     SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
 
@@ -148,10 +152,22 @@ public class Main_Fragment1 extends Fragment {
 
             }
         }).start();
+
         return view;
     }
 
-    
+    public void setListener(AutoWindowListener callback) {
+        this.callback = callback;
+    }
+
+    //메인에 데이터 보내기
+    public interface AutoWindowListener {
+
+        public void onAutoWindowSet(String temp, String dust, String rain);
+
+    }
+
+
     String getXmlData1(){
 
         StringBuffer buffer1=new StringBuffer();
