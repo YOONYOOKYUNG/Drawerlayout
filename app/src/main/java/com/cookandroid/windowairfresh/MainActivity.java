@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
-    ImageView question2;
     ViewPager2 viewpager;
     CircleIndicator3 indicator;
     WindowListAdapter adapter;
@@ -110,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             address = listViewItem.getAddress();
         }
 
+        //도움말
+        ImageView question2;
+
         //fragment 관련
         viewpager = findViewById(R.id.viewpager);
         slideadapter = new Main_SlideAdapter(this, databaseManager);
@@ -142,13 +144,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         mContext=this;
 
-        /*question2.setOnClickListener(new View.OnClickListener() {
+        question2 = findViewById(R.id.question2);
+        question2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(getApplicationContext(),HelpActivity2.class);
                 startActivity(intent1);
             }
-        });*/
+        });
     }
 
     //menu
