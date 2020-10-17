@@ -264,6 +264,7 @@ public void makesocket(){
 
 public void opensocket(){
     makesocket();
+    btAdapter.cancelDiscovery();
     try {
         btSocket.connect();
         btsocketstate=true;
@@ -275,6 +276,8 @@ public void opensocket(){
             errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
         }
     }
+    ConnectedThread = new ConnectedThread(btSocket);
+    ConnectedThread.start();
 }
 
 
