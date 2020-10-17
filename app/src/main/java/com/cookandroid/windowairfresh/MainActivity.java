@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
-    ImageView question2;
     ViewPager2 viewpager;
     CircleIndicator3 indicator;
     WindowListAdapter adapter;
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+    ImageView question2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         indicator.setViewPager(viewpager);
 
 
+
         //(블투2)
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
@@ -168,13 +168,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         mContext=this;
 
-        /*question2.setOnClickListener(new View.OnClickListener() {
+        question2 = findViewById(R.id.question2);
+        question2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(getApplicationContext(),HelpActivity2.class);
                 startActivity(intent1);
             }
-        });*/
+        });
     }
 
     //menu
