@@ -42,7 +42,6 @@ public class WindowlistActivity extends AppCompatActivity {
     GridView gridView;
     WindowListAdapter adapter;
     TextView main_label;
-    Boolean mode;
     final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
 
 
@@ -86,25 +85,20 @@ public class WindowlistActivity extends AppCompatActivity {
         //final Switch switch1 = findViewById(R.id.switch1);
         gridView = findViewById(R.id.listview1);
         gridView.setAdapter(adapter);
-        SharedPreferences sf = getSharedPreferences("autoset", 0);
-        mode = sf.getBoolean("state", false); // 키값으로
-        if (mode){
-            gridView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    Intent intent = new Intent(WindowlistActivity.this,Popup_warning.class);
-                    startActivity(intent);
-                    return false;
-                }
-            });
-        }
 
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
             @Override
             public void onWindowButtonClick(int pos) {
                 WindowDetails listViewItem = adapter.listViewItemList.get(pos);
                 Boolean state=listViewItem.getState();
-                if(state)
+                SharedPreferences sf = getSharedPreferences("autoset", 0);
+                Boolean mode = sf.getBoolean("modestate", false); // 키값으로
+                if(mode)
+                {
+                    Intent intent = new Intent(WindowlistActivity.this,Popup_warning.class);
+                    startActivity(intent);
+                }
+                else if(state)
                 {
                     listViewItem.setState(false);
                     ((MainActivity)MainActivity.mContext).closewindow(pos);

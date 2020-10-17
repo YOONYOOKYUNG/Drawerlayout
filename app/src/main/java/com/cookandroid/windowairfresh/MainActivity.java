@@ -69,15 +69,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SwipeRefreshLayout swipeRefreshLayout;
     FragmentStateAdapter slideadapter;
     public static Context mContext;
-    static boolean modestate = false;
-    static int hottemp;
-    static int coldtemp;
-    static int comparedust;
     float insidedust;
     float outsidedust;
     float outsidetemp;
     int outsiderain;
-    final int AutoSet_REQUEST = 2020;
     static boolean btsocketstate=false;
 
     @Override
@@ -95,30 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-
-        if (resultCode == RESULT_OK && requestCode == AutoSet_REQUEST) {
-            SharedPreferences sf = getSharedPreferences("autoset", 0);
-            Boolean modestate = sf.getBoolean("state",false);
-            int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
-            int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
-            int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
-            setResult(RESULT_OK, data);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //자동시작
-        AutoOpen autoOpen = new AutoOpen();
-        autoOpen.start();
-        AutoClose autoClose = new AutoClose();
-        autoClose.start();
 
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
@@ -183,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuitem.getItemId()) {
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, AutoSetActivity.class);
-                startActivityForResult(intent1, AutoSet_REQUEST);
+                startActivity(intent1);
                 break;
 
             case R.id.alarm:
@@ -230,56 +204,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //창문설정 - 열기
     public void openwindow(int pos){
+        if(btsocketstate){
         WindowDetails listViewItem = adapter.listViewItemList.get(pos);
         address=listViewItem.getAddress();
-        if(!btsocketstate)
-        {opensocket();}
-        ConnectedThread.write("2");
+        ConnectedThread.write("2"); }
+        else
+        {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}
+
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
+        if(btsocketstate){
         WindowDetails listViewItem = adapter.listViewItemList.get(pos);
         address=listViewItem.getAddress();
-        if(!btsocketstate)
-        {opensocket();}
-        ConnectedThread.write("3");
-    }
+        ConnectedThread.write("3");}
+        else
+            {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}    }
 
     //창문자동설정 - 열기
     public class AutoOpen extends Thread {
         public void run() {
+            if(btsocketstate){
             if (databaseManager != null){
                 checklist = databaseManager.getAll();
             }
             if (!checklist.isEmpty()) {
+                SharedPreferences sf = getSharedPreferences("autoset", 0);
+                Boolean modestate = sf.getBoolean("modestate",false);
+                int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+                int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+                int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
                 if(modestate){
             float dustresult = outsidedust-insidedust;
             int windownumber = adapter.getCount();
-            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp && dustresult>comparedust)
+            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult>comparedust)
             {
                 for(int i=0;i<windownumber;i++) {
                     if(checklist.get(i).getState()==false)
                     {
                         openwindow(i);
+                        Log.d("자동모드", "자동모드:창문 열었어요");
                         adapter.listViewItemList.get(i).setState(true);
+                        if (databaseManager != null) {
+                            ContentValues updateRowValue = new ContentValues();
+                            updateRowValue.put("state", true);
+                            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+                        }
                     }
             }
             }
             try {
-                Thread.sleep(60000);
+                Thread.sleep(1000);
             } catch (Exception e) {
             }}
         }}
+            else
+            {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}
+        }
     }
 
 
     //창문자동설정 - 닫기
     public class AutoClose extends Thread {
         public void run() {
-            if (databaseManager != null){
+            if(btsocketstate){
+                if (databaseManager != null){
                 checklist = databaseManager.getAll();
             }
             if (!checklist.isEmpty()) {
+                SharedPreferences sf = getSharedPreferences("autoset", 0);
+                Boolean modestate = sf.getBoolean("modestate",false);
+                int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+                int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+                int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
                 if(modestate){
             float dustresult = outsidedust-insidedust;
             int windownumber = adapter.getCount();
@@ -289,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(checklist.get(i).getState()==true)
                 {
                     closewindow(i);
+                    Log.d("자동모드", "비와서 창문 닫았습니다");
                     adapter.listViewItemList.get(i).setState(false);
                     dbcloseupdate(i);
                 }
@@ -299,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(checklist.get(i).getState()==true)
                 {
                     closewindow(i);
+                    Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
                     adapter.listViewItemList.get(i).setState(false);
                     dbcloseupdate(i);
                 }
@@ -309,15 +308,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(checklist.get(i).getState()==true)
                 {
                     closewindow(i);
+                    Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
                     adapter.listViewItemList.get(i).setState(false);
                     dbcloseupdate(i);
                 }
             }}
             try {
-                Thread.sleep(60000);
+                Thread.sleep(1000);
             } catch (Exception e) {
             }}
         }}
+            else
+            {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}
+        }
     }
 
     //창문 db 닫기상태로 업데이트
@@ -330,20 +333,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //소켓 닫혀있으면 여는 코드
-    void opensocket(){
-        try {
-            btSocket.connect();
-            btsocketstate=true;
-        } catch (IOException e) {
-            try {
-                btSocket.close();
-                btsocketstate=false;
-            } catch (IOException e2) {
-                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
-            }
-        }
-    }
     // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
         private final java.io.InputStream InputStream;
@@ -416,8 +405,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
-              if(!btsocketstate)
-              {opensocket();}
             ConnectedThread.write("1");
 
 
@@ -463,6 +450,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             };
+        //자동시작
+        AutoOpen autoOpen = new AutoOpen();
+        autoOpen.start();
+        AutoClose autoClose = new AutoClose();
+        autoClose.start();
     }
 
 
