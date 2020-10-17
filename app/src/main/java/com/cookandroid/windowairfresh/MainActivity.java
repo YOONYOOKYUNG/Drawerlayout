@@ -264,6 +264,7 @@ public void makesocket(){
 
 public void opensocket(){
     makesocket();
+    btAdapter.cancelDiscovery();
     try {
         btSocket.connect();
         btsocketstate=true;
@@ -275,6 +276,8 @@ public void opensocket(){
             errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
         }
     }
+    ConnectedThread = new ConnectedThread(btSocket);
+    ConnectedThread.start();
 }
 
 
@@ -299,6 +302,7 @@ public void opensocket(){
         }
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
+            if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
 
             //handler.postDelayed(new Handler(),1000)
@@ -367,22 +371,19 @@ public void opensocket(){
 
     //창문설정 - 열기
     public void openwindow(int pos){
-        if(btsocketstate){
+        if (!btsocketstate)
+        { opensocket();}
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-            ConnectedThread.write("2"); }
-        else
-            opensocket();
-
+            ConnectedThread.write("2");
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
-        if(btsocketstate){
+        if (!btsocketstate)
+        { opensocket();}
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-            ConnectedThread.write("3");}
-        else
-            opensocket();
+            ConnectedThread.write("3");
     }
 
     //창문자동설정 - 열기
@@ -399,10 +400,11 @@ public void opensocket(){
                         int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
                         int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
                         if(modestate){
-                            if(btsocketstate){
+                            if (!btsocketstate)
+                            { opensocket();}
                             float dustresult = outsidedust-insidedust;
                             int windownumber = adapter.getCount();
-                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult>comparedust)
+                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
                             {
                                 for(int i=0;i<windownumber;i++) {
                                     if(checklist.get(i).getState()==false)
@@ -422,15 +424,22 @@ public void opensocket(){
                                 Thread.sleep(1000);
                             } catch (Exception e) {
                             }
-                        }
                     }
                 }
-                else
-                        opensocket();
         }
         }
     }
 
+
+    //창문 자동설정 - 모두닫기
+    public void allwindowclose(int i)
+    {
+            if (checklist.get(i).getState() == true) {
+                closewindow(i);
+                adapter.listViewItemList.get(i).setState(false);
+                dbcloseupdate(i);
+            }
+    }
 
     //창문자동설정 - 닫기
     public class AutoClose extends Thread {
@@ -446,45 +455,31 @@ public void opensocket(){
                         int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
                         int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
                         if (modestate) {
-                            if (btsocketstate) {
+                            if (!btsocketstate)
+                            { opensocket();}
                             float dustresult = outsidedust - insidedust;
                             int windownumber = adapter.getCount();
                             if (outsiderain != 0) {
+                                Log.d("자동모드", "비와서 창문 닫았습니다");
                                 for (int i = 0; i < windownumber; i++) {
-                                    if (checklist.get(i).getState() == true) {
-                                        closewindow(i);
-                                        Log.d("자동모드", "비와서 창문 닫았습니다");
-                                        adapter.listViewItemList.get(i).setState(false);
-                                        dbcloseupdate(i);
-                                    }
+                                    allwindowclose(i);
                                 }
                             } else if (outsidetemp < coldtemp || outsidetemp > hottemp) {
+                                Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
                                 for (int i = 0; i < windownumber; i++) {
-                                    if (checklist.get(i).getState() == true) {
-                                        closewindow(i);
-                                        Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
-                                        adapter.listViewItemList.get(i).setState(false);
-                                        dbcloseupdate(i);
-                                    }
+                                    allwindowclose(i);
                                 }
-                            } else if (dustresult < -comparedust) {
+                            } else if (dustresult>comparedust) {
+                                Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
                                 for (int i = 0; i < windownumber; i++) {
-                                    if (checklist.get(i).getState() == true) {
-                                        closewindow(i);
-                                        Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
-                                        adapter.listViewItemList.get(i).setState(false);
-                                        dbcloseupdate(i);
-                                    }
+                                    allwindowclose(i);
                                 }
                             }
                             try {
                                 Thread.sleep(1000);
                             } catch (Exception e) {
                             }
-                        }
                     }
-                } else {
-                        opensocket();
                 }
             }
         }
