@@ -104,8 +104,8 @@ public class WindowlistActivity extends AppCompatActivity {
                     ((MainActivity)MainActivity.mContext).closewindow(pos);
                     if (databaseManager != null) {
                         ContentValues updateRowValue = new ContentValues();
-                        updateRowValue.put("state", false);
-                        databaseManager.update(updateRowValue,listViewItem.getName());
+                        updateRowValue.put("state", "false");
+                       databaseManager.update(updateRowValue,listViewItem.getName());
                     }
                 }
                 else
@@ -114,7 +114,7 @@ public class WindowlistActivity extends AppCompatActivity {
                     ((MainActivity)MainActivity.mContext).openwindow(pos);
                     if (databaseManager != null) {
                         ContentValues updateRowValue = new ContentValues();
-                        updateRowValue.put("state", true);
+                        updateRowValue.put("state", "true");
                         databaseManager.update(updateRowValue,listViewItem.getName());
                     }
                 }

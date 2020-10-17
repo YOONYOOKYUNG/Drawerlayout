@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
     private static String address = "98:D3:51:F9:28:05";
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
-    Boolean state;
     String[] array;
     //블루투스 관련 선언 종료(블투1)
 
@@ -152,6 +151,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent1);
             }
         });
+        //자동시작
+        AutoOpen autoOpen = new AutoOpen();
+        autoOpen.start();
+        AutoClose autoClose = new AutoClose();
+        autoClose.start();
     }
 
     //menu
@@ -205,136 +209,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //창문설정 - 열기
-    public void openwindow(int pos){
-        if(btsocketstate){
-        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-        address=listViewItem.getAddress();
-        ConnectedThread.write("2"); }
-        else
-        {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}
-
-    }
-    //창문설정 - 닫기
-    public void closewindow(int pos){
-        if(btsocketstate){
-        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-        address=listViewItem.getAddress();
-        ConnectedThread.write("3");}
-        else
-            {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}    }
-
-    //창문자동설정 - 열기
-    public class AutoOpen extends Thread {
-        public void run() {
-            if(btsocketstate){
-            if (databaseManager != null){
-                checklist = databaseManager.getAll();
-            }
-            if (!checklist.isEmpty()) {
-                SharedPreferences sf = getSharedPreferences("autoset", 0);
-                Boolean modestate = sf.getBoolean("modestate",false);
-                int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
-                int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
-                int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
-                if(modestate){
-            float dustresult = outsidedust-insidedust;
-            int windownumber = adapter.getCount();
-            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult>comparedust)
-            {
-                for(int i=0;i<windownumber;i++) {
-                    if(checklist.get(i).getState()==false)
-                    {
-                        openwindow(i);
-                        Log.d("자동모드", "자동모드:창문 열었어요");
-                        adapter.listViewItemList.get(i).setState(true);
-                        if (databaseManager != null) {
-                            ContentValues updateRowValue = new ContentValues();
-                            updateRowValue.put("state", true);
-                            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
-                        }
-                    }
-            }
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-            }}
-        }}
-            else
-            {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}
-        }
-    }
-
-
-    //창문자동설정 - 닫기
-    public class AutoClose extends Thread {
-        public void run() {
-            if(btsocketstate){
-                if (databaseManager != null){
-                checklist = databaseManager.getAll();
-            }
-            if (!checklist.isEmpty()) {
-                SharedPreferences sf = getSharedPreferences("autoset", 0);
-                Boolean modestate = sf.getBoolean("modestate",false);
-                int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
-                int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
-                int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
-                if(modestate){
-            float dustresult = outsidedust-insidedust;
-            int windownumber = adapter.getCount();
-            if(outsiderain!=0)
-            {for(int i=0;i<windownumber;i++)
-            {
-                if(checklist.get(i).getState()==true)
-                {
-                    closewindow(i);
-                    Log.d("자동모드", "비와서 창문 닫았습니다");
-                    adapter.listViewItemList.get(i).setState(false);
-                    dbcloseupdate(i);
-                }
-            }}
-            else if(outsidetemp<coldtemp||outsidetemp>hottemp)
-            {for(int i=0;i<windownumber;i++)
-            {
-                if(checklist.get(i).getState()==true)
-                {
-                    closewindow(i);
-                    Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
-                    adapter.listViewItemList.get(i).setState(false);
-                    dbcloseupdate(i);
-                }
-            }}
-            else if(dustresult<-comparedust)
-            {for(int i=0;i<windownumber;i++)
-            {
-                if(checklist.get(i).getState()==true)
-                {
-                    closewindow(i);
-                    Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
-                    adapter.listViewItemList.get(i).setState(false);
-                    dbcloseupdate(i);
-                }
-            }}
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-            }}
-        }}
-            else
-            {Log.d("자동모드", "블루투스 소켓이 닫혀있어서 실행이 불가능해요");}
-        }
-    }
-
-    //창문 db 닫기상태로 업데이트
-    void dbcloseupdate(int i)
-    {
-        if (databaseManager != null) {
-            ContentValues updateRowValue = new ContentValues();
-            updateRowValue.put("state", false);
-            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
-        }
-    }
 
     // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
@@ -379,7 +253,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+public void makesocket(){
+        BluetoothDevice device = btAdapter.getRemoteDevice(address);
+        try {
+            btSocket = createBluetoothSocket(device);
+        } catch (IOException e) {
+            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
+        }
+    }
 
+public void opensocket(){
+    makesocket();
+    try {
+        btSocket.connect();
+        btsocketstate=true;
+    } catch (IOException e) {
+        try {
+            btSocket.close();
+            btsocketstate=false;
+        } catch (IOException e2) {
+            errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+        }
+    }
+}
 
 
     @Override
@@ -388,12 +284,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();
         viewpager.setAdapter(slideadapter);
-        BluetoothDevice device = btAdapter.getRemoteDevice(address);
-        try {
-            btSocket = createBluetoothSocket(device);
-        } catch (IOException e) {
-            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
-        }
+        makesocket();
         btAdapter.cancelDiscovery();
         try {
             btSocket.connect();
@@ -409,7 +300,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
             ConnectedThread.write("1");
-
 
             //handler.postDelayed(new Handler(),1000)
 
@@ -453,11 +343,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             };
-        //자동시작
-        AutoOpen autoOpen = new AutoOpen();
-        autoOpen.start();
-        AutoClose autoClose = new AutoClose();
-        autoClose.start();
     }
 
 
@@ -478,5 +363,140 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void errorExit(String title, String message){
         Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
         finish();
+    }
+
+    //창문설정 - 열기
+    public void openwindow(int pos){
+        if(btsocketstate){
+            WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+            address=listViewItem.getAddress();
+            ConnectedThread.write("2"); }
+        else
+            opensocket();
+
+    }
+    //창문설정 - 닫기
+    public void closewindow(int pos){
+        if(btsocketstate){
+            WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+            address=listViewItem.getAddress();
+            ConnectedThread.write("3");}
+        else
+            opensocket();
+    }
+
+    //창문자동설정 - 열기
+    public class AutoOpen extends Thread {
+        public void run() {
+            while(true){
+                    if (databaseManager != null){
+                        checklist = databaseManager.getAll();
+                    }
+                    if (!checklist.isEmpty()) {
+                        SharedPreferences sf = getSharedPreferences("autoset", 0);
+                        Boolean modestate = sf.getBoolean("modestate",false);
+                        int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+                        int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+                        int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
+                        if(modestate){
+                            if(btsocketstate){
+                            float dustresult = outsidedust-insidedust;
+                            int windownumber = adapter.getCount();
+                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult>comparedust)
+                            {
+                                for(int i=0;i<windownumber;i++) {
+                                    if(checklist.get(i).getState()==false)
+                                    {
+                                        openwindow(i);
+                                        Log.d("자동모드", "자동모드:창문 열었어요");
+                                        adapter.listViewItemList.get(i).setState(true);
+                                        if (databaseManager != null) {
+                                            ContentValues updateRowValue = new ContentValues();
+                                            updateRowValue.put("state", "true");
+                                            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+                                        }
+                                    }
+                                }
+                            }
+                            try {
+                                Thread.sleep(1000);
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }
+                else
+                        opensocket();
+        }
+        }
+    }
+
+
+    //창문자동설정 - 닫기
+    public class AutoClose extends Thread {
+        public void run() {
+            while(true) {
+                    if (databaseManager != null) {
+                        checklist = databaseManager.getAll();
+                    }
+                    if (!checklist.isEmpty()) {
+                        SharedPreferences sf = getSharedPreferences("autoset", 0);
+                        Boolean modestate = sf.getBoolean("modestate", false);
+                        int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));
+                        int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
+                        int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
+                        if (modestate) {
+                            if (btsocketstate) {
+                            float dustresult = outsidedust - insidedust;
+                            int windownumber = adapter.getCount();
+                            if (outsiderain != 0) {
+                                for (int i = 0; i < windownumber; i++) {
+                                    if (checklist.get(i).getState() == true) {
+                                        closewindow(i);
+                                        Log.d("자동모드", "비와서 창문 닫았습니다");
+                                        adapter.listViewItemList.get(i).setState(false);
+                                        dbcloseupdate(i);
+                                    }
+                                }
+                            } else if (outsidetemp < coldtemp || outsidetemp > hottemp) {
+                                for (int i = 0; i < windownumber; i++) {
+                                    if (checklist.get(i).getState() == true) {
+                                        closewindow(i);
+                                        Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
+                                        adapter.listViewItemList.get(i).setState(false);
+                                        dbcloseupdate(i);
+                                    }
+                                }
+                            } else if (dustresult < -comparedust) {
+                                for (int i = 0; i < windownumber; i++) {
+                                    if (checklist.get(i).getState() == true) {
+                                        closewindow(i);
+                                        Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
+                                        adapter.listViewItemList.get(i).setState(false);
+                                        dbcloseupdate(i);
+                                    }
+                                }
+                            }
+                            try {
+                                Thread.sleep(1000);
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                } else {
+                        opensocket();
+                }
+            }
+        }
+    }
+
+    //창문 db 닫기상태로 업데이트
+    void dbcloseupdate(int i)
+    {
+        if (databaseManager != null) {
+            ContentValues updateRowValue = new ContentValues();
+            updateRowValue.put("state", "false");
+            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+        }
     }
 }

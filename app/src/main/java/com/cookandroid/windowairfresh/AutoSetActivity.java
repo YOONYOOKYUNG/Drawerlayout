@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class AutoSetActivity extends AppCompatActivity {
     Button manual_mode, auto_mode, goWindowbtn;
     LinearLayout manual_layout;
@@ -25,9 +27,18 @@ public class AutoSetActivity extends AppCompatActivity {
     Boolean modestate;
     String shared_temp_high,shared_temp_low,shared_dust;
 
+    //kiki
+    DatabaseManager databaseManager= DatabaseManager.getInstance(this);
+    public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (databaseManager != null){
+            checklist = databaseManager.getAll();
+        }
+        if(!checklist.isEmpty())
+            Log.d("kiki","before clicking  it"+checklist.get(0).getState().toString());
         setContentView(R.layout.activity_modesetting);
         manual_mode = findViewById(R.id.manual_mode);
         auto_mode = findViewById(R.id.auto_mode);
@@ -68,14 +79,16 @@ public class AutoSetActivity extends AppCompatActivity {
             manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
         };
         manual_mode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                manual_mode.setBackgroundResource(R.drawable.modebtn);
-                auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
-                manual_layout.setVisibility(View.VISIBLE);
-                auto_layout.setVisibility(View.INVISIBLE);
-                modestate = false; //수동버튼 누르면 0 저장
-            }
+                    @Override
+                    public void onClick(View v) {
+                        manual_mode.setBackgroundResource(R.drawable.modebtn);
+                        auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
+                        manual_layout.setVisibility(View.VISIBLE);
+                        auto_layout.setVisibility(View.INVISIBLE);
+                        modestate = false; //수동버튼 누르면 0 저장
+                        if(!checklist.isEmpty())
+                            Log.d("kiki","after clicking it"+checklist.get(0).getState().toString());
+        }
         });
         auto_mode.setOnClickListener(new View.OnClickListener() {
             @Override
