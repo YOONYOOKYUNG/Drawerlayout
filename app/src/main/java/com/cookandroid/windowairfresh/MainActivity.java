@@ -402,7 +402,7 @@ public void opensocket(){
                             if(btsocketstate){
                             float dustresult = outsidedust-insidedust;
                             int windownumber = adapter.getCount();
-                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult>comparedust)
+                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
                             {
                                 for(int i=0;i<windownumber;i++) {
                                     if(checklist.get(i).getState()==false)
@@ -469,7 +469,7 @@ public void opensocket(){
                                 for (int i = 0; i < windownumber; i++) {
                                     allwindowclose(i);
                                 }
-                            } else if (dustresult < -comparedust) {
+                            } else if (dustresult>comparedust) {
                                 Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
                                 for (int i = 0; i < windownumber; i++) {
                                     allwindowclose(i);
