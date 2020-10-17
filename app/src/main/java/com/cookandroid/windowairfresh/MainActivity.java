@@ -302,6 +302,7 @@ public void opensocket(){
         }
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
+            if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
 
             //handler.postDelayed(new Handler(),1000)
@@ -370,22 +371,19 @@ public void opensocket(){
 
     //창문설정 - 열기
     public void openwindow(int pos){
-        if(btsocketstate){
+        if (!btsocketstate)
+        { opensocket();}
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-            ConnectedThread.write("2"); }
-        else
-            opensocket();
-
+            ConnectedThread.write("2");
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
-        if(btsocketstate){
+        if (!btsocketstate)
+        { opensocket();}
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-            ConnectedThread.write("3");}
-        else
-            opensocket();
+            ConnectedThread.write("3");
     }
 
     //창문자동설정 - 열기
@@ -402,7 +400,8 @@ public void opensocket(){
                         int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
                         int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
                         if(modestate){
-                            if(btsocketstate){
+                            if (!btsocketstate)
+                            { opensocket();}
                             float dustresult = outsidedust-insidedust;
                             int windownumber = adapter.getCount();
                             if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
@@ -425,11 +424,8 @@ public void opensocket(){
                                 Thread.sleep(1000);
                             } catch (Exception e) {
                             }
-                        }
                     }
                 }
-                else
-                        opensocket();
         }
         }
     }
@@ -459,7 +455,8 @@ public void opensocket(){
                         int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
                         int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
                         if (modestate) {
-                            if (btsocketstate) {
+                            if (!btsocketstate)
+                            { opensocket();}
                             float dustresult = outsidedust - insidedust;
                             int windownumber = adapter.getCount();
                             if (outsiderain != 0) {
@@ -482,10 +479,7 @@ public void opensocket(){
                                 Thread.sleep(1000);
                             } catch (Exception e) {
                             }
-                        }
                     }
-                } else {
-                        opensocket();
                 }
             }
         }
