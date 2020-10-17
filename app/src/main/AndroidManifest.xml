@@ -21,6 +21,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".AddressActivity"/>
+        <activity android:name=".HelpActivity2"
+            android:theme="@style/AppTheme.help"/>
         <activity android:name=".ActlogActivity" />
         <activity
             android:name=".HelpActivity"

@@ -8,10 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class DeviceListActivity extends AppCompatActivity {
 	public static int page = 1;
 	public static String btaddress = "";
 	private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
+	ImageView backarrow;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -61,6 +64,7 @@ public class DeviceListActivity extends AppCompatActivity {
 		//어느 페이지의 레이아웃인가요?
 		mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
 			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
+			backarrow = findViewById(R.id.backarrow);
 			mListView = (ListView) findViewById(R.id.lv_paired);
 			btrefreshbutton = (Button) findViewById(R.id.btrefresh);
 			mListView2 = (ListView) findViewById(R.id.lv_paired2);
@@ -147,6 +151,15 @@ public class DeviceListActivity extends AppCompatActivity {
 				//receiver를 등록한다
 			}
 		});
+
+
+		backarrow.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
+
 	}
 
 	@Override
