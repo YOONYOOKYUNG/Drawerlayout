@@ -20,21 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".HelpMode2Activity"
-            android:theme="@style/Transparent"/>
-        <activity
-            android:name=".HelpMode1Activity"
-            android:theme="@style/Transparent" />
-        <activity android:name=".AddressActivity" />
+        <activity android:name=".AddressActivity"/>
         <activity android:name=".ActlogActivity" />
         <activity
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />
-        <activity android:name=".AlarmReceiver" />
+        <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
         <activity
             android:name=".WindowNameActivity"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" /> <!-- dhkim end -->
         <activity
             android:name=".Popup_warning"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -55,8 +49,7 @@
             android:name=".SplashActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
