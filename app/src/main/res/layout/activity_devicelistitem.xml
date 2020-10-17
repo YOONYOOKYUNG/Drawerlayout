@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:padding="5dp">
+    android:padding="10dp"
+    android:layout_margin="10dp">
 
     <Button
         android:id="@+id/btn_pair"
@@ -11,14 +12,13 @@
         android:layout_height="wrap_content"        
         android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/main_popup_shape_round"
-        android:backgroundTint="#CCCBCB"
         android:text="@string/text_pair" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp">
     
     <TextView
         android:id="@+id/tv_name"

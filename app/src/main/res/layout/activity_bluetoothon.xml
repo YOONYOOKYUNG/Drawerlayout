@@ -59,7 +59,7 @@
             android:background="@drawable/main_popup_shape_round"
             android:backgroundTint="#CCCBCB"
             android:layout_toRightOf="@id/okButton"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
 </RelativeLayout>
