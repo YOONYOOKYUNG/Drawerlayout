@@ -42,6 +42,6 @@
         android:backgroundDimEnabled
         true - 반투명 검정 /  false - 완전 투명
         -->
-        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 </resources>

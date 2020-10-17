@@ -18,7 +18,8 @@ public class Main_Fragment2 extends Fragment {
 
     ViewPager2 viewpager;
     TextView tvdate, temp, humid, micro;
-    RelativeLayout templayout, dustlayout, humidlayout;
+    RelativeLayout templayout, dustlayout, humidlayout, bgbg;
+    Boolean nowrain;
 
     public Main_Fragment2() {
         // Required empty public constructor
@@ -37,6 +38,7 @@ public class Main_Fragment2 extends Fragment {
         temp = view.findViewById(R.id.temp);
         micro = view.findViewById(R.id.micro);
         humid = view.findViewById(R.id.humid);
+        bgbg = view.findViewById(R.id.bgbg);
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
@@ -85,6 +87,13 @@ public class Main_Fragment2 extends Fragment {
                 customDialogPopup1.callhumidpopup();
             }
         });
+        SharedPreferences rain = getContext().getSharedPreferences("rain",0);
+        nowrain=rain.getBoolean("rain",true);
+        if (nowrain){
+            bgbg.setBackgroundResource(R.drawable.fragment1_rain);
+        }
         return view;
+
+
     }
 }
