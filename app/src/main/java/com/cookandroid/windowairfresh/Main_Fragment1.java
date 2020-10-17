@@ -146,7 +146,7 @@ public class Main_Fragment1 extends Fragment {
                     humid1.setText(reh);
                     micro1.setText(data2);
 
-                    callback.onAutoWindowSet(pty,data2,t1h);
+                    callback.onAutoWindowSet(t1h,data2,pty);
 
                     //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
                     SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
