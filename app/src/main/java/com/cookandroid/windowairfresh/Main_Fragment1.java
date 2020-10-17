@@ -105,7 +105,9 @@ public class Main_Fragment1 extends Fragment {
             public void run() {
 
             data= getXmlData1();
+                Log.d("00","data : "+data);
             data2=getXmlData2();
+                Log.d("00","data : "+data2);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -122,10 +124,20 @@ public class Main_Fragment1 extends Fragment {
                     //온도 파싱
                     Start_index = data.indexOf("T1H:");
                     End_index = data.indexOf("/",Start_index);
+
+
                     String t1h = data.substring(Start_index+4,End_index);
+
                     int index = t1h.indexOf(".",0);
-                    t1h= t1h.substring(0,index);
+                    if (index!=-1)
+                        t1h= t1h.substring(0,index);
                     //보정값
+
+                    Log.d("00",t1h);
+                    Log.d("00",reh);
+                    Log.d("00",data2);
+
+
                         if (t1h=="-"){ t1h = "18";}
                         if (reh=="-"){ t1h = "15";}
                         if (data2=="-"){ t1h = "32";}
