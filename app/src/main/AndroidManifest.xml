@@ -40,7 +40,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".BluetoothOnActivity" />
         <activity android:name=".AutoSetActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"/>
         <activity android:name=".WindowlistActivity" />
         <activity android:name=".AlarmActivity" />
         <activity android:name=".AlarmSpinnerActivity" />

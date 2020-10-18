@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +24,6 @@ public class AutoSetActivity extends AppCompatActivity {
     ImageView question, question2,backarrow;
     Boolean state;
     String shared_temp_high,shared_temp_low,shared_dust;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,6 @@ public class AutoSetActivity extends AppCompatActivity {
         high_temp_txt.setText(shared_temp_high);
         low_temp_txt.setText(shared_temp_low);
         dust_txt.setText(shared_dust);
-
 
 
         if (state==false){ // 모드값 저장이 수동일떄 = 0
@@ -140,7 +138,7 @@ public class AutoSetActivity extends AppCompatActivity {
     // 미세먼지 창문닫기
     void set_dust() {
         final EditText edittext = new EditText(this);
-
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("미세먼지 개폐 수치 설정하기");
         builder.setMessage("외부와 내부가 몇 pm 이상 차이날 때 닫을까요?");
@@ -166,7 +164,8 @@ public class AutoSetActivity extends AppCompatActivity {
     //최고온도시 창문닫기
     void temp_High() {
         final EditText edittext = new EditText(this);
-
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+        final int high_temp = Integer.parseInt(String.valueOf(edittext));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("최고 온도 설정하기");
         builder.setMessage("몇도 이상일때 창문을 닫기를 원하시나요?");
@@ -174,9 +173,9 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        shared_temp_high=edittext.getText().toString()+" ℃";
-                        Toast.makeText(getApplicationContext(),shared_temp_high+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        high_temp_txt.setText(shared_temp_high);
+                            shared_temp_high = edittext.getText().toString() + " ℃";
+                            Toast.makeText(getApplicationContext(), shared_temp_high + " 로 설정되었습니다.", Toast.LENGTH_LONG).show();
+                            high_temp_txt.setText(shared_temp_high);
                     }
                 });
         builder.setNegativeButton("취소",
@@ -190,16 +189,17 @@ public class AutoSetActivity extends AppCompatActivity {
 
     //최저온도시 창문닫기
     void temp_Low() {
-        final EditText edittext = new EditText(this);
-
+        final EditText edittext2 = new EditText(this);
+        final int low_temp = Integer.parseInt(String.valueOf(edittext2));
+        edittext2.setInputType(InputType.TYPE_CLASS_NUMBER);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("최저 온도 설정하기");
         builder.setMessage("몇도 이하일때 창문을 닫기를 원하시나요?");
-        builder.setView(edittext);
+        builder.setView(edittext2);
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        shared_temp_low=edittext.getText().toString()+" ℃";
+                        shared_temp_low=edittext2.getText().toString()+" ℃";
                         Toast.makeText(getApplicationContext(),shared_temp_low+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
                         low_temp_txt.setText(shared_temp_low);
                     }
