@@ -2,8 +2,7 @@
 <resources>
 <color name="colorPrimary">#bce1fb</color>
 <color name="colorPrimaryDark">#3498DB</color>
-<color name="colorAccent">#3498DB</color>
+<color name="colorAccent">#1ABC9C</color>
 <color name="colorBad">#E74C3C</color>
 <color name="colorFont">#5e5e5e</color>
-<color name="colorSoso">#1ABC9C</color>
 </resources>
