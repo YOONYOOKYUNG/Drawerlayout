@@ -34,12 +34,12 @@ public class BluetoothOnActivity extends AppCompatActivity {
         //커스텀 다이얼로그를 정의하기 위해 Dialog 클래스를 생성한다.
         final Dialog bluetoothDlg = new Dialog(this);
         //타이틀바 숨김
-        bluetoothDlg .requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bluetoothDlg .getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bluetoothDlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bluetoothDlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //레이아웃 설정
-        bluetoothDlg .setContentView(R.layout.activity_windowname);
+        bluetoothDlg.setContentView(R.layout.activity_bluetoothon);
         //노출
-        bluetoothDlg .show();
+        bluetoothDlg.show();
 
         setTitle("Bluetooth 연결");
         btnok = bluetoothDlg.findViewById(R.id.btnok);
