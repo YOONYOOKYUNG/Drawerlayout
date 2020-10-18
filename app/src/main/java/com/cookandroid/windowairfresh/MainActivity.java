@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     float outsidetemp;
     int outsiderain;
     static boolean btsocketstate=false;
+
+    Handler autohandler;
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -152,6 +156,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         //자동시작
+        autohandler  = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                Popup_automode popup = new Popup_automode(mContext);
+                popup.setnumber(message.what);
+                popup.callautomodepopup();
+            }
+        };
+
         AutoOpen autoOpen = new AutoOpen();
         autoOpen.start();
         AutoClose autoClose = new AutoClose();
@@ -406,11 +419,13 @@ public void opensocket(){
                             int windownumber = adapter.getCount();
                             if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
                             {
+                                Log.d("자동모드", "자동모드:창문 열었어요");
+                                boolean windowsOpened = false;
                                 for(int i=0;i<windownumber;i++) {
                                     if(checklist.get(i).getState()==false)
                                     {
                                         openwindow(i);
-                                        Log.d("자동모드", "자동모드:창문 열었어요");
+                                        windowsOpened = true;
                                         adapter.listViewItemList.get(i).setState(true);
                                         if (databaseManager != null) {
                                             ContentValues updateRowValue = new ContentValues();
@@ -418,6 +433,10 @@ public void opensocket(){
                                             databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
                                         }
                                     }
+                                }
+                                if (windowsOpened){
+                                    Message message = autohandler.obtainMessage(1);
+                                    message.sendToTarget();
                                 }
                             }
                             try {
@@ -432,14 +451,24 @@ public void opensocket(){
 
 
     //창문 자동설정 - 모두닫기
-    public void allwindowclose(int i)
+    public void allwindowclose(int num)
     {
-            if (checklist.get(i).getState() == true) {
+        int windownumber = adapter.getCount();
+        boolean windowsclosed = false;
+        for (int i = 0; i < windownumber; i++) {
+            if (checklist.get(i).getState()) {
                 closewindow(i);
+                windowsclosed = true;
                 adapter.listViewItemList.get(i).setState(false);
                 dbcloseupdate(i);
             }
+        }
+        if (windowsclosed){
+            Message message = autohandler.obtainMessage(num);
+            message.sendToTarget();
+        }
     }
+
 
     //창문자동설정 - 닫기
     public class AutoClose extends Thread {
@@ -458,22 +487,15 @@ public void opensocket(){
                             if (!btsocketstate)
                             { opensocket();}
                             float dustresult = outsidedust - insidedust;
-                            int windownumber = adapter.getCount();
                             if (outsiderain != 0) {
                                 Log.d("자동모드", "비와서 창문 닫았습니다");
-                                for (int i = 0; i < windownumber; i++) {
-                                    allwindowclose(i);
-                                }
+                                 allwindowclose(2);
                             } else if (outsidetemp < coldtemp || outsidetemp > hottemp) {
                                 Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
-                                for (int i = 0; i < windownumber; i++) {
-                                    allwindowclose(i);
-                                }
+                                allwindowclose(3);
                             } else if (dustresult>comparedust) {
                                 Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
-                                for (int i = 0; i < windownumber; i++) {
-                                    allwindowclose(i);
-                                }
+                                allwindowclose(4);
                             }
                             try {
                                 Thread.sleep(1000);
