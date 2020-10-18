@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,10 +30,14 @@ public class Main_Fragment1 extends Fragment {
     RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
     String data, data2;
+    public String nowrain;
+
+    AutoWindowListener callback;
 
     public Main_Fragment1() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -102,7 +107,9 @@ public class Main_Fragment1 extends Fragment {
             public void run() {
 
             data= getXmlData1();
+                Log.d("00","data : "+data);
             data2=getXmlData2();
+                Log.d("00","data : "+data2);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -111,7 +118,11 @@ public class Main_Fragment1 extends Fragment {
                     Start_index = data.indexOf("PTY:");
                     End_index = data.indexOf("/",Start_index);
                     String pty = data.substring(Start_index+4,End_index);
-                            //String pty = "1"; //억지로 비오는 설정 넣기
+                    //String pty = "1"; //억지로 비오는 설정 넣기
+                    SharedPreferences sf = getContext().getSharedPreferences("fragment2",0);
+                    SharedPreferences.Editor editor =sf.edit();
+                    editor.putString("pty",pty);
+                    editor.commit();
                     //습도 파싱
                     Start_index = data.indexOf("REH:");
                     End_index = data.indexOf("/",Start_index);
@@ -119,10 +130,20 @@ public class Main_Fragment1 extends Fragment {
                     //온도 파싱
                     Start_index = data.indexOf("T1H:");
                     End_index = data.indexOf("/",Start_index);
+
+
                     String t1h = data.substring(Start_index+4,End_index);
+
                     int index = t1h.indexOf(".",0);
-                    t1h= t1h.substring(0,index);
+                    if (index!=-1)
+                        t1h= t1h.substring(0,index);
                     //보정값
+
+                    Log.d("00",t1h);
+                    Log.d("00",reh);
+                    Log.d("00",data2);
+
+
                         if (t1h=="-"){ t1h = "18";}
                         if (reh=="-"){ t1h = "15";}
                         if (data2=="-"){ t1h = "32";}
@@ -130,6 +151,8 @@ public class Main_Fragment1 extends Fragment {
                     temp1.setText(t1h);
                     humid1.setText(reh);
                     micro1.setText(data2);
+
+                    callback.onAutoWindowSet(t1h,data2,pty);
 
                     //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
                     SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
@@ -140,18 +163,34 @@ public class Main_Fragment1 extends Fragment {
                     }
                     if (Integer.parseInt(pty)!=0){
                         bg.setBackgroundResource(R.drawable.fragment2_rain);
+
                     }
+
+
+
                 }
             });
 
 
             }
         }).start();
+
         return view;
+    }
+
+
+    public void setListener(AutoWindowListener callback) {
+        this.callback = callback;
+    }
+
+    //메인에 데이터 보내기
+    public interface AutoWindowListener {
+
+        public void onAutoWindowSet(String temp, String dust, String rain);
 
     }
 
-    
+
     String getXmlData1(){
 
         StringBuffer buffer1=new StringBuffer();

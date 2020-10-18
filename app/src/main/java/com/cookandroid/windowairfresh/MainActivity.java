@@ -3,11 +3,14 @@ package com.cookandroid.windowairfresh;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -35,7 +40,7 @@ import java.util.UUID;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Main_Fragment1.AutoWindowListener{
 
 
     //블루투스 관련 선언 시작(블투1)
@@ -50,11 +55,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
     private static String address = "98:D3:51:F9:28:05";
     public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
-    Boolean state;
+    String[] array;
     //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
-    ImageView question2;
     ViewPager2 viewpager;
     CircleIndicator3 indicator;
     WindowListAdapter adapter;
@@ -65,12 +69,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SwipeRefreshLayout swipeRefreshLayout;
     FragmentStateAdapter slideadapter;
     public static Context mContext;
+    float insidedust;
+    float outsidedust;
+    float outsidetemp;
+    int outsiderain;
+    static boolean btsocketstate=false;
+
+    Handler autohandler;
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof Main_Fragment1) {
+            Main_Fragment1 mainFragment1 = (Main_Fragment1) fragment;
+            mainFragment1.setListener(this);
+        }
+    }
+
+    public void onAutoWindowSet(String temp, String dust, String rain) {
+        outsidetemp=Float.parseFloat(temp);
+        outsidedust=Float.parseFloat(dust);
+        outsiderain=Integer.parseInt(rain);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
@@ -80,13 +104,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (databaseManager != null){
             checklist = databaseManager.getAll();
         }
-        if (adapter.listViewItemList.isEmpty()) {
+        if (checklist.isEmpty()) {
             //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
             address = "98:D3:51:F9:28:05";
         } else {
             WindowDetails listViewItem = adapter.listViewItemList.get(0);
             address = listViewItem.getAddress();
         }
+
+        //도움말
+        ImageView question2;
 
         //fragment 관련
         viewpager = findViewById(R.id.viewpager);
@@ -120,13 +147,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         mContext=this;
 
-        /*question2.setOnClickListener(new View.OnClickListener() {
+        question2 = findViewById(R.id.question2);
+        question2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(getApplicationContext(),HelpActivity2.class);
                 startActivity(intent1);
             }
-        });*/
+        });
+        //자동시작
+        autohandler  = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                Popup_automode popup = new Popup_automode(mContext);
+                popup.setnumber(message.what);
+                popup.callautomodepopup();
+            }
+        };
+
+        AutoOpen autoOpen = new AutoOpen();
+        autoOpen.start();
+        AutoClose autoClose = new AutoClose();
+        autoClose.start();
     }
 
     //menu
@@ -180,19 +222,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //창문설정 - 열기
-    public void openwindow(int pos){
-        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-        address=listViewItem.getAddress();
-        ConnectedThread.write("2");
-    }
-    //창문설정 - 닫기
-    public void closewindow(int pos){
-        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-        address=listViewItem.getAddress();
-        ConnectedThread.write("3");
-    }
-
 
     // fragment2 아두이노 측정값 송수신
     class ConnectedThread extends Thread {
@@ -237,7 +266,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+public void makesocket(){
+        BluetoothDevice device = btAdapter.getRemoteDevice(address);
+        try {
+            btSocket = createBluetoothSocket(device);
+        } catch (IOException e) {
+            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
+        }
+    }
 
+public void opensocket(){
+    makesocket();
+    btAdapter.cancelDiscovery();
+    try {
+        btSocket.connect();
+        btsocketstate=true;
+    } catch (IOException e) {
+        try {
+            btSocket.close();
+            btsocketstate=false;
+        } catch (IOException e2) {
+            errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+        }
+    }
+    ConnectedThread = new ConnectedThread(btSocket);
+    ConnectedThread.start();
+}
 
 
     @Override
@@ -246,26 +300,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();
         viewpager.setAdapter(slideadapter);
-        BluetoothDevice device = btAdapter.getRemoteDevice(address);
-        try {
-            btSocket = createBluetoothSocket(device);
-        } catch (IOException e) {
-            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
-        }
+        makesocket();
         btAdapter.cancelDiscovery();
         try {
             btSocket.connect();
+            btsocketstate=true;
         } catch (IOException e) {
             try {
                     btSocket.close();
+                btsocketstate=false;
             } catch (IOException e2) {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
         }
             ConnectedThread = new ConnectedThread(btSocket);
             ConnectedThread.start();
+            if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
-
 
             //handler.postDelayed(new Handler(),1000)
 
@@ -287,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 Log.d("a5", sbprint);
                                 sb.delete(0, sb.length());
 
-                                String[] array = sbprint.split("#");
+                                array = sbprint.split("#");
 
                                 Log.d("a6", array[0]);
                                 Log.d("a6", array[1]);
@@ -298,8 +349,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 SharedPreferences.Editor editor =pf.edit();
                                 editor.putString("temp", array[1]);
                                 editor.putString("dust", array[2]);
+                                insidedust = Float.parseFloat(pf.getString("dust","0"));
                                 editor.putString("humid", array[3]);
                                 editor.commit();
+
                                 flag++;
                             }
 
@@ -307,7 +360,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             };
-
     }
 
 
@@ -328,5 +380,140 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void errorExit(String title, String message){
         Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
         finish();
+    }
+
+    //창문설정 - 열기
+    public void openwindow(int pos){
+        if (!btsocketstate)
+        { opensocket();}
+            WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+            address=listViewItem.getAddress();
+            ConnectedThread.write("2");
+    }
+    //창문설정 - 닫기
+    public void closewindow(int pos){
+        if (!btsocketstate)
+        { opensocket();}
+            WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+            address=listViewItem.getAddress();
+            ConnectedThread.write("3");
+    }
+
+    //창문자동설정 - 열기
+    public class AutoOpen extends Thread {
+        public void run() {
+            while(true){
+                    if (databaseManager != null){
+                        checklist = databaseManager.getAll();
+                    }
+                    if (!checklist.isEmpty()) {
+                        SharedPreferences sf = getSharedPreferences("autoset", 0);
+                        Boolean modestate = sf.getBoolean("modestate",false);
+                        int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+                        int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+                        int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
+                        if(modestate){
+                            if (!btsocketstate)
+                            { opensocket();}
+                            float dustresult = outsidedust-insidedust;
+                            int windownumber = adapter.getCount();
+                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
+                            {
+                                Log.d("자동모드", "자동모드:창문 열었어요");
+                                boolean windowsOpened = false;
+                                for(int i=0;i<windownumber;i++) {
+                                    if(checklist.get(i).getState()==false)
+                                    {
+                                        openwindow(i);
+                                        windowsOpened = true;
+                                        adapter.listViewItemList.get(i).setState(true);
+                                        if (databaseManager != null) {
+                                            ContentValues updateRowValue = new ContentValues();
+                                            updateRowValue.put("state", "true");
+                                            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+                                        }
+                                    }
+                                }
+                                if (windowsOpened){
+                                    Message message = autohandler.obtainMessage(1);
+                                    message.sendToTarget();
+                                }
+                            }
+                            try {
+                                Thread.sleep(1000);
+                            } catch (Exception e) {
+                            }
+                    }
+                }
+        }
+        }
+    }
+
+
+    //창문 자동설정 - 모두닫기
+    public void allwindowclose(int num)
+    {
+        int windownumber = adapter.getCount();
+        boolean windowsclosed = false;
+        for (int i = 0; i < windownumber; i++) {
+            if (checklist.get(i).getState()) {
+                closewindow(i);
+                windowsclosed = true;
+                adapter.listViewItemList.get(i).setState(false);
+                dbcloseupdate(i);
+            }
+        }
+        if (windowsclosed){
+            Message message = autohandler.obtainMessage(num);
+            message.sendToTarget();
+        }
+    }
+
+
+    //창문자동설정 - 닫기
+    public class AutoClose extends Thread {
+        public void run() {
+            while(true) {
+                    if (databaseManager != null) {
+                        checklist = databaseManager.getAll();
+                    }
+                    if (!checklist.isEmpty()) {
+                        SharedPreferences sf = getSharedPreferences("autoset", 0);
+                        Boolean modestate = sf.getBoolean("modestate", false);
+                        int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));
+                        int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
+                        int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
+                        if (modestate) {
+                            if (!btsocketstate)
+                            { opensocket();}
+                            float dustresult = outsidedust - insidedust;
+                            if (outsiderain != 0) {
+                                Log.d("자동모드", "비와서 창문 닫았습니다");
+                                 allwindowclose(2);
+                            } else if (outsidetemp < coldtemp || outsidetemp > hottemp) {
+                                Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
+                                allwindowclose(3);
+                            } else if (dustresult>comparedust) {
+                                Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
+                                allwindowclose(4);
+                            }
+                            try {
+                                Thread.sleep(1000);
+                            } catch (Exception e) {
+                            }
+                    }
+                }
+            }
+        }
+    }
+
+    //창문 db 닫기상태로 업데이트
+    void dbcloseupdate(int i)
+    {
+        if (databaseManager != null) {
+            ContentValues updateRowValue = new ContentValues();
+            updateRowValue.put("state", "false");
+            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+        }
     }
 }

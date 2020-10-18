@@ -1,12 +1,16 @@
 package com.cookandroid.windowairfresh;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +30,20 @@ public class BluetoothOnActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
-        setContentView(R.layout.activity_bluetoothon);
+
+        //커스텀 다이얼로그를 정의하기 위해 Dialog 클래스를 생성한다.
+        final Dialog bluetoothDlg = new Dialog(this);
+        //타이틀바 숨김
+        bluetoothDlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bluetoothDlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //레이아웃 설정
+        bluetoothDlg.setContentView(R.layout.activity_bluetoothon);
+        //노출
+        bluetoothDlg.show();
+
         setTitle("Bluetooth 연결");
-        btnok = findViewById(R.id.btnok);
-        btnend = findViewById(R.id.btnend);
+        btnok = bluetoothDlg.findViewById(R.id.btnok);
+        btnend = bluetoothDlg.findViewById(R.id.btnend);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다
 
@@ -58,6 +72,7 @@ public class BluetoothOnActivity extends AppCompatActivity {
                 finishAndRemoveTask();                        // 액티비티 종료 + 태스크 리스트에서 지우기
                 android.os.Process.killProcess(android.os.Process.myPid());
                 finish();
+                bluetoothDlg.dismiss();
             }
         });
     }

@@ -179,6 +179,16 @@ public class DatabaseManager {
                 "name = ?", new String[] { name });
     }
 
+    //창문 상태 업데이트
+    public int update(ContentValues updateRowValue,
+                      String name)
+    {
+        return mydatabase.update(Window_TABLE_NAME,
+                updateRowValue,
+                "name= ?",
+                new String[] { name });
+    }
+
     //창문db얻어오기
     public ArrayList<WindowDetails> getAll() {
         ArrayList<WindowDetails> array_list = new ArrayList<WindowDetails>();

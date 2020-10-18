@@ -4,7 +4,8 @@
     android:layout_height="200dp"
     android:layout_gravity="center"
     android:padding="10dp"
-    android:background="@drawable/main_popup_shape_round">
+    android:background="@drawable/main_popup_shape_round"
+    style="@style/Transparent">
 
     <TextView
         android:id="@+id/title"
@@ -21,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:padding="10dp"
         android:layout_margin="10dp"
         android:textColor="#000000"
         android:textSize="16dp"
@@ -32,7 +32,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_below="@+id/messagse">
 
         <Button
@@ -58,7 +58,8 @@
             android:textSize="16dp"
             android:background="@drawable/main_popup_shape_round"
             android:backgroundTint="#CCCBCB"
-            android:layout_toRightOf="@id/okButton" />
+            android:layout_toRightOf="@id/okButton"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
 </RelativeLayout>

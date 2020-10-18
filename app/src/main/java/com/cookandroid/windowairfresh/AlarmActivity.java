@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class AlarmActivity extends AppCompatActivity {
     String sharedName = "file";
     TextView st_time;
     RelativeLayout rl3;
+    ImageView backarrow;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,14 @@ public class AlarmActivity extends AppCompatActivity {
         swit_setTime = findViewById(R.id.swit_setTime);
         st_time = findViewById(R.id.st_time);
         rl3 = findViewById(R.id.rl3);
+        backarrow = findViewById(R.id.backarrow);
+
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         SharedPreferences state = getSharedPreferences(sharedName, MODE_PRIVATE);
@@ -140,6 +150,11 @@ public class AlarmActivity extends AppCompatActivity {
         editor2.commit();
 
         super.onStop();
+    }
+    @Override
+    public void onBackPressed(){
+        AlarmActivity.this.finish();
+        super.onBackPressed();
     }
 }
 
