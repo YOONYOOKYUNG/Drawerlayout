@@ -9,7 +9,7 @@
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:id="@+id/windowbtnback"
-        android:background="#B7DBF4"
+        android:background="@drawable/windowname_open"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp">
 
