@@ -141,12 +141,12 @@ public class Main_Fragment1 extends Fragment {
 
                     Log.d("00",t1h);
                     Log.d("00",reh);
-                    Log.d("00",data2);
+                    Log.d("00","0"+data2+"0");
 
 
-                        if (t1h=="-"){ t1h = "18";}
-                        if (reh=="-"){ t1h = "15";}
-                        if (data2=="-"){ t1h = "32";}
+                        if (t1h.equals("-")){ t1h = "18";}
+                        if (reh.equals("-")){ reh = "15";}
+                        if (data2.equals("-")){ data2 = "32";}
 
                     temp1.setText(t1h);
                     humid1.setText(reh);
