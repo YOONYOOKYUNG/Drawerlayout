@@ -34,7 +34,6 @@ public class AutoSetActivity extends AppCompatActivity {
         auto_layout = findViewById(R.id.auto_layout);
         dustbtn = findViewById(R.id.dustbtn);
         tempLow_btn = findViewById(R.id.tempLow_btn);
-        tempHigh_btn = findViewById(R.id.tempHigh_btn);
         high_temp_txt = findViewById(R.id.high_temp_txt);
         low_temp_txt = findViewById(R.id.low_temp_txt);
         dust_txt = findViewById(R.id.dust_txt);
@@ -45,9 +44,9 @@ public class AutoSetActivity extends AppCompatActivity {
 
         SharedPreferences sf = getSharedPreferences("autoset",0);
         state = sf.getBoolean("state",false);
-        shared_temp_high = sf.getString("High_temp","30 ℃");
-        shared_temp_low = sf.getString("Low_temp","0 ℃");
-        shared_dust = sf.getString("Compare_dust","20 pm");
+        shared_temp_high = sf.getString("High_temp","30");
+        shared_temp_low = sf.getString("Low_temp","0");
+        shared_dust = sf.getString("Compare_dust","20");
 
         high_temp_txt.setText(shared_temp_high);
         low_temp_txt.setText(shared_temp_low);
@@ -146,10 +145,9 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        shared_dust=edittext.getText().toString()+" pm";
+                        shared_dust=edittext.getText().toString();
                         Toast.makeText(getApplicationContext(),shared_dust+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        dust_txt.setText(shared_dust);
-
+                        dust_txt.setText(shared_dust+" pm");
                     }
                 });
         builder.setNegativeButton("취소",
@@ -174,10 +172,9 @@ public class AutoSetActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                            shared_temp_high = edittext.getText().toString() + " ℃";
-                            Toast.makeText(getApplicationContext(), shared_temp_high + " 로 설정되었습니다.", Toast.LENGTH_LONG).show();
-                            high_temp_txt.setText(shared_temp_high);
-                    }
+                        shared_temp_high = edittext.getText().toString();
+                        Toast.makeText(getApplicationContext(), shared_temp_high + " 로 설정되었습니다.", Toast.LENGTH_LONG).show();
+                        high_temp_txt.setText(shared_temp_high+ " ℃");                    }
                 });
         builder.setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -200,9 +197,9 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        shared_temp_low=edittext2.getText().toString()+" ℃";
+                        shared_temp_low=edittext2.getText().toString();
                         Toast.makeText(getApplicationContext(),shared_temp_low+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        low_temp_txt.setText(shared_temp_low);
+                        low_temp_txt.setText(shared_temp_low+" ℃");
                     }
                 });
         builder.setNegativeButton("취소",
