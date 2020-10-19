@@ -40,7 +40,7 @@ public class BluetoothOnActivity extends AppCompatActivity {
         bluetoothDlg.setContentView(R.layout.activity_bluetoothon);
         //노출
         bluetoothDlg.show();
-        bluetoothDlg.setCancelable(false);
+
         setTitle("Bluetooth 연결");
         btnok = bluetoothDlg.findViewById(R.id.btnok);
         btnend = bluetoothDlg.findViewById(R.id.btnend);
