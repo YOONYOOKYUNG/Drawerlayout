@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_2"
-        android:visibility="invisible">
+        android:visibility="visible">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -173,9 +173,15 @@
             android:text="수치 설정하기"
             android:layout_margin="8dp"
             android:textSize="17dp"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/view_3"/>
+        <View
+            android:layout_below="@id/dustbtn"
+            android:layout_width="match_parent"
+            android:background="#EDEDED"
+            android:layout_height="1dp"/>
         <RelativeLayout
             android:id="@+id/dustbtn"
             android:layout_below="@id/set_dust"
@@ -199,8 +205,8 @@
                 android:layout_below="@+id/low_dust"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/tempLow_btn"
@@ -213,45 +219,59 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:gravity="center">
-            <TextView
-                android:id="@+id/low_temp"
+            <LinearLayout
+                android:id="@+id/line4"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/low_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="최저 온도 설정하기"
+                android:layout_weight="1"
                 android:gravity="center"/>
             <TextView
                 android:id="@+id/low_temp_txt"
                 android:textSize="30dp"
                 android:layout_below="@+id/low_temp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_weight="1"
                 android:layout_marginLeft="10dp"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/tempHigh_btn"
-            android:layout_below="@id/tempLow_btn"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center">
-            <TextView
-                android:id="@+id/high_temp"
+            </LinearLayout>
+            <View
+                android:layout_marginLeft="132dp"
+                android:layout_width="1dp"
+                android:layout_height="70dp"
+                android:background="#FFFFFF"/>
+            <LinearLayout
+                android:id="@+id/line5"
+                android:layout_toRightOf="@+id/line4"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/high_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="최고 온도일 때 닫기"/>
             <TextView
                 android:id="@+id/high_temp_txt"
                 android:textSize="30dp"
                 android:layout_below="@+id/high_temp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"/>
+            </LinearLayout>
         </RelativeLayout>
+
     </RelativeLayout>
 </RelativeLayout>

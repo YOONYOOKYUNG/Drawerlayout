@@ -173,6 +173,7 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
                             shared_temp_high = edittext.getText().toString() + " ℃";
                             Toast.makeText(getApplicationContext(), shared_temp_high + " 로 설정되었습니다.", Toast.LENGTH_LONG).show();
                             high_temp_txt.setText(shared_temp_high);
