@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -7,8 +8,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -399,114 +402,6 @@ public void opensocket(){
             ConnectedThread.write("3");
     }
 
-    //창문자동설정 - 열기
-    public class AutoOpen extends Thread {
-        public void run() {
-            while(true){
-                    if (databaseManager != null){
-                        checklist = databaseManager.getAll();
-                    }
-                    if (!checklist.isEmpty()) {
-                        SharedPreferences sf = getSharedPreferences("autoset", 0);
-                        Boolean modestate = sf.getBoolean("modestate",false);
-                        int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
-                        int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
-                        int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
-                        if(modestate){
-                            if (!btsocketstate)
-                            { opensocket();}
-                            float dustresult = outsidedust-insidedust;
-                            int windownumber = adapter.getCount();
-                            if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
-                            {
-                                Log.d("자동모드", "자동모드:창문 열었어요");
-                                boolean windowsOpened = false;
-                                for(int i=0;i<windownumber;i++) {
-                                    if(checklist.get(i).getState()==false)
-                                    {
-                                        openwindow(i);
-                                        windowsOpened = true;
-                                        adapter.listViewItemList.get(i).setState(true);
-                                        if (databaseManager != null) {
-                                            ContentValues updateRowValue = new ContentValues();
-                                            updateRowValue.put("state", "true");
-                                            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
-                                        }
-                                    }
-                                }
-                                if (windowsOpened){
-                                    Message message = autohandler.obtainMessage(1);
-                                    message.sendToTarget();
-                                }
-                            }
-                            try {
-                                Thread.sleep(1000);
-                            } catch (Exception e) {
-                            }
-                    }
-                }
-        }
-        }
-    }
-
-
-    //창문 자동설정 - 모두닫기
-    public void allwindowclose(int num)
-    {
-        int windownumber = adapter.getCount();
-        boolean windowsclosed = false;
-        for (int i = 0; i < windownumber; i++) {
-            if (checklist.get(i).getState()) {
-                closewindow(i);
-                windowsclosed = true;
-                adapter.listViewItemList.get(i).setState(false);
-                dbcloseupdate(i);
-            }
-        }
-        if (windowsclosed){
-            Message message = autohandler.obtainMessage(num);
-            message.sendToTarget();
-        }
-    }
-
-
-    //창문자동설정 - 닫기
-    public class AutoClose extends Thread {
-        public void run() {
-            while(true) {
-                    if (databaseManager != null) {
-                        checklist = databaseManager.getAll();
-                    }
-                    if (!checklist.isEmpty()) {
-                        SharedPreferences sf = getSharedPreferences("autoset", 0);
-                        Boolean modestate = sf.getBoolean("modestate", false);
-                        int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));
-                        int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
-                        int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
-                        if (modestate) {
-                            if (!btsocketstate)
-                            { opensocket();}
-                            float dustresult = outsidedust - insidedust;
-                            if (outsiderain != 0) {
-                                Log.d("자동모드", "비와서 창문 닫았습니다");
-                                 allwindowclose(2);
-                            } else if (outsidetemp < coldtemp || outsidetemp > hottemp) {
-                                Log.d("자동모드", "자동모드:온도 때문에 창문 닫았습니다");
-                                allwindowclose(3);
-                            } else if (dustresult>comparedust) {
-                                Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
-                                allwindowclose(4);
-                            }
-                            try {
-                                Thread.sleep(1000);
-                            } catch (Exception e) {
-                            }
-                    }
-                }
-            }
-        }
-    }
-
     //창문 db 닫기상태로 업데이트
     void dbcloseupdate(int i)
     {
@@ -516,4 +411,5 @@ public void opensocket(){
             databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
         }
     }
+
 }
