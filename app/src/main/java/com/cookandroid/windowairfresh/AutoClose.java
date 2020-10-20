@@ -16,10 +16,9 @@ public class AutoClose extends Thread {
         DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.mContext);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
-        adapter.initialiseList();
 
         while(true) {
-
+            adapter.initialiseList();
             SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
             Boolean modestate = sf.getBoolean("modestate", false);
             int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));

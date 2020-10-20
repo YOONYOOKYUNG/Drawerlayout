@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 public class AutoOpen extends Thread {
     WindowListAdapter adapter = new WindowListAdapter();
-    SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-    Boolean modestate = sf.getBoolean("modestate",false);
-    int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
-    int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
-    int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
+
     public void run() {
+        SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
+        Boolean modestate = sf.getBoolean("modestate",false);
+        int hottemp =  Integer.parseInt(sf.getString("High_temp","30"));
+        int coldtemp= Integer.parseInt(sf.getString("Low_temp","0"));
+        int comparedust = Integer.parseInt(sf.getString("Compare_dust","20"));
         ArrayList<WindowDetails> checklist = new ArrayList<>() ;
         float insidedust=((MainActivity)MainActivity.mContext).insidedust;
         float outsidedust=((MainActivity)MainActivity.mContext).outsidedust;
@@ -23,8 +24,8 @@ public class AutoOpen extends Thread {
         DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.mContext);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
-        adapter.initialiseList();
         while(true){
+            adapter.initialiseList();
             if (databaseManager != null){
                 checklist = databaseManager.getAll();
             }
