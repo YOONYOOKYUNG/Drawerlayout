@@ -14,7 +14,11 @@ import java.util.ArrayList;
 public class AutoClose  extends Thread {
     WindowListAdapter adapter = new WindowListAdapter();
     ArrayList<WindowDetails> checklist = new ArrayList<>() ;
-
+    SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
+    Boolean modestate = sf.getBoolean("modestate", false);
+    int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));
+    int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
+    int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
     public void run() {
         DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.mContext);
         float insidedust=((MainActivity)MainActivity.mContext).insidedust;
@@ -29,11 +33,6 @@ public class AutoClose  extends Thread {
                 checklist = databaseManager.getAll();
             }
             if (!checklist.isEmpty()) {
-                SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-                Boolean modestate = sf.getBoolean("modestate", false);
-                int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));
-                int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
-                int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
                 if (modestate) {
                     if(!((MainActivity)MainActivity.mContext).btsocketstate)
                     { ((MainActivity)MainActivity.mContext).opensocket();}

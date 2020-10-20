@@ -22,7 +22,7 @@ public class AutoSetActivity extends AppCompatActivity {
     RelativeLayout dustbtn,tempLow_btn,tempHigh_btn,auto_layout;
     TextView high_temp_txt,low_temp_txt,dust_txt;
     ImageView question, question2,backarrow;
-    Boolean state;
+    Boolean modestate;
     String shared_temp_high,shared_temp_low,shared_dust;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class AutoSetActivity extends AppCompatActivity {
         backarrow = findViewById(R.id.backarrow);
 
         SharedPreferences sf = getSharedPreferences("autoset",0);
-        state = sf.getBoolean("state",false);
+        modestate = sf.getBoolean("modestate",false);
         shared_temp_high = sf.getString("High_temp","30");
         shared_temp_low = sf.getString("Low_temp","0");
         shared_dust = sf.getString("Compare_dust","20");
@@ -53,7 +53,7 @@ public class AutoSetActivity extends AppCompatActivity {
         dust_txt.setText(shared_dust);
 
 
-        if (state==false){ // 모드값 저장이 수동일떄 = 0
+        if (modestate==false){ // 모드값 저장이 수동일떄 = 0
             manual_mode.setBackgroundResource(R.drawable.modebtn);
             auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
             manual_layout.setVisibility(View.VISIBLE);
@@ -71,7 +71,7 @@ public class AutoSetActivity extends AppCompatActivity {
                 auto_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 manual_layout.setVisibility(View.VISIBLE);
                 auto_layout.setVisibility(View.INVISIBLE);
-                state = false; //수동버튼 누르면 0 저장
+                modestate = false; //수동버튼 누르면 0 저장
             }
         });
         auto_mode.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class AutoSetActivity extends AppCompatActivity {
                 auto_layout.setVisibility(View.VISIBLE);
                 manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 auto_mode.setBackgroundResource(R.drawable.modebtn);
-                state = true; //자동버튼 누르면 1 저장
+                modestate = true; //자동버튼 누르면 1 저장
             }
         });
 
@@ -92,12 +92,12 @@ public class AutoSetActivity extends AppCompatActivity {
                 temp_Low();
             }
         });
-        tempHigh_btn.setOnClickListener(new View.OnClickListener() {
+    /*    tempHigh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 temp_High();
             }
-        });
+        }); */
         dustbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,7 +215,7 @@ public class AutoSetActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("autoset",0);
         SharedPreferences.Editor editor =sf.edit();
         editor.clear();
-        editor.putBoolean("state",state);
+        editor.putBoolean("modestate",modestate);
         editor.putString("High_temp",shared_temp_high);
         editor.putString("Low_temp",shared_temp_low);
         editor.putString("Compare_dust",shared_dust);
