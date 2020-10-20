@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cookandroid.windowairfresh.R;
+
 public class HelpActivity2 extends AppCompatActivity {
 ImageView cancel;
 

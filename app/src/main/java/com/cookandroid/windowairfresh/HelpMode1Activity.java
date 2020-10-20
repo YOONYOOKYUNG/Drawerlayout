@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.cookandroid.windowairfresh.R;
+
 public class HelpMode1Activity extends AppCompatActivity {
 ImageView cancel1;
     @Override
