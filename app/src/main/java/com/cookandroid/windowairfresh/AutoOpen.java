@@ -33,7 +33,7 @@ public class AutoOpen extends Thread {
                 boolean windowsOpened = false;
                 for (int i = 0; i < windownumber; i++) {
                     {
-                        if(adapter.listViewItemList.get(i).getState()){
+                        if(!adapter.listViewItemList.get(i).getState()){
                         ((MainActivity) MainActivity.mContext).openwindow(i);
                         windowsOpened = true;
                         adapter.listViewItemList.get(i).setState(true);
