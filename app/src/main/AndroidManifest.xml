@@ -20,6 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".popup_set_dust"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity android:name=".popup_set_temp"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+
         <service
             android:name=".AutoService"
             android:enabled="true"
@@ -43,7 +48,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".WindowlistActivity" />
         <activity android:name=".AlarmActivity" />
-        <activity android:name=".AlarmSpinnerActivity" />
+        <activity android:name=".AlarmSpinnerActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity
             android:name=".DeviceListActivity"
             android:label="@string/app_name">

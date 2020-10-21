@@ -19,21 +19,22 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AutoSetActivity extends AppCompatActivity {
     Button manual_mode, auto_mode, goWindowbtn;
     LinearLayout manual_layout;
-    RelativeLayout dustbtn,tempLow_btn,tempHigh_btn,auto_layout;
+    RelativeLayout dustbtn,tempLow_btn,auto_layout,temp_btn;
     TextView high_temp_txt,low_temp_txt,dust_txt;
     ImageView question, question2,backarrow;
     Boolean modestate;
     String shared_temp_high,shared_temp_low,shared_dust;
+    int RESULT_TEST = 1212;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modesetting);
         manual_mode = findViewById(R.id.manual_mode);
-        auto_mode = findViewById(R.id.auto_mode);
         manual_layout = findViewById(R.id.manual_layout);
+        auto_mode = findViewById(R.id.auto_mode);
         auto_layout = findViewById(R.id.auto_layout);
         dustbtn = findViewById(R.id.dustbtn);
-        tempLow_btn = findViewById(R.id.tempLow_btn);
+        temp_btn = findViewById(R.id.temp_btn);
         high_temp_txt = findViewById(R.id.high_temp_txt);
         low_temp_txt = findViewById(R.id.low_temp_txt);
         dust_txt = findViewById(R.id.dust_txt);
@@ -85,23 +86,18 @@ public class AutoSetActivity extends AppCompatActivity {
             }
         });
 
-
-        tempLow_btn.setOnClickListener(new View.OnClickListener() {
+        temp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                temp_Low();
+                Intent intent = new Intent(getApplicationContext(), popup_set_temp.class);
+                startActivityForResult(intent,RESULT_TEST);
             }
         });
-    /*    tempHigh_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                temp_High();
-            }
-        }); */
         dustbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                set_dust();
+                Intent intent2 = new Intent(getApplicationContext(),popup_set_dust.class);
+                startActivityForResult(intent2,RESULT_TEST);
             }
         });
 
@@ -134,7 +130,7 @@ public class AutoSetActivity extends AppCompatActivity {
             }
         });
     }
-    // 미세먼지 창문닫기
+    // 미세먼지 창문닫기**지워야될거
     void set_dust() {
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -159,7 +155,7 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.show();
     }
 
-    //최고온도시 창문닫기
+    //최고온도시 창문닫기**지워야될거
     void temp_High() {
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -185,7 +181,7 @@ public class AutoSetActivity extends AppCompatActivity {
         builder.show();
     }
 
-    //최저온도시 창문닫기
+    //최저온도시 창문닫기 **지워야될거
     void temp_Low() {
         final EditText edittext2 = new EditText(this);
         final int low_temp = Integer.parseInt(String.valueOf(edittext2));
@@ -210,6 +206,25 @@ public class AutoSetActivity extends AppCompatActivity {
                 });
         builder.show();
     }
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        super.onActivityResult(requestCode,resultCode,data);
+//        if(requestCode==RESULT_TEST) {
+//            if (resultCode == 1) {
+//                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
+//                low_temp_txt.setText(data.getStringExtra("low_temp"));
+//                high_temp_txt.setText(data.getStringExtra("high_temp"));
+//                shared_temp_low=low_temp_txt.getText().toString();
+//                shared_temp_high=high_temp_txt.getText().toString();
+//
+//            }
+//            else if(resultCode==2){
+//                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
+//                dust_txt.setText(data.getStringExtra("dust_num"));
+//                shared_dust=dust_txt.getText().toString();
+//            }
+//        }
+//    }
+
     protected void onStop(){
         super.onStop();
         SharedPreferences sf = getSharedPreferences("autoset",0);
