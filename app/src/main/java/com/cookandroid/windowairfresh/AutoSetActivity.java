@@ -130,100 +130,25 @@ public class AutoSetActivity extends AppCompatActivity {
             }
         });
     }
-    // 미세먼지 창문닫기**지워야될거
-    void set_dust() {
-        final EditText edittext = new EditText(this);
-        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("미세먼지 개폐 수치 설정하기");
-        builder.setMessage("외부와 내부가 몇 pm 이상 차이날 때 닫을까요?");
-        builder.setView(edittext);
-        builder.setPositiveButton("확인",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        shared_dust=edittext.getText().toString();
-                        Toast.makeText(getApplicationContext(),shared_dust+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        dust_txt.setText(shared_dust+" pm");
-                    }
-                });
-        builder.setNegativeButton("취소",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-        builder.show();
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==RESULT_TEST) {
+            if (resultCode == 1) {
+                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
+                low_temp_txt.setText(data.getStringExtra("low_temp"));
+                high_temp_txt.setText(data.getStringExtra("high_temp"));
+                //shared_temp_low=low_temp_txt.getText().toString();
+                //shared_temp_high=high_temp_txt.getText().toString();
+
+            }
+            else if(resultCode==2){
+                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
+                dust_txt.setText(data.getStringExtra("dust_num"));
+                //shared_dust=dust_txt.getText().toString();
+            }
+        }
     }
-
-    //최고온도시 창문닫기**지워야될거
-    void temp_High() {
-        final EditText edittext = new EditText(this);
-        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-        final int high_temp = Integer.parseInt(String.valueOf(edittext));
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("최고 온도 설정하기");
-        builder.setMessage("몇도 이상일때 창문을 닫기를 원하시나요?");
-        builder.setView(edittext);
-        builder.setPositiveButton("확인",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        shared_temp_high = edittext.getText().toString();
-                        Toast.makeText(getApplicationContext(), shared_temp_high + " 로 설정되었습니다.", Toast.LENGTH_LONG).show();
-                        high_temp_txt.setText(shared_temp_high+ " ℃");                    }
-                });
-        builder.setNegativeButton("취소",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        set_dust();
-                    }
-                });
-        builder.show();
-    }
-
-    //최저온도시 창문닫기 **지워야될거
-    void temp_Low() {
-        final EditText edittext2 = new EditText(this);
-        final int low_temp = Integer.parseInt(String.valueOf(edittext2));
-        edittext2.setInputType(InputType.TYPE_CLASS_NUMBER);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("최저 온도 설정하기");
-        builder.setMessage("몇도 이하일때 창문을 닫기를 원하시나요?");
-        builder.setView(edittext2);
-        builder.setPositiveButton("확인",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        shared_temp_low=edittext2.getText().toString();
-                        Toast.makeText(getApplicationContext(),shared_temp_low+" 로 설정되었습니다." , Toast.LENGTH_LONG).show();
-                        low_temp_txt.setText(shared_temp_low+" ℃");
-                    }
-                });
-        builder.setNegativeButton("취소",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.show();
-    }
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        super.onActivityResult(requestCode,resultCode,data);
-//        if(requestCode==RESULT_TEST) {
-//            if (resultCode == 1) {
-//                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
-//                low_temp_txt.setText(data.getStringExtra("low_temp"));
-//                high_temp_txt.setText(data.getStringExtra("high_temp"));
-//                shared_temp_low=low_temp_txt.getText().toString();
-//                shared_temp_high=high_temp_txt.getText().toString();
-//
-//            }
-//            else if(resultCode==2){
-//                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
-//                dust_txt.setText(data.getStringExtra("dust_num"));
-//                shared_dust=dust_txt.getText().toString();
-//            }
-//        }
-//    }
 
     protected void onStop(){
         super.onStop();
