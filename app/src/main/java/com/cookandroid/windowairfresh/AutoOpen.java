@@ -15,6 +15,7 @@ public class AutoOpen extends Thread {
         int hottemp =  Integer.parseInt(sf.getString("hightemp","30"));
         int coldtemp= Integer.parseInt(sf.getString("lowtemp","0"));
         int comparedust = Integer.parseInt(sf.getString("comparedust","20"));
+        Boolean modestate = sf.getBoolean("modestate", false);
         float insidedust=((MainActivity)MainActivity.mContext).insidedust;
         float outsidedust=((MainActivity)MainActivity.mContext).outsidedust;
         float outsidetemp=((MainActivity)MainActivity.mContext).outsidetemp;
@@ -22,35 +23,36 @@ public class AutoOpen extends Thread {
         DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.mContext);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
-        while(true){
+        while(true) {
             adapter.initialiseList();
-                    float dustresult = outsidedust-insidedust;
-                    int windownumber = adapter.getCount();
-                    if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
+            float dustresult = outsidedust - insidedust;
+            int windownumber = adapter.getCount();
+            if (modestate){
+            if (outsiderain == 0 && coldtemp < outsidetemp && outsidetemp < hottemp && dustresult < -comparedust) {
+                Log.d("자동모드", "자동모드:창문 열었어요");
+                boolean windowsOpened = false;
+                for (int i = 0; i < windownumber; i++) {
                     {
-                        Log.d("자동모드", "자동모드:창문 열었어요");
-                        boolean windowsOpened = false;
-                        for(int i=0;i<windownumber;i++) {
-                            {
-                                ((MainActivity)MainActivity.mContext).openwindow(i);
-                                windowsOpened = true;
-                                adapter.listViewItemList.get(i).setState(true);
-                                if (databaseManager != null) {
-                                    ContentValues updateRowValue = new ContentValues();
-                                    updateRowValue.put("state", "true");
-                                    databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
-                                }
-                            }
+                        ((MainActivity) MainActivity.mContext).openwindow(i);
+                        windowsOpened = true;
+                        adapter.listViewItemList.get(i).setState(true);
+                        if (databaseManager != null) {
+                            ContentValues updateRowValue = new ContentValues();
+                            updateRowValue.put("state", "true");
+                            databaseManager.update(updateRowValue, adapter.listViewItemList.get(i).getName());
                         }
-                        if (windowsOpened){
-                            Message message = ((MainActivity)MainActivity.mContext).autohandler.obtainMessage(1);
-                            message.sendToTarget();
                     }
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
+                }
+                if (windowsOpened) {
+                    Message message = ((MainActivity) MainActivity.mContext).autohandler.obtainMessage(1);
+                    message.sendToTarget();
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
         }
     }
 }

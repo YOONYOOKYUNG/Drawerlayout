@@ -167,14 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-        Boolean modestate = sf.getBoolean("modestate", false);
-        if (modestate) {
             if (!checklist.isEmpty()) {
                 AutoOpen autoOpen = new AutoOpen();
                 autoOpen.start();
                 AutoClose autoClose = new AutoClose();
                 autoClose.start();}
-        }
     }
 
     //menu
@@ -390,6 +387,7 @@ public void opensocket(){
 
     //창문설정 - 열기
     public void openwindow(int pos){
+            adapter.initialiseList();
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
            if(!listViewItem.getState())
@@ -399,6 +397,7 @@ public void opensocket(){
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
+            adapter.initialiseList();
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
            if(listViewItem.getState())
