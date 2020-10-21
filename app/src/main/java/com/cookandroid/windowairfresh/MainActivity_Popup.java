@@ -130,7 +130,7 @@ public class MainActivity_Popup {
 
         if (Integer.parseInt(dust)<30){
             boldtext.setText("좋음");
-            con2.setImageResource(R.drawable.main_popup_darkhappy);
+            con2.setImageResource(R.drawable.main_popup_colorgood);
             suchisoso.setVisibility(View.INVISIBLE);
             suchibad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);
@@ -141,7 +141,7 @@ public class MainActivity_Popup {
 
         }else if (Integer.parseInt(dust)<80){
             boldtext.setText("보통");
-            con2.setImageResource(R.drawable.main_popup_darksoso);
+            con2.setImageResource(R.drawable.main_popup_colorsoso);
             suchigood.setVisibility(View.INVISIBLE);
             suchibad.setVisibility(View.INVISIBLE);
             pointbad.setVisibility(View.INVISIBLE);
@@ -152,7 +152,7 @@ public class MainActivity_Popup {
 
         }else if (Integer.parseInt(dust)>=80){
             boldtext.setText("나쁨");
-            con2.setImageResource(R.drawable.main_popup_darkbad);
+            con2.setImageResource(R.drawable.main_popup_colorbad);
             suchigood.setVisibility(View.INVISIBLE);
             suchisoso.setVisibility(View.INVISIBLE);
             pointgood.setVisibility(View.INVISIBLE);

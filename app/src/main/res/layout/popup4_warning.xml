@@ -3,7 +3,7 @@
     android:layout_width="300dp"
     android:layout_height="250dp"
     android:layout_gravity="center"
-    android:background="#FFF"
+    android:background="@drawable/main_popup_shape_round"
     android:padding="10dp"
     android:id="@+id/bgbg"
     android:layout_margin="30dp">
@@ -60,14 +60,15 @@
             android:layout_gravity="center_horizontal"/>
 </RelativeLayout>
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/button1"
             android:text="닫기"
+            android:textSize="16dp"
             android:textColor="#FFF"
             android:id="@+id/closewar"/>
 
