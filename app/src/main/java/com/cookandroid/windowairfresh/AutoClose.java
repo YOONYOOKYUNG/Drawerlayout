@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class AutoClose extends Thread {
     WindowListAdapter adapter = new WindowListAdapter();
-    ArrayList<WindowDetails> checklist = new ArrayList<>() ;
 
     public void run() {
         DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.mContext);
@@ -20,7 +19,6 @@ public class AutoClose extends Thread {
         while(true) {
             adapter.initialiseList();
             SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-            Boolean modestate = sf.getBoolean("modestate", false);
             int hottemp = Integer.parseInt(sf.getString("hightemp", "30"));
             int coldtemp = Integer.parseInt(sf.getString("lowtemp", "0"));
             int comparedust = Integer.parseInt(sf.getString("comparedust", "20"));
@@ -29,17 +27,6 @@ public class AutoClose extends Thread {
             float outsidedust=((MainActivity)MainActivity.mContext).outsidedust;
             float outsidetemp=((MainActivity)MainActivity.mContext).outsidetemp;
             int outsiderain=((MainActivity)MainActivity.mContext).outsiderain;
-
-
-
-            if (databaseManager != null) {
-                checklist = databaseManager.getAll();
-            }
-            if (!checklist.isEmpty()) {
-                if (modestate) {
-
-                    if(!((MainActivity)MainActivity.mContext).btsocketstate)
-                    { ((MainActivity)MainActivity.mContext).opensocket();}
                     float dustresult = outsidedust - insidedust;
 
                     Log.d("00", "indust : "+ String.valueOf(insidedust));
@@ -55,15 +42,12 @@ public class AutoClose extends Thread {
                         allwindowclose(3);
                     } else if (dustresult>comparedust) {
                         Log.d("자동모드", "자동모드:미세먼지 때문에 창문 닫았습니다.");
-
                         allwindowclose(4);
                     }
                     try {
                         Thread.sleep(3000);
                     } catch (Exception e) {
                     }
-                }
-            }
         }
     }
 
@@ -74,12 +58,10 @@ public class AutoClose extends Thread {
         boolean windowsclosed = false;
 
         for (int i = 0; i < windownumber; i++) {
-            if (adapter.listViewItemList.get(i).getState()) {
                 ((MainActivity)MainActivity.mContext).closewindow(i);
                 windowsclosed = true;
                 adapter.listViewItemList.get(i).setState(false);
                 ((MainActivity)MainActivity.mContext).dbcloseupdate(i);
-            }
         }
 
         if (windowsclosed){

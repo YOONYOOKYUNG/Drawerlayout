@@ -12,11 +12,9 @@ public class AutoOpen extends Thread {
 
     public void run() {
         SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-        Boolean modestate = sf.getBoolean("modestate",false);
         int hottemp =  Integer.parseInt(sf.getString("hightemp","30"));
         int coldtemp= Integer.parseInt(sf.getString("lowtemp","0"));
         int comparedust = Integer.parseInt(sf.getString("comparedust","20"));
-        ArrayList<WindowDetails> checklist = new ArrayList<>() ;
         float insidedust=((MainActivity)MainActivity.mContext).insidedust;
         float outsidedust=((MainActivity)MainActivity.mContext).outsidedust;
         float outsidetemp=((MainActivity)MainActivity.mContext).outsidetemp;
@@ -26,13 +24,6 @@ public class AutoOpen extends Thread {
         adapter.setDatabaseManager(databaseManager);
         while(true){
             adapter.initialiseList();
-            if (databaseManager != null){
-                checklist = databaseManager.getAll();
-            }
-            if (!checklist.isEmpty()) {
-                if(modestate){
-                    if (!((MainActivity)MainActivity.mContext).btsocketstate)
-                    { ((MainActivity)MainActivity.mContext).opensocket();}
                     float dustresult = outsidedust-insidedust;
                     int windownumber = adapter.getCount();
                     if(outsiderain==0&& coldtemp<outsidetemp && outsidetemp<hottemp&&dustresult < -comparedust)
@@ -40,7 +31,6 @@ public class AutoOpen extends Thread {
                         Log.d("자동모드", "자동모드:창문 열었어요");
                         boolean windowsOpened = false;
                         for(int i=0;i<windownumber;i++) {
-                            if(checklist.get(i).getState()==false)
                             {
                                 ((MainActivity)MainActivity.mContext).openwindow(i);
                                 windowsOpened = true;
@@ -55,14 +45,12 @@ public class AutoOpen extends Thread {
                         if (windowsOpened){
                             Message message = ((MainActivity)MainActivity.mContext).autohandler.obtainMessage(1);
                             message.sendToTarget();
-                        }
+                    }
                     }
                     try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                     }
-                }
-            }
         }
     }
 }
