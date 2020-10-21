@@ -22,10 +22,10 @@ public class Main_SlideAdapter extends FragmentStateAdapter {
         }
         switch (position){
             case 0:
-                return new Main_Fragment1();
+                return new MainActivity_Fragment1();
             case 1:
-                if (checklist.isEmpty()){ return new Main_Fragment3(); }
-                else                    { return new Main_Fragment2(); }
+                if (checklist.isEmpty()){ return new MainActivity_Fragment3(); }
+                else                    { return new MainActivity_Fragment2(); }
             default:
                 return null;
         }

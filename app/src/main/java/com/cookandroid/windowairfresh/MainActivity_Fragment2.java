@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Main_Fragment2 extends Fragment {
+public class MainActivity_Fragment2 extends Fragment {
 
     ViewPager2 viewpager;
     TextView tvdate, temp, humid, micro;
@@ -22,7 +22,7 @@ public class Main_Fragment2 extends Fragment {
     Boolean nowrain;
     String pty;
 
-    public Main_Fragment2() {
+    public MainActivity_Fragment2() {
         // Required empty public constructor
     }
 
@@ -68,7 +68,7 @@ public class Main_Fragment2 extends Fragment {
         templayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(view.getContext());
+                MainActivity_Popup customDialogPopup1 = new MainActivity_Popup(view.getContext());
                 customDialogPopup1.settemp(temp.getText().toString());
                 customDialogPopup1.calltemppopup();
             }
@@ -78,7 +78,7 @@ public class Main_Fragment2 extends Fragment {
         dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(view.getContext());
+                MainActivity_Popup customDialogPopup1 = new MainActivity_Popup(view.getContext());
                 customDialogPopup1.setdust(micro.getText().toString());
                 customDialogPopup1.calldustpopup();
             }
@@ -88,7 +88,7 @@ public class Main_Fragment2 extends Fragment {
         humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(view.getContext());
+                MainActivity_Popup customDialogPopup1 = new MainActivity_Popup(view.getContext());
                 customDialogPopup1.settemp(temp.getText().toString());
                 customDialogPopup1.sethumid(humid.getText().toString());
                 customDialogPopup1.callhumidpopup();

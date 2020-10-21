@@ -4,26 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".popup_set_dust"
+    tools:context=".ModeSetActivity_popup_temp"
     android:background="@drawable/set_temp_popup_bg">
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txt_low"
+            android:text="최저 온도 수치 설정하기"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/low_temp"
+            android:hint="최저 온도"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/linear2"
+        android:layout_below="@id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/txt_high"
-            android:text="미세먼지 개폐 수치 설정하기"
+            android:text="최고 온도 수치 설정하기"
             android:textSize="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"/>
         <EditText
-            android:id="@+id/dust_edit"
+            android:id="@+id/high_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="수치입력"
+            android:hint="최고 온도"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -39,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"/>
         <Button
             android:text="뒤로가기"
@@ -50,7 +70,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_below="@id/linear2"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>

@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.cookandroid.windowairfresh.R;
 
-public class Popup {
+public class MainActivity_Popup {
     private Context context;
-    public Popup(Context context) {
+    public MainActivity_Popup(Context context) {
         this.context = context;
     }
 
