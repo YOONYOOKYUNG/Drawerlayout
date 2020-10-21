@@ -54,10 +54,11 @@ public class AutoClose extends Thread {
         boolean windowsclosed = false;
 
         for (int i = 0; i < windownumber; i++) {
+            if(adapter.listViewItemList.get(i).getState()){
                 ((MainActivity)MainActivity.mContext).closewindow(i);
                 windowsclosed = true;
                 adapter.listViewItemList.get(i).setState(false);
-                ((MainActivity)MainActivity.mContext).dbcloseupdate(i);
+                ((MainActivity)MainActivity.mContext).dbcloseupdate(i);}
         }
 
         if (windowsclosed){

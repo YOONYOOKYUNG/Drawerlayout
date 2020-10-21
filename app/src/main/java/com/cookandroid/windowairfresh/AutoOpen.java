@@ -33,6 +33,7 @@ public class AutoOpen extends Thread {
                 boolean windowsOpened = false;
                 for (int i = 0; i < windownumber; i++) {
                     {
+                        if(adapter.listViewItemList.get(i).getState()){
                         ((MainActivity) MainActivity.mContext).openwindow(i);
                         windowsOpened = true;
                         adapter.listViewItemList.get(i).setState(true);
@@ -41,6 +42,7 @@ public class AutoOpen extends Thread {
                             updateRowValue.put("state", "true");
                             databaseManager.update(updateRowValue, adapter.listViewItemList.get(i).getName());
                         }
+                       }
                     }
                 }
                 if (windowsOpened) {
