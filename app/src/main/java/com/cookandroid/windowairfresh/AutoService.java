@@ -23,9 +23,12 @@ public class AutoService extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // 서비스가 호출될 때마다 실행
+        AutoOpen autoOpen = new AutoOpen();
+        autoOpen.start();
+        AutoClose autoClose = new AutoClose();
+        autoClose.start();
         Log.d("test", "서비스의 onStartCommand");
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
