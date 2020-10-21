@@ -390,20 +390,20 @@ public void opensocket(){
             adapter.initialiseList();
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-           if(!listViewItem.getState())
+           if(!listViewItem.getState()){
                if (!btsocketstate)
                { opensocket();}
-            ConnectedThread.write("2");
+            ConnectedThread.write("2");}
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
             adapter.initialiseList();
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-           if(listViewItem.getState())
+           if(listViewItem.getState()){
                if (!btsocketstate)
                { opensocket();}
-            ConnectedThread.write("3");
+            ConnectedThread.write("3");}
     }
 
     //창문 db 닫기상태로 업데이트
