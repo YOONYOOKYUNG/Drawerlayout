@@ -12,9 +12,9 @@ public class AutoOpen extends Thread {
 
     public void run() {
         SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-        int hottemp =  Integer.parseInt(sf.getString("hightemp","30"));
-        int coldtemp= Integer.parseInt(sf.getString("lowtemp","0"));
-        int comparedust = Integer.parseInt(sf.getString("comparedust","20"));
+        int hottemp =  Integer.parseInt(sf.getString("high_temp","30"));
+        int coldtemp= Integer.parseInt(sf.getString("low_temp","0"));
+        int comparedust = Integer.parseInt(sf.getString("compare_dust","20"));
         Boolean modestate = sf.getBoolean("modestate", false);
         float insidedust=((MainActivity)MainActivity.mContext).insidedust;
         float outsidedust=((MainActivity)MainActivity.mContext).outsidedust;
