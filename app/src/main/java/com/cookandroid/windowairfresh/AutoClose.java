@@ -21,9 +21,9 @@ public class AutoClose extends Thread {
             adapter.initialiseList();
             SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
             Boolean modestate = sf.getBoolean("modestate", false);
-            int hottemp = Integer.parseInt(sf.getString("High_temp", "30"));
-            int coldtemp = Integer.parseInt(sf.getString("Low_temp", "0"));
-            int comparedust = Integer.parseInt(sf.getString("Compare_dust", "20"));
+            int hottemp = Integer.parseInt(sf.getString("hightemp", "30"));
+            int coldtemp = Integer.parseInt(sf.getString("lowtemp", "0"));
+            int comparedust = Integer.parseInt(sf.getString("comparedust", "20"));
 
             float insidedust=((MainActivity)MainActivity.mContext).insidedust;
             float outsidedust=((MainActivity)MainActivity.mContext).outsidedust;

@@ -45,9 +45,9 @@ public class AutoSetActivity extends AppCompatActivity {
 
         SharedPreferences sf = getSharedPreferences("autoset",0);
         modestate = sf.getBoolean("modestate",false);
-        shared_temp_high = sf.getString("High_temp","30");
-        shared_temp_low = sf.getString("Low_temp","0");
-        shared_dust = sf.getString("Compare_dust","20");
+        shared_temp_high = sf.getString("hightemp","30");
+        shared_temp_low = sf.getString("lowtemp","0");
+        shared_dust = sf.getString("comparedust","20");
 
         high_temp_txt.setText(shared_temp_high);
         low_temp_txt.setText(shared_temp_low);
@@ -136,15 +136,15 @@ public class AutoSetActivity extends AppCompatActivity {
         if(requestCode==RESULT_TEST) {
             if (resultCode == 1) {
                 Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
-                low_temp_txt.setText(data.getStringExtra("low_temp"));
-                high_temp_txt.setText(data.getStringExtra("high_temp"));
+                low_temp_txt.setText(data.getStringExtra("lowtemp"));
+                high_temp_txt.setText(data.getStringExtra("hightemp"));
                 //shared_temp_low=low_temp_txt.getText().toString();
                 //shared_temp_high=high_temp_txt.getText().toString();
 
             }
             else if(resultCode==2){
                 Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
-                dust_txt.setText(data.getStringExtra("dust_num"));
+                dust_txt.setText(data.getStringExtra("comparedust"));
                 //shared_dust=dust_txt.getText().toString();
             }
         }
@@ -156,9 +156,9 @@ public class AutoSetActivity extends AppCompatActivity {
         SharedPreferences.Editor editor =sf.edit();
         editor.clear();
         editor.putBoolean("modestate",modestate);
-        editor.putString("High_temp",shared_temp_high);
-        editor.putString("Low_temp",shared_temp_low);
-        editor.putString("Compare_dust",shared_dust);
+        editor.putString("hightemp",shared_temp_high);
+        editor.putString("lowtemp",shared_temp_low);
+        editor.putString("comparedust",shared_dust);
         editor.commit();
     }
 }
