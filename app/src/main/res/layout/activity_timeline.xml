@@ -33,10 +33,10 @@
 
 
     <ListView
+        android:layout_margin="10dp"
         android:id="@+id/timeline"
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

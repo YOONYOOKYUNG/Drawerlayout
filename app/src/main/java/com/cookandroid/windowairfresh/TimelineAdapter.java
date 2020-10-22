@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class TimelineAdapter extends BaseAdapter {
-    public ArrayList<TimelineItem> timelineItemList = new ArrayList<>();
+    public ArrayList<TimelineDetails> timelineDetailsList = new ArrayList<>();
     public TimelineAdapter() { }
 
     private DatabaseManager databaseManager;
@@ -20,10 +20,11 @@ public class TimelineAdapter extends BaseAdapter {
     public void setDatabaseManager(DatabaseManager databaseManager){
         this.databaseManager = databaseManager;
     }
+
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴
     @Override
     public int getCount() {
-        return timelineItemList.size();
+        return timelineDetailsList.size();
     }
     // "activity_timelineitem" Layout을 inflate하여 convertView 참조 획득.
     @Override
@@ -36,25 +37,29 @@ public class TimelineAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_timelineitem, parent, false);
         }
 
-        TextView txt_date = (TextView) convertView.findViewById(R.id.txt_date);
-        TextView txt_window = (TextView) convertView.findViewById(R.id.txt_window);
-        TextView txt_state = (TextView) convertView.findViewById(R.id.txt_state);
-        TextView txt_cause = (TextView) convertView.findViewById(R.id.txt_cause);
         final ImageView item_openclose = (ImageView) convertView.findViewById(R.id.item_openclose);
+        TextView txt_date = (TextView) convertView.findViewById(R.id.txt_date);
+        TextView txt_time = (TextView) convertView.findViewById(R.id.txt_time);
+        TextView txt_content = (TextView) convertView.findViewById(R.id.txt_content);
 
-        final TimelineItem timelineItem = timelineItemList.get(position);
 
-        txt_date.setText(timelineItem.getDatetime());
-        txt_window.setText(timelineItem.getWindow());
-        txt_state.setText(timelineItem.getState());
-        txt_cause.setText(timelineItem.getCause());
 
+        final TimelineDetails timelineDetails = timelineDetailsList.get(position);
+        // TextView에 띄우기
+        txt_date.setText(timelineDetails.getDate());
+        txt_time.setText(timelineDetails.getTime());
+        txt_content.setText(timelineDetails.getContent());
+        //창문 개폐 아이콘 변경
+       //timelineDetails.getState().equals("true") --> 기존이미지인 timelineitem_open이 보여짐.
+        if (timelineDetails.getState().equals("false")){ //--> 이미지 변경 필요.
+            item_openclose.setImageResource(R.drawable.timelineitem_close);
+         }
         return convertView;
     }
 
     @Override
     public Object getItem(int position) {
-        return timelineItemList;
+        return timelineDetailsList;
     }
 
     @Override
@@ -63,30 +68,10 @@ public class TimelineAdapter extends BaseAdapter {
     }
 
 
-    public void addItem(String datetime, String window, String state, String cause) {
-        TimelineItem item = new TimelineItem();
-        item.setDatetime(datetime);
-        item.setWindow(window);
-        item.setState(state);
-        item.setCause(cause);
-        timelineItemList.add(item);
-
-        if(databaseManager != null){
-            ContentValues timeValues = new ContentValues();
-            timeValues.put("Datetime", datetime);
-            timeValues.put("Window", window);
-            timeValues.put("State", state);
-            timeValues.put("Cause", cause);
-
-            databaseManager.timeline_insert(timeValues);
-        }
-
-    }
-
     //동기화
     public void renewItem() {
         if (databaseManager != null) {
-            timelineItemList = databaseManager.timeline_select();
+            timelineDetailsList = databaseManager.timeline_select();
         }
     }
 }

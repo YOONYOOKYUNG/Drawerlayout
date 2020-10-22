@@ -62,13 +62,15 @@ public class DatabaseManager {
                 "gu TEXT," +
                 "station TEXT);");
 
+        //mydatabase.execSQL("DROP TABLE " + Timeline_TABLE_NAME );
+
         //활동 기록 Table 생성
         mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Timeline_TABLE_NAME +
                 "("  + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "Datetime TEXT," +
-                "Window TEXT," +
-                "State TEXT," +
-                "Cause TEXT);");
+                "Date TEXT," +
+                "Time TEXT," +
+                "Content TEXT," +
+                "State TEXT);");
 
     }
 
@@ -216,13 +218,24 @@ public class DatabaseManager {
 
 
     // Timeline 추가
-    public long timeline_insert(ContentValues timeValues){
+    public static final String Timeline_data = "Date";
+    public static final String Timeline_time = "Time";
+    public static final String Timeline_content = "Content";
+    public static final String Timeline_state = "State";
+
+    public long timeline_insert(String date, String time, String content, String state){
+
+        ContentValues timeValues = new ContentValues();
+        timeValues.put(Timeline_data, date);
+        timeValues.put(Timeline_time, time);
+        timeValues.put(Timeline_content, content);
+        timeValues.put(Timeline_state, state);
         return mydatabase.insert(Timeline_TABLE_NAME, null, timeValues);
     }
 
     // Timeline 조회
-    public ArrayList<TimelineItem> timeline_select() {
-        ArrayList<TimelineItem> timeline_list = new ArrayList<TimelineItem>();
+    public ArrayList<TimelineDetails> timeline_select() {
+        ArrayList<TimelineDetails> timeline_list = new ArrayList<TimelineDetails>();
 
         String sqlSelect = "SELECT * FROM " + Timeline_TABLE_NAME;
         Cursor cursor = null;
@@ -230,13 +243,12 @@ public class DatabaseManager {
         cursor = mydatabase.rawQuery(sqlSelect, null);
 
         while (cursor.moveToNext()) {
-            TimelineItem newAdapter = new TimelineItem();
-            newAdapter.setDatetime(cursor.getString(1));
-            newAdapter.setWindow(cursor.getString(2));
-            newAdapter.setState(cursor.getString(3));
-            newAdapter.setCause(cursor.getString(4));
-
-            timeline_list.add(newAdapter);
+            TimelineDetails newAdapter = new TimelineDetails();
+            newAdapter.setDate(cursor.getString(1));
+            newAdapter.setTime(cursor.getString(2));
+            newAdapter.setContent(cursor.getString(3));
+            newAdapter.setState(cursor.getString(4));
+            timeline_list.add(0, newAdapter);
         }
 
         cursor.close();
