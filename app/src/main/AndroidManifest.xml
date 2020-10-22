@@ -20,9 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".popup_set_dust"
+        <activity android:name=".ModeSetActivity_popup_dust"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
-        <activity android:name=".popup_set_temp"
+        <activity android:name=".ModeSetActivity_popup_temp"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
 
         <service
@@ -44,7 +44,7 @@
             android:name=".Popup_warning"
             android:theme="@style/Transparent" /> <!-- android:theme="@android:style/Theme.NoTitleBar" -->
         <activity android:name=".BluetoothOnActivity" />
-        <activity android:name=".AutoSetActivity" />
+        <activity android:name=".ModeSetActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".WindowlistActivity" />
         <activity android:name=".AlarmActivity" />

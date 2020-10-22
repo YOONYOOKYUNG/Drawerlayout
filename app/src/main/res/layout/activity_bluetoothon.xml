@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="200dp"
+    android:layout_height="250dp"
     android:layout_gravity="center"
     android:padding="10dp"
     android:background="@drawable/main_popup_shape_round"
@@ -12,12 +12,13 @@
 
     <TextView
         android:id="@+id/text1"
+        android:paddingTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="블루투스 연결이 필요합니다."
-        android:textSize="20dp"/>
+        android:textSize="22dp"/>
 
     <TextView
         android:id="@+id/text2"
@@ -25,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/text1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="연결하시겠습니까?"
-        android:textSize="20dp"/>
+        android:textSize="22dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,25 +39,26 @@
 
         <Button
             android:id="@+id/btnok"
+            android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@drawable/main_popup_shape_round"
             android:backgroundTint="@color/colorPrimary"
             android:gravity="center"
             android:text="확인"
             android:textColor="#FFF"
-            android:textSize="16dp" />
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/btnend"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="취소"
             android:textColor="#FFF"
-            android:textSize="16dp"
+            android:textSize="18dp"
             android:background="@drawable/main_popup_shape_round"
             android:backgroundTint="#CCCBCB"
             android:layout_toRightOf="@id/okButton"

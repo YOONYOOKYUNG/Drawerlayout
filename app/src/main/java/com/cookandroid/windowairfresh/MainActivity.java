@@ -40,7 +40,7 @@ import java.util.UUID;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Main_Fragment1.AutoWindowListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainActivity_Fragment1.AutoWindowListener{
 
 
     //블루투스 관련 선언 시작(블투1)
@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        if (fragment instanceof Main_Fragment1) {
-            Main_Fragment1 mainFragment1 = (Main_Fragment1) fragment;
+        if (fragment instanceof MainActivity_Fragment1) {
+            MainActivity_Fragment1 mainFragment1 = (MainActivity_Fragment1) fragment;
             mainFragment1.setListener(this);
         }
     }
@@ -166,11 +166,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 popup.callautomodepopup();
             }
         };
-
-        AutoOpen autoOpen = new AutoOpen();
-        autoOpen.start();
-        AutoClose autoClose = new AutoClose();
-        autoClose.start();
+        SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
+            if (!checklist.isEmpty()) {
+                Intent intent= new Intent(this,AutoService.class);
+                startService(intent); }
+            else{
+                Intent intent= new Intent(this, AutoService.class);
+                stopService(intent);
+            }
     }
 
     //menu
@@ -178,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
         switch (menuitem.getItemId()) {
             case R.id.auto_set:
-                Intent intent1 = new Intent(MainActivity.this, AutoSetActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, ModeSetActivity.class);
                 startActivity(intent1);
                 break;
 
@@ -386,19 +389,23 @@ public void opensocket(){
 
     //창문설정 - 열기
     public void openwindow(int pos){
-        if (!btsocketstate)
-        { opensocket();}
+            adapter.initialiseList();
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-            ConnectedThread.write("2");
+           if(!listViewItem.getState()){
+               if (!btsocketstate)
+               { opensocket();}
+            ConnectedThread.write("2");}
     }
     //창문설정 - 닫기
     public void closewindow(int pos){
-        if (!btsocketstate)
-        { opensocket();}
+            adapter.initialiseList();
             WindowDetails listViewItem = adapter.listViewItemList.get(pos);
             address=listViewItem.getAddress();
-            ConnectedThread.write("3");
+           if(listViewItem.getState()){
+               if (!btsocketstate)
+               { opensocket();}
+            ConnectedThread.write("3");}
     }
 
     //창문 db 닫기상태로 업데이트

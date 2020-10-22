@@ -58,16 +58,12 @@ public class WindowListAdapter extends BaseAdapter {
         addressTextView.setText(listViewItem.getAddress());
         boolean state=listViewItem.getState();
         if (state){
-            windowstate.setImageResource(R.drawable.windowlist_windowopen);
+            windowstate.setImageResource(R.drawable.window_open_wh);
             windowbtnback.setBackgroundResource(R.drawable.windowname_open);
-            windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
-            windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
             notifyDataSetChanged();
         }else if (!state){
-            windowstate.setImageResource(R.drawable.windowlist_windowclose);
+            windowstate.setImageResource(R.drawable.window_close_wh);
             windowbtnback.setBackgroundResource(R.drawable.windowname_close);
-            windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
-            windowdelete.setBackgroundColor(Color.parseColor("#B9BDBF"));
             notifyDataSetChanged();
         }
 
@@ -79,16 +75,12 @@ public class WindowListAdapter extends BaseAdapter {
                     boolean state=listViewItem.getState();
                     Log.d("상태", "현재 창문 상태 : " + listViewItem.getState());
                 if (state){
-                    windowstate.setImageResource(R.drawable.windowlist_windowopen);
+                    windowstate.setImageResource(R.drawable.window_open_wh);
                     windowbtnback.setBackgroundResource(R.drawable.windowname_open);
-                    windowstate.setBackgroundColor(Color.parseColor("#B7DBF4"));
-                    windowdelete.setBackgroundColor(Color.parseColor("#B7DBF4"));
                     notifyDataSetChanged();
                 }else if (!state){
-                    windowstate.setImageResource(R.drawable.windowlist_windowclose);
+                    windowstate.setImageResource(R.drawable.window_close_wh);
                     windowbtnback.setBackgroundResource(R.drawable.windowname_close);
-                    windowstate.setBackgroundColor(Color.parseColor("#B9BDBF"));
-                    windowdelete.setBackgroundColor(Color.parseColor("#B9BDBF"));
                     notifyDataSetChanged();
                   }
                 }
