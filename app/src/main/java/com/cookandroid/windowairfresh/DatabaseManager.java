@@ -14,6 +14,7 @@ public class DatabaseManager {
     static final String Window_TABLE_NAME = "Windows"; //Table 이름
     static final String Location_TABLE_NAME = "Location"; //Table 이름
     static final String Station_TABLE_NAME = "Station"; //Table 이름
+    static final String Timeline_TABLE_NAME = "Timelines"; //Table 이름
     static final int DB_VERSION = 1;         //DB 버전
 
     Context myContext = null;
@@ -39,7 +40,6 @@ public class DatabaseManager {
         //DB Open
         mydatabase = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE,null);
 
-
         //창문 Table 생성
         mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Window_TABLE_NAME +
                 "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -61,6 +61,14 @@ public class DatabaseManager {
                 "si TEXT," +
                 "gu TEXT," +
                 "station TEXT);");
+
+        //활동 기록 Table 생성
+        mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Timeline_TABLE_NAME +
+                "("  + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Datetime TEXT," +
+                "Window TEXT," +
+                "State TEXT," +
+                "Cause TEXT);");
 
     }
 
@@ -100,13 +108,14 @@ public class DatabaseManager {
 
     public String selectNote_station(String si, String gu) {
 
-        String station = null;
-        String sqlSelect = "SELECT * FROM " + Station_TABLE_NAME;
-        Cursor cursor = null;
+        String station = null; //station에 임의의 값 넣기
 
-        cursor = mydatabase.rawQuery(sqlSelect, null);
+        String sqlSelect = "SELECT * FROM " + Station_TABLE_NAME; //측정소 데이터 조회
+        Cursor cursor = null; //커서 : 데이터를 읽음
 
-        while (cursor.moveToNext()) {
+        cursor = mydatabase.rawQuery(sqlSelect, null); //위에서 조회한 측정소 데이터를 읽음
+
+        while (cursor.moveToNext()) { //커서를 다음 행으로 이동
 
             if(si.equals(cursor.getString(1))){
                 Log.d("00", "성공1 ");
@@ -121,8 +130,6 @@ public class DatabaseManager {
         cursor.close();
         return station;
     }
-
-
 
     public static final String Address_si = "si";
     public static final String Address_gu = "gu";
@@ -187,6 +194,40 @@ public class DatabaseManager {
                 updateRowValue,
                 "name= ?",
                 new String[] { name });
+    }
+
+    public static final String Actlog_datetime = "Datetime";
+    public static final String Actlog_window = "Window";
+    public static final String Actlog_state = "State";
+    public static final String Actlog_cause = "Cause";
+
+    //활동 기록 추가
+    public long timeline_insert(ContentValues timeValues){
+        //필드에 데이터 추가
+        return mydatabase.insert(Timeline_TABLE_NAME, null, timeValues);
+    }
+
+    //활동 기록 조회
+    public ArrayList<TimelineItem> timeline_select() {
+        ArrayList<TimelineItem> timeline_list = new ArrayList<TimelineItem>();
+
+        String sqlSelect = "SELECT * FROM " + Window_TABLE_NAME;
+        Cursor cursor = null;
+
+        cursor = mydatabase.rawQuery(sqlSelect, null);
+
+        while (cursor.moveToNext()) {
+            TimelineItem newAdapter = new TimelineItem();
+            newAdapter.setDatetime(cursor.getString(1));
+            newAdapter.setWindow(cursor.getString(2));
+            newAdapter.setState(cursor.getString(3));
+            newAdapter.setCause(cursor.getString(4));
+
+            timeline_list.add(newAdapter);
+        }
+
+        cursor.close();
+        return timeline_list;
     }
 
     //창문db얻어오기

@@ -45,7 +45,7 @@
         <activity
             android:name=".HelpActivity2"
             android:theme="@style/AppTheme.help" />
-        <activity android:name=".ActlogActivity" />
+        <activity android:name=".TimelineActivity" />
         <activity
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />

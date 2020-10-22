@@ -193,11 +193,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.log_record:
-                Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
+                Intent intent3 = new Intent(MainActivity.this, TimelineActivity.class);
                 startActivity(intent3);
+                break;
 
             case R.id.window:
                 startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
+                break;
         }
         return true;
     }
