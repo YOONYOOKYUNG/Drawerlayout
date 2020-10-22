@@ -182,6 +182,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
         switch (menuitem.getItemId()) {
+            case R.id.window:
+                startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
+                break;
+
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, ModeSetActivity.class);
                 startActivity(intent1);
@@ -197,9 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent3);
                 break;
 
-            case R.id.window:
-                startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
-                break;
+
         }
         return true;
     }
