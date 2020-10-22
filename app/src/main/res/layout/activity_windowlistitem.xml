@@ -10,7 +10,7 @@
         android:layout_height="160dp"
         android:id="@+id/windowbtnback"
         android:background="@drawable/windowname_open"
-        android:layout_marginLeft="30dp"
+
         android:layout_marginTop="30dp">
 
         <TextView
@@ -36,16 +36,16 @@
 
 
         </TextView>
+
         <ImageButton
+            android:id="@+id/windowstate"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:src="@drawable/window_open_wh"
-            android:scaleType="fitXY"
-            android:id="@+id/windowstate"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
             android:background="#00000000"
-           />
+            android:scaleType="fitXY"
+            android:src="@drawable/window_open_wh" />
         <ImageButton
             android:layout_width="15dp"
             android:layout_height="15dp"
