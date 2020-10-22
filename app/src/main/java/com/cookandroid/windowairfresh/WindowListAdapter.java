@@ -153,14 +153,6 @@ public class WindowListAdapter extends BaseAdapter {
 
 
 
-    public void removeitem(int position) {
-        if (databaseManager != null) {
-           databaseManager.delete(listViewItemList.get(position).getName());
-        }
-        listViewItemList.remove(position);
-
-    }
-
     public void initialiseList()
     {
         if (databaseManager != null){

@@ -67,21 +67,19 @@ public class WindowlistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseManager = DatabaseManager.getInstance(this);
+        adapter = new WindowListAdapter();
+        adapter.setDatabaseManager(databaseManager);
         setContentView(R.layout.activity_windowlist);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         //GPS permission 허용
         btn1 = findViewById(R.id.btn1);
-        databaseManager = DatabaseManager.getInstance(this);
-        adapter = new WindowListAdapter();
-        adapter.setDatabaseManager(databaseManager);
-        adapter.initialiseList();
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         main_label = (TextView) findViewById(R.id.main_label);
         //final Switch switch1 = findViewById(R.id.switch1);
         gridView = findViewById(R.id.listview1);
-        gridView.setAdapter(adapter);
 
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
             @Override
@@ -175,6 +173,13 @@ public class WindowlistActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        adapter.initialiseList();
+        gridView.setAdapter(adapter);
+        super.onResume();
     }
 
     @Override
