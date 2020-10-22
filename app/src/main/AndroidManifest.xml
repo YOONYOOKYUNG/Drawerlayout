@@ -34,7 +34,7 @@
         <activity
             android:name=".ModeSetActivity_popup_temp"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-
+        <activity android:name=".WindowNameActivity" />
         <service
             android:name=".AutoService"
             android:enabled="true"
