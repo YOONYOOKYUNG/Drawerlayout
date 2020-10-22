@@ -58,7 +58,10 @@
             android:id="@+id/templayout"
             android:layout_width="360dp"
             android:layout_height="90dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/main_layout_shape"
             android:layout_below="@id/tvdate"
             android:layout_centerHorizontal="true">
@@ -115,11 +118,12 @@
             android:id="@+id/dustlayout"
             android:layout_width="360dp"
             android:layout_height="90dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/main_layout_shape"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/templayout"
-            >
+            android:layout_below="@id/templayout">
 
             <ImageView
                 android:id="@+id/img2"
@@ -174,7 +178,10 @@
             android:id="@+id/humidlayout"
             android:layout_width="360dp"
             android:layout_height="90dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/main_layout_shape"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/dustlayout"
