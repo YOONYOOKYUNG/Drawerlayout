@@ -310,6 +310,8 @@ public void opensocket(){
 
         if (databaseManager != null){
             checklist = databaseManager.getAll();
+        }
+        if(!checklist.isEmpty()){
             if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
         }
