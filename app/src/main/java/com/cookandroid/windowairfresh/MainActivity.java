@@ -93,18 +93,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent= new Intent(this,AutoService.class);
+        startService(intent);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //서비스 시작
-        if (!checklist.isEmpty()) {
-            Intent intent= new Intent(this,AutoService.class);
-            startService(intent); }
-        else{
-            Intent intent= new Intent(this, AutoService.class);
-            stopService(intent);
-        }
 
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
@@ -315,6 +310,12 @@ public void opensocket(){
             if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
         }
+        else
+        {
+            Intent intent= new Intent(this, AutoService.class);
+            stopService(intent);}
+
+
             //handler.postDelayed(new Handler(),1000)
 
             handler = new Handler() {
