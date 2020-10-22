@@ -137,7 +137,7 @@
         <RelativeLayout
             android:id="@+id/rl4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">z
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv3"
                 android:text="자동 모드 설정"
@@ -199,6 +199,14 @@
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/question3"
+                android:src="@drawable/question3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"/>
         </RelativeLayout>
 
         <RelativeLayout

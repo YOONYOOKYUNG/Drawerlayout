@@ -19,7 +19,7 @@ public class ModeSetActivity extends AppCompatActivity {
     LinearLayout manual_layout;
     RelativeLayout dustbtn,auto_layout,temp_btn;
     TextView high_temp_txt,low_temp_txt,dust_txt;
-    ImageView question, question2,backarrow;
+    ImageView question, question2,backarrow,question3;
     Boolean modestate;
     String shared_temp_high,shared_temp_low,shared_dust;
     int RESULT_TEST = 1212;
@@ -42,7 +42,7 @@ public class ModeSetActivity extends AppCompatActivity {
         question = findViewById(R.id.question);
         question2 = findViewById(R.id.question2);
         backarrow = findViewById(R.id.backarrow);
-
+        question3 = findViewById(R.id.question3);
 
         // shared 값 받아오기
         get_shared();
@@ -132,6 +132,13 @@ public class ModeSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent5 = new Intent(getApplicationContext(), HelpMode2Activity.class);
                 startActivity(intent5);
+            }
+        });
+        question3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent6 = new Intent(getApplicationContext(),HelpMode3Activity.class);
+                startActivity(intent6);
             }
         });
 
