@@ -86,7 +86,6 @@ public class ModeSetActivity extends AppCompatActivity {
                 manual_mode.setBackgroundResource(R.drawable.modeoffbtn);
                 auto_mode.setBackgroundResource(R.drawable.modebtn);
                 modestate = true; //자동버튼 누르면 1 저장
-                set_shared_boolean(modestate);
             }
         });
 
@@ -200,6 +199,7 @@ public class ModeSetActivity extends AppCompatActivity {
     }
 
     protected void onStop(){
+        set_shared_boolean(modestate);
         super.onStop();
     }
 }

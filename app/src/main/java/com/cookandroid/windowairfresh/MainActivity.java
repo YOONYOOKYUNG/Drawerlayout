@@ -168,10 +168,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
         SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
             if (!checklist.isEmpty()) {
-                AutoOpen autoOpen = new AutoOpen();
-                autoOpen.start();
-                AutoClose autoClose = new AutoClose();
-                autoClose.start();}
+                Intent intent= new Intent(this,AutoService.class);
+                startService(intent); }
+            else{
+                Intent intent= new Intent(this, AutoService.class);
+                stopService(intent);
+            }
     }
 
     //menu
