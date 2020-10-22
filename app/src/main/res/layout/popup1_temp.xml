@@ -12,7 +12,7 @@
         android:id="@+id/title1"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="기온별 옷차림 추천"
@@ -27,7 +27,7 @@
         android:layout_below="@+id/title1"
         android:layout_centerVertical="true"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:src="@drawable/main_popup_darksmile" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_toRightOf="@+id/con1"
         android:layout_below="@+id/title1"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="27dp"
         android:text="현재 기온 : "
         android:textColor="#000"
         android:textSize="19dp" />
@@ -49,7 +49,7 @@
         android:layout_toRightOf="@+id/now_temp"
         android:layout_below="@+id/title1"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="26dp"
         android:textStyle="bold"
         android:text="00"
         android:textColor="#000"
@@ -75,7 +75,7 @@
         android:layout_toRightOf="@id/con1"
         android:layout_below="@id/now_temp"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="5dp"
         android:text="패딩, 기모, 목도리, 모자"
         android:textColor="#3A3535"
         android:textSize="18dp" />
@@ -85,7 +85,7 @@
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="18dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button1"

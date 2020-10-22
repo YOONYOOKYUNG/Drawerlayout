@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:text="불쾌지수"
         android:textColor="#3A3535"
         android:textSize="20dp" />
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="21"
         android:textColor="#000"
         android:textSize="26dp"
@@ -38,7 +38,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="18dp"
         android:id="@+id/con3"
         android:src="@drawable/main_popup_humidity" />
 
@@ -47,8 +47,8 @@
         android:layout_width="67dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_popup_color_condition_good"
-        android:layout_below="@+id/con3"
-        android:layout_marginLeft="10dp">
+        android:layout_marginTop="72dp"
+        android:layout_marginLeft="7dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
         android:layout_width="67dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_popup_color_condition_soso"
-        android:layout_below="@+id/con3"
+        android:layout_marginTop="72dp"
         android:layout_toRightOf="@+id/rl_good">
 
         <TextView
@@ -83,7 +83,7 @@
         android:layout_width="67dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_popup_color_condition_littlebad"
-        android:layout_below="@+id/con3"
+        android:layout_marginTop="72dp"
         android:layout_toRightOf="@id/rl_soso">
 
         <TextView
@@ -101,7 +101,7 @@
         android:layout_width="67dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_popup_color_condition_bad"
-        android:layout_below="@+id/con3"
+        android:layout_marginTop="72dp"
         android:layout_toRightOf="@id/rl_littlebad">
 
         <TextView
@@ -169,7 +169,6 @@
     <TextView
         android:textSize="15dp"
         android:textColor="#3A3535"
-        android:layout_marginTop="3dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -183,7 +182,7 @@
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="18dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button1"

@@ -37,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:id="@+id/listview1"
-        android:numColumns="2" />
+        android:numColumns="2"
+        android:layout_marginLeft="30dp"/>
 
    <ImageButton
     android:id="@+id/btn1"

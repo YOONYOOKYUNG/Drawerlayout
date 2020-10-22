@@ -1,5 +1,7 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -7,10 +9,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +40,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.UUID;
 
 import me.relex.circleindicator.CircleIndicator3;
@@ -74,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     float outsidetemp;
     int outsiderain;
     static boolean btsocketstate=false;
-
     Handler autohandler;
 
     @Override
@@ -96,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Intent intent= new Intent(this,AutoService.class);
         startService(intent);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -105,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
+
+        //절전모드
+        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(POWER_SERVICE);
+        boolean isWhiteListing = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            isWhiteListing = pm.isIgnoringBatteryOptimizations(getApplicationContext().getPackageName());
+        }
+        if (!isWhiteListing) {
+            Intent powerintent = new Intent();
+            powerintent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            powerintent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+            startActivity(powerintent);
+        }
 
 
         //도움말
@@ -409,6 +425,32 @@ public void opensocket(){
             updateRowValue.put("state", "false");
             databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(!checklist.isEmpty())
+        {
+            Intent intent= new Intent(this, AutoService.class);
+            stopService(intent);}
+        setAlarmTimer();
+        Thread.currentThread().interrupt();
+
+      /*  if (MainThread != null) {
+            mainThread.interrupt();
+            mainThread = null; }*/
+    }
+
+    protected void setAlarmTimer() {
+        final Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.add(Calendar.SECOND, 1);
+        Intent Alarmintent = new Intent(this, AutoAlarmReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(this, 0,Alarmintent,0);
+
+        AlarmManager mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), sender);
     }
 
 }

@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
 
     <application
         android:allowBackup="true"
@@ -20,26 +23,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HelpMode3Activity"
-            android:theme="@style/AppTheme.help" />
+        <service
+            android:name=".AutoRestartService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".ModeSetActivity_popup_dust"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
             android:name=".ModeSetActivity_popup_temp"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-
+        <activity android:name=".WindowNameActivity" />
         <service
             android:name=".AutoService"
             android:enabled="true"
             android:exported="true" />
-        <activity
-            android:name=".HelpMode1Activity"
-            android:theme="@style/AppTheme.help" />
-        <activity
-            android:name=".HelpMode2Activity"
-            android:theme="@style/AppTheme.help" />
+
         <activity android:name=".AddressActivity" />
+        <activity android:name=".WindowDeleteActivity" />
         <activity
             android:name=".HelpActivity2"
             android:theme="@style/AppTheme.help" />
@@ -48,7 +50,7 @@
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />
         <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
-        <activity android:name=".WindowNameActivity" /> <!-- dhkim end -->
+        <receiver android:name=".AutoAlarmReceiver"/>
         <activity
             android:name=".Popup_warning"
             android:theme="@style/Transparent" /> <!-- android:theme="@android:style/Theme.NoTitleBar" -->

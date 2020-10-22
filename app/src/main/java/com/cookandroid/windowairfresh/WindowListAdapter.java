@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class WindowListAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         final int pos = position;
         final Context context = parent.getContext();
         // "activity_windowlistitem" Layout을 inflate하여 convertView 참조 획득.
@@ -49,8 +51,7 @@ public class WindowListAdapter extends BaseAdapter {
         final ImageButton windowdelete = (ImageButton) convertView.findViewById(R.id.windowdelete);
         final FrameLayout windowbtnback = (FrameLayout) convertView.findViewById(R.id.windowbtnback);
 
-        //리스트뷰 기본 배경색 지정
-        //convertView.setBackgroundColor(Color.parseColor("#B7DBF4"));
+
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         final WindowDetails listViewItem = listViewItemList.get(position);
         // 아이템 내 각 위젯에 데이터 반영
@@ -87,7 +88,7 @@ public class WindowListAdapter extends BaseAdapter {
             }
         });
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+     /*   final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("창문삭제")        // 제목 설정
                 .setMessage("창문을 삭제하시겠습니까?")        // 메세지 설정
                 .setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
@@ -103,15 +104,21 @@ public class WindowListAdapter extends BaseAdapter {
                     public void onClick(DialogInterface dialog, int whichButton){
                         dialog.dismiss();
                     }
-                });
+                });*/
 
-        windowdelete.setOnClickListener(new View.OnClickListener() {
+
+       windowdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                builder.show();
+                Intent intent = new Intent(context,WindowDeleteActivity.class);
+                Log.d("0000", String.valueOf(pos));
+                intent.putExtra("position",pos);
+                context.startActivity(intent);
+
             }
         });
+
         return convertView;
     }
 
@@ -154,6 +161,7 @@ public class WindowListAdapter extends BaseAdapter {
            databaseManager.delete(listViewItemList.get(position).getName());
         }
         listViewItemList.remove(position);
+
     }
 
     public void initialiseList()
@@ -164,7 +172,8 @@ public class WindowListAdapter extends BaseAdapter {
     }
 
 
-  // public ArrayList<WindowDetails> getListViewItemList(){return listViewItemList;}
+
+    // public ArrayList<WindowDetails> getListViewItemList(){return listViewItemList;}
 
 
     public interface OnWindowButtonClickListener{
