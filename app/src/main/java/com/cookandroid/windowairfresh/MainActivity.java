@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private StringBuilder sb = new StringBuilder();
     private static int flag = 0;
     private ConnectedThread ConnectedThread;
+    public static Context mContext;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
     private static String address = "98:D3:51:F9:28:05";
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Handler handler;
     SwipeRefreshLayout swipeRefreshLayout;
     FragmentStateAdapter slideadapter;
-    public static Context mContext;
     float insidedust;
     float outsidedust;
     float outsidetemp;
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
-
+        mContext = this;
         //절전모드
         PowerManager pm = (PowerManager) getApplicationContext().getSystemService(POWER_SERVICE);
         boolean isWhiteListing = false;
@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             powerintent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
             startActivity(powerintent);
         }
-
 
         //도움말
         ImageView question2;
@@ -315,9 +314,8 @@ public void opensocket(){
             WindowDetails listViewItem = adapter.listViewItemList.get(0);
             address = listViewItem.getAddress();
         }
-        slideadapter = new Main_SlideAdapter(this, databaseManager);
-        slideadapter.notifyDataSetChanged();
-        viewpager.setAdapter(slideadapter);
+
+        onRefresh();
 
         if (databaseManager != null){
             checklist = databaseManager.getAll();
@@ -452,5 +450,9 @@ public void opensocket(){
         AlarmManager mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), sender);
     }
-
+    public void onRefresh(){
+        slideadapter = new Main_SlideAdapter(this, databaseManager);
+        slideadapter.notifyDataSetChanged();
+        viewpager.setAdapter(slideadapter);
+    }
 }

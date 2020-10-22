@@ -12,7 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -30,9 +34,10 @@ public class MainActivity_Fragment1 extends Fragment {
     int Start_index,End_index;
     String data, data2;
     public String nowrain;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     AutoWindowListener callback;
-
+    FragmentStateAdapter slideadapter;
+    private DatabaseManager databaseManager;
     public MainActivity_Fragment1() {
         // Required empty public constructor
     }
@@ -41,12 +46,12 @@ public class MainActivity_Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        databaseManager = DatabaseManager.getInstance(getContext());
         // Inflate the layout for this fragment
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_main_fragment1, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
 
-
+        swipeRefreshLayout = view.findViewById(R.id.swipe1);
         temp1 = view.findViewById(R.id.temp1);
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
@@ -66,6 +71,12 @@ public class MainActivity_Fragment1 extends Fragment {
         humidlayout = view.findViewById(R.id.humidlayout);
         bg = view.findViewById(R.id.bg);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((MainActivity) MainActivity.mContext).onRefresh();
+            }
+        });
 
         // 주소창 클릭 시 주소 변경
         location_address.setOnClickListener(new View.OnClickListener() {
@@ -350,5 +361,4 @@ public class MainActivity_Fragment1 extends Fragment {
         }
         return buffer2.toString(); //StringBuffer 문자열 객체 반환
     }
-
 }

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ public class MainActivity_Fragment2 extends Fragment {
     RelativeLayout templayout, dustlayout, humidlayout, bgbg;
     Boolean nowrain;
     String pty;
+    SwipeRefreshLayout swipe2;
 
     public MainActivity_Fragment2() {
         // Required empty public constructor
@@ -36,7 +38,7 @@ public class MainActivity_Fragment2 extends Fragment {
         viewpager = getActivity().findViewById(R.id.viewpager);
 
 
-
+        swipe2 = view.findViewById(R.id.swipe2);
         temp = view.findViewById(R.id.temp);
         micro = view.findViewById(R.id.micro);
         humid = view.findViewById(R.id.humid);
@@ -67,7 +69,13 @@ public class MainActivity_Fragment2 extends Fragment {
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
 
-
+        swipe2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((MainActivity) MainActivity.mContext).onRefresh();
+                swipe2.setRefreshing(false);
+            }
+        });
         // 주소창 클릭 시 주소 변경
         location_address.setOnClickListener(new View.OnClickListener() {
             @Override
