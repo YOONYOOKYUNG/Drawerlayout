@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import java.util.Calendar;
 public class MainActivity_Fragment2 extends Fragment {
 
     ViewPager2 viewpager;
-    TextView tvdate, temp, humid, micro;
+    TextView tvdate, temp, humid, micro, location_address;
     RelativeLayout templayout, dustlayout, humidlayout, bgbg;
     Boolean nowrain;
     String pty;
@@ -48,6 +49,9 @@ public class MainActivity_Fragment2 extends Fragment {
         tvdate = view.findViewById(R.id.tvdate);
         tvdate.setText(today);
 
+        location_address = view.findViewById(R.id.location_address);
+        SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
+        location_address.setText(pf2.getString("addr0","서울시 성동구"));
 
 
         SharedPreferences pf1 = getContext().getSharedPreferences("fragment2",getContext().MODE_PRIVATE);
@@ -63,6 +67,14 @@ public class MainActivity_Fragment2 extends Fragment {
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
 
+
+        // 주소창 클릭 시 주소 변경
+        location_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddressActivity.class));
+            }
+        });
 
         //click -> popup1_temp
         templayout.setOnClickListener(new View.OnClickListener() {

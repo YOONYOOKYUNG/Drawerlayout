@@ -2,6 +2,7 @@ package com.cookandroid.windowairfresh;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -24,8 +25,17 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mBluetoothAdapter.isEnabled()) {
-                    startActivity(new Intent(SplashActivity.this, AddressActivity.class));
-                    finish();
+
+                    SharedPreferences pf =getSharedPreferences("address",MODE_PRIVATE);
+                    String shared_address=pf.getString("addr0","");
+                    if(shared_address.isEmpty()) {
+                        startActivity(new Intent(SplashActivity.this, AddressActivity.class));
+                        finish();
+                    }
+                    else{
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    }
                 }
                 else{
                     startActivity(new Intent(SplashActivity.this, BluetoothOnActivity.class));

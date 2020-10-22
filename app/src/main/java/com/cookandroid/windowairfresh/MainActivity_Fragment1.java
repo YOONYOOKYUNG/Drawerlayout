@@ -67,6 +67,14 @@ public class MainActivity_Fragment1 extends Fragment {
         bg = view.findViewById(R.id.bg);
 
 
+        // 주소창 클릭 시 주소 변경
+        location_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddressActivity.class));
+            }
+        });
+
 
         //click -> popup1_temp
         templayout.setOnClickListener(new View.OnClickListener() {
