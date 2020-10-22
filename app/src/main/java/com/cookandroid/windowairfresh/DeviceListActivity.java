@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class DeviceListActivity extends AppCompatActivity {
 	private ListView mListView, mListView2;
 	private DeviceListAdapter mAdapter,mAdapter2;
 	private ArrayList<BluetoothDevice> mDeviceList,mDeviceList2;
-	private Button btrefreshbutton;
+	private ImageButton btrefreshbutton;
 	private ProgressDialog mProgressDlg; //로딩중 화면
 
 	@Override
@@ -65,7 +66,7 @@ public class DeviceListActivity extends AppCompatActivity {
 			mDeviceList2 = getIntent().getExtras().getParcelableArrayList("device.list2");
 			backarrow = findViewById(R.id.backarrow);
 			mListView = (ListView) findViewById(R.id.lv_paired);
-			btrefreshbutton = (Button) findViewById(R.id.btrefresh);
+			btrefreshbutton = (ImageButton) findViewById(R.id.btrefresh);
 			mListView2 = (ListView) findViewById(R.id.lv_paired2);
 			mAdapter = new DeviceListAdapter(this);
 			mAdapter2 = new DeviceListAdapter(this);
