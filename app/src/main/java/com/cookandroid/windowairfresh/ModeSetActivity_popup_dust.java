@@ -40,7 +40,7 @@ public class ModeSetActivity_popup_dust extends AppCompatActivity {
         okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //edit에 입력값이 없다면, 입력을 유도.
+                //edit에 입력값이 없다면, 입력을 유도.
                 String dust_str = dust_edit.getText().toString();
                 if(dust_str.isEmpty()){
                     Toast.makeText(ModeSetActivity_popup_dust.this, "수치를 입력해주세요.", Toast.LENGTH_SHORT).show();
