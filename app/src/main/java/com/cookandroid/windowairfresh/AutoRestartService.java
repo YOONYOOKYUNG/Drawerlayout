@@ -1,14 +1,14 @@
 package com.cookandroid.windowairfresh;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.Notification;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-public class AutoService extends Service {
+import androidx.core.app.NotificationCompat;
+
+public class AutoRestartService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -26,12 +26,17 @@ public class AutoService extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        AutoOpen autoOpen = new AutoOpen();
-        autoOpen.start();
-        AutoClose autoClose = new AutoClose();
-        autoClose.start();
-        Log.d("test", "서비스의 onStartCommand");
-        return START_STICKY;
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        Notification notification = builder.build();
+        startForeground(9, notification);
+        Intent in = new Intent(this, AutoService.class);
+        startService(in);
+
+        stopForeground(true);
+        stopSelf();
+
+        return START_NOT_STICKY;
     }
 
     @Override
