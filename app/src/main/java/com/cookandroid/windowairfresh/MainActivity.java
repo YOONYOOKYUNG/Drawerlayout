@@ -97,21 +97,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //서비스 시작
+        if (!checklist.isEmpty()) {
+            Intent intent= new Intent(this,AutoService.class);
+            startService(intent); }
+        else{
+            Intent intent= new Intent(this, AutoService.class);
+            stopService(intent);
+        }
+
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
 
-        if (databaseManager != null){
-            checklist = databaseManager.getAll();
-        }
-        if (checklist.isEmpty()) {
-            //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
-            address = "98:D3:51:F9:28:05";
-        } else {
-            WindowDetails listViewItem = adapter.listViewItemList.get(0);
-            address = listViewItem.getAddress();
-        }
 
         //도움말
         ImageView question2;
@@ -166,14 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 popup.callautomodepopup();
             }
         };
-        SharedPreferences sf = (MainActivity.mContext).getSharedPreferences("autoset", 0);
-            if (!checklist.isEmpty()) {
-                Intent intent= new Intent(this,AutoService.class);
-                startService(intent); }
-            else{
-                Intent intent= new Intent(this, AutoService.class);
-                stopService(intent);
-            }
+
     }
 
     //menu
@@ -272,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 public void makesocket(){
-        BluetoothDevice device = btAdapter.getRemoteDevice(address);
+        BluetoothDevice device = btAdapter.getRemoteDevice(adapter.listViewItemList.get(0).getAddress());
         try {
             btSocket = createBluetoothSocket(device);
         } catch (IOException e) {
@@ -302,27 +294,25 @@ public void opensocket(){
     @Override
     public void onResume() {
         super.onResume();
+        if (databaseManager != null){
+            checklist = databaseManager.getAll();
+        }
+        if (checklist.isEmpty()) {
+            //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
+            address = "98:D3:51:F9:28:05";
+        } else {
+            WindowDetails listViewItem = adapter.listViewItemList.get(0);
+            address = listViewItem.getAddress();
+        }
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();
         viewpager.setAdapter(slideadapter);
-        makesocket();
-        btAdapter.cancelDiscovery();
-        try {
-            btSocket.connect();
-            btsocketstate=true;
-        } catch (IOException e) {
-            try {
-                    btSocket.close();
-                btsocketstate=false;
-            } catch (IOException e2) {
-                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
-            }
-        }
-            ConnectedThread = new ConnectedThread(btSocket);
-            ConnectedThread.start();
+
+        if (databaseManager != null){
+            checklist = databaseManager.getAll();
             if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
-
+        }
             //handler.postDelayed(new Handler(),1000)
 
             handler = new Handler() {

@@ -8,13 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -27,16 +23,17 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Main_Fragment1 extends Fragment {
+public class MainActivity_Fragment1 extends Fragment {
     ViewPager2 viewpager;
     TextView tvdate,temp1,humid1,micro1,location_address;
     RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
     String data, data2;
     public String nowrain;
+
     AutoWindowListener callback;
 
-    public Main_Fragment1() {
+    public MainActivity_Fragment1() {
         // Required empty public constructor
     }
 
@@ -54,7 +51,6 @@ public class Main_Fragment1 extends Fragment {
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
 
-
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
         cal.add(Calendar.DATE,0);
@@ -71,11 +67,20 @@ public class Main_Fragment1 extends Fragment {
         bg = view.findViewById(R.id.bg);
 
 
+        // 주소창 클릭 시 주소 변경
+        location_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddressActivity.class));
+            }
+        });
+
+
         //click -> popup1_temp
         templayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(view.getContext());
+                MainActivity_Popup customDialogPopup1 = new MainActivity_Popup(view.getContext());
                 customDialogPopup1.settemp(temp1.getText().toString());
                 customDialogPopup1.calltemppopup();
             }
@@ -85,7 +90,7 @@ public class Main_Fragment1 extends Fragment {
         dustlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(view.getContext());
+                MainActivity_Popup customDialogPopup1 = new MainActivity_Popup(view.getContext());
                 customDialogPopup1.setdust(micro1.getText().toString());
                 customDialogPopup1.calldustpopup();
             }
@@ -95,7 +100,7 @@ public class Main_Fragment1 extends Fragment {
         humidlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Popup customDialogPopup1 = new Popup(view.getContext());
+                MainActivity_Popup customDialogPopup1 = new MainActivity_Popup(view.getContext());
                 customDialogPopup1.settemp(temp1.getText().toString());
                 customDialogPopup1.sethumid(humid1.getText().toString());
                 customDialogPopup1.callhumidpopup();
@@ -107,68 +112,68 @@ public class Main_Fragment1 extends Fragment {
 
             public void run() {
 
-            data= getXmlData1();
+                data= getXmlData1();
                 Log.d("00","data : "+data);
-            data2=getXmlData2();
+                data2=getXmlData2();
                 Log.d("00","data : "+data2);
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
-                    Start_index = data.indexOf("PTY:");
-                    End_index = data.indexOf("/",Start_index);
-                    String pty = data.substring(Start_index+4,End_index);
-                    //String pty = "1"; //억지로 비오는 설정 넣기
-                    SharedPreferences sf = getContext().getSharedPreferences("fragment2",0);
-                    SharedPreferences.Editor editor =sf.edit();
-                    editor.putString("pty",pty);
-                    editor.commit();
-                    //습도 파싱
-                    Start_index = data.indexOf("REH:");
-                    End_index = data.indexOf("/",Start_index);
-                    String reh = data.substring(Start_index+4,End_index);
-                    //온도 파싱
-                    Start_index = data.indexOf("T1H:");
-                    End_index = data.indexOf("/",Start_index);
+                        // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
+                        Start_index = data.indexOf("PTY:");
+                        End_index = data.indexOf("/",Start_index);
+                        String pty = data.substring(Start_index+4,End_index);
+                        //String pty = "1"; //억지로 비오는 설정 넣기
+                        SharedPreferences sf = getContext().getSharedPreferences("fragment2",0);
+                        SharedPreferences.Editor editor =sf.edit();
+                        editor.putString("pty",pty);
+                        editor.commit();
+                        //습도 파싱
+                        Start_index = data.indexOf("REH:");
+                        End_index = data.indexOf("/",Start_index);
+                        String reh = data.substring(Start_index+4,End_index);
+                        //온도 파싱
+                        Start_index = data.indexOf("T1H:");
+                        End_index = data.indexOf("/",Start_index);
 
 
-                    String t1h = data.substring(Start_index+4,End_index);
+                        String t1h = data.substring(Start_index+4,End_index);
 
-                    int index = t1h.indexOf(".",0);
-                    if (index!=-1)
-                        t1h= t1h.substring(0,index);
-                    //보정값
+                        int index = t1h.indexOf(".",0);
+                        if (index!=-1)
+                            t1h= t1h.substring(0,index);
+                        //보정값
 
-                    Log.d("00",t1h);
-                    Log.d("00",reh);
-                    Log.d("00","0"+data2+"0");
+                        Log.d("00",t1h);
+                        Log.d("00",reh);
+                        Log.d("00","0"+data2+"0");
 
 
                         if (t1h.equals("-")){ t1h = "18";}
                         if (reh.equals("-")){ reh = "15";}
                         if (data2.equals("-")){ data2 = "32";}
 
-                    temp1.setText(t1h);
-                    humid1.setText(reh);
-                    micro1.setText(data2);
+                        temp1.setText(t1h);
+                        humid1.setText(reh);
+                        micro1.setText(data2);
 
-                    callback.onAutoWindowSet(t1h,data2,pty);
+                        callback.onAutoWindowSet(t1h,data2,pty);
 
-                    //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
-                    SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
+                        //도움말 띄우기 (show=true 띄움 / show=false 띄우지않음)
+                        SharedPreferences pf1 = getContext().getSharedPreferences("help",getContext().MODE_PRIVATE);
 
-                    if(pf1.getBoolean("show", true)==true) {
-                        Intent intent = new Intent(getContext(), HelpActivity.class);
-                        startActivity(intent);
+                        if(pf1.getBoolean("show", true)==true) {
+                            Intent intent = new Intent(getContext(), HelpActivity.class);
+                            startActivity(intent);
+                        }
+                        if (Integer.parseInt(pty)!=0){
+                            bg.setBackgroundResource(R.drawable.fragment2_rain);
+
+                        }
+
                     }
-                    if (Integer.parseInt(pty)!=0){
-                        bg.setBackgroundResource(R.drawable.fragment2_rain);
-
-                    }
-
-                }
-            });
+                });
 
 
             }
