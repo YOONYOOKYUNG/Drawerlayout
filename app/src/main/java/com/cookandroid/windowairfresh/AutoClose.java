@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Message;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 
 public class AutoClose extends Thread {
     WindowListAdapter adapter = new WindowListAdapter();
@@ -40,7 +38,7 @@ public class AutoClose extends Thread {
                 allwindowclose(4);
             }
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (Exception e) {
             }
         }

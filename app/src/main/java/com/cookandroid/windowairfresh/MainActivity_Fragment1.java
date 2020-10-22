@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class MainActivity_Fragment1 extends Fragment {
     ViewPager2 viewpager;
     TextView tvdate,temp1,humid1,micro1,location_address;
-    RelativeLayout templayout, dustlayout, humidlayout, bg, location;
+    RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
     String data, data2;
     public String nowrain;
@@ -51,15 +51,12 @@ public class MainActivity_Fragment1 extends Fragment {
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
 
-        //날짜 받아오기
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
         cal.add(Calendar.DATE,0);
         String today = sdf.format(cal.getTime());
         tvdate = view.findViewById(R.id.tvdate);
         tvdate.setText(today);
-
-        //주소 받아오기
         location_address = view.findViewById(R.id.location_address);
         SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
         location_address.setText(pf2.getString("addr0","서울시 성동구"));
@@ -67,18 +64,17 @@ public class MainActivity_Fragment1 extends Fragment {
         templayout = view.findViewById(R.id.templayout);
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
-        location = view.findViewById(R.id.location);
         bg = view.findViewById(R.id.bg);
 
 
-        //주소창 클릭 시 주소 변경
-        location.setOnClickListener(new View.OnClickListener() {
+        // 주소창 클릭 시 주소 변경
+        location_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("0000","클릭완료");
                 startActivity(new Intent(getContext(), AddressActivity.class));
             }
         });
+
 
         //click -> popup1_temp
         templayout.setOnClickListener(new View.OnClickListener() {
