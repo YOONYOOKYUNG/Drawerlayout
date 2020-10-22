@@ -224,7 +224,7 @@ public class DatabaseManager {
     public ArrayList<TimelineItem> timeline_select() {
         ArrayList<TimelineItem> timeline_list = new ArrayList<TimelineItem>();
 
-        String sqlSelect = "SELECT * FROM " + Window_TABLE_NAME;
+        String sqlSelect = "SELECT * FROM " + Timeline_TABLE_NAME;
         Cursor cursor = null;
 
         cursor = mydatabase.rawQuery(sqlSelect, null);
