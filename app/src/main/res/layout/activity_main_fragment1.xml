@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context=".Main_Fragment1"
     android:id="@+id/frag">
@@ -10,6 +11,7 @@
         android:id="@+id/swipe1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
     <RelativeLayout
         android:id="@+id/bg"
         android:layout_width="wrap_content"

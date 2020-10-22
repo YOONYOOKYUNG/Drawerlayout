@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".AlarmSpinnerActivity"
+    style="@style/Transparent"
     android:background="@drawable/main_popup_shape_round">
 
     <TimePicker
@@ -12,13 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"/>
     <Button
         android:id="@+id/btn_send"
         android:text="설정하기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@drawable/modebtn"
         android:layout_below="@id/timepicker"
-        android:layout_centerInParent="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"/>
 </RelativeLayout>

@@ -9,11 +9,15 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     tools:context=".MainActivity">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF">
+        android:background="#00EFD9D9">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,11 +27,6 @@
             android:layout_gravity="left"
             android:theme="?attr/actionBarTheme"
             app:navigationIcon="@drawable/main_navi_icon_menu" />
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager"
-            android:layout_below="@id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
         <ImageView
             android:src="@drawable/question2"
             android:layout_width="25dp"
@@ -36,7 +35,7 @@
             android:layout_alignEnd="@+id/toolbar"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
-            android:layout_centerHorizontal="true"/>
+            android:layout_alignParentRight="true"/>
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             app:ci_drawable="@drawable/blue_radius"
@@ -48,7 +47,6 @@
             android:layout_alignParentBottom="true"
             android:layout_height="48dp"/>
     </RelativeLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

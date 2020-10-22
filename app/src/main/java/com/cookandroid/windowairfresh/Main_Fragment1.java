@@ -8,9 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -30,7 +34,6 @@ public class Main_Fragment1 extends Fragment {
     int Start_index,End_index;
     String data, data2;
     public String nowrain;
-
     AutoWindowListener callback;
 
     public Main_Fragment1() {
@@ -51,6 +54,7 @@ public class Main_Fragment1 extends Fragment {
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
 
+
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
         cal.add(Calendar.DATE,0);
@@ -65,7 +69,6 @@ public class Main_Fragment1 extends Fragment {
         dustlayout = view.findViewById(R.id.dustlayout);
         humidlayout = view.findViewById(R.id.humidlayout);
         bg = view.findViewById(R.id.bg);
-
 
 
         //click -> popup1_temp

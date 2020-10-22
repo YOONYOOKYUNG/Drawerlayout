@@ -56,7 +56,7 @@ public class popup_set_dust extends AppCompatActivity {
         });
 
     }
-    public boolean onnTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         //바깥레이어 클릭시 안닫히게
         if(event.getAction()== MotionEvent.ACTION_OUTSIDE){
             return false;

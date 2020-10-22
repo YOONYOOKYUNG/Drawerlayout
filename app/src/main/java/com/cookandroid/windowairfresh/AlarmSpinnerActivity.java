@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,20 +33,20 @@ public class AlarmSpinnerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarmspinner);
         final TimePicker timePicker;
         Button btn_send;
-
+        setTitle("");
         timePicker = findViewById(R.id.timepicker);
         btn_send = findViewById(R.id.btn_send);
+
+        timePicker.setIs24HourView(true);
+
         //앞서 설정한 시간을 보여주고 설정값이 없으면 디폴트값은 현재시간으로 지정.
-        SharedPreferences sharedPreferences = getSharedPreferences("daily alarm",MODE_PRIVATE);
-        long millis = sharedPreferences.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
+        SharedPreferences sp_time = getSharedPreferences("daily alarm",MODE_PRIVATE);
+        //int ampm_int = sp_time.getInt("ampm_int",Calendar.AM_PM);
+        long millis = sp_time.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
 
         Calendar nextNotify = new GregorianCalendar();
+        nextNotify.isSet(Calendar.AM_PM);
         nextNotify.setTimeInMillis(millis);
-
-        Date nextDate = nextNotify.getTime();
-        String txt_date = new SimpleDateFormat("hh시 mm분", Locale.getDefault()).format(nextDate);
-
-        //Toast.makeText(getApplicationContext(),txt_date+"으로 설정 되었습니다.",Toast.LENGTH_SHORT).show();
 
         //이전 설정값으로 timepicker 초기화
         Date currentTime = nextNotify.getTime();
@@ -69,6 +70,7 @@ public class AlarmSpinnerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int hour,hour_24,minute;
                 final String ampm;
+                //final int ampm_int;
                 if(Build.VERSION.SDK_INT>=23){
                     hour_24 = timePicker.getHour();
                     minute = timePicker.getMinute();
@@ -78,38 +80,43 @@ public class AlarmSpinnerActivity extends AppCompatActivity {
                     minute = timePicker.getChildCount();
                 }
                 if(hour_24>12){
-                    ampm = "오후 ";
+                    //ampm_int = Calendar.PM;
                     hour = hour_24 - 12;
+                    ampm = "오후";
                 }else{
                     hour = hour_24;
-                    ampm = "오전 ";
+                    //ampm_int = Calendar.AM;
+                    ampm = "오전";
                 }
                 //현재 지정된 시간으로 알림 시간 설정
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
                 calendar.set(Calendar.HOUR_OF_DAY,hour_24);
                 calendar.set(Calendar.MINUTE,minute);
+                //calendar.set(Calendar.AM_PM,ampm_int);
 
                 //이미 지난 시간으로 지정했다면 다음 날 같은 시간으로 설정함.
                 if(calendar.before(Calendar.getInstance())){
                     calendar.add(Calendar.DATE,1);
                 }
                 Date currentTime = calendar.getTime();
-                String txt_date = new SimpleDateFormat("hh시 mm분",Locale.getDefault()).format(currentTime);
+                String txt_date = new SimpleDateFormat("a hh시 mm분",Locale.getDefault()).format(currentTime);
 
-                Toast.makeText(getApplicationContext(), ampm + txt_date+"으로 알람이 설정되었습니다.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), txt_date+"으로 알람이 설정되었습니다.",Toast.LENGTH_SHORT).show();
 
                 //preference에 설정한 값 저장
-                SharedPreferences.Editor editor = getSharedPreferences("daily alarm",MODE_PRIVATE).edit();
-
+                SharedPreferences sp_time = getSharedPreferences("daily alarm",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp_time.edit();
                 editor.putLong("nextNotifyTime",(long)calendar.getTimeInMillis());
                 editor.putString("ampm",ampm);
-                editor.apply();
+                Log.d("문자값",ampm);
+                //editor.putInt("ampm_int",ampm_int);
+                //Log.d("num", String.valueOf(ampm_int));
+                editor.commit();
 
                 dailyNotification(calendar);
-
                 Intent intent = getIntent();
-                String ampmtime = ampm + txt_date;
+                String ampmtime = txt_date;
                 intent.putExtra("time",ampmtime);
                 setResult(RESULT_OK,intent);
                 finish();
