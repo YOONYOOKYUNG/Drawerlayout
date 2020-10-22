@@ -77,7 +77,10 @@ public class TimelineAdapter extends BaseAdapter {
             timeValues.put("Window", window);
             timeValues.put("State", state);
             timeValues.put("Cause", cause);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4b04ce3... Merge branch 'GYUNGWON' of C:\Users\USER\Documents\GitHub\WindowAirFresh with conflicts.
             databaseManager.timeline_insert(timeValues);
         }
 
