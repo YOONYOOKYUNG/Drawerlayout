@@ -72,6 +72,43 @@ public class DatabaseManager {
 
     }
 
+    // Window 추가
+    public long insert(ContentValues addRowValue) {
+        return mydatabase.insert(Window_TABLE_NAME, null, addRowValue);
+    }
+
+    // Window 삭제
+    public Integer delete (String name) {
+        return mydatabase.delete(Window_TABLE_NAME, "name = ?", new String[] { name });
+    }
+
+    // Window 상태 업데이트
+    public int update(ContentValues updateRowValue, String name) {
+        return mydatabase.update(Window_TABLE_NAME, updateRowValue, "name= ?", new String[] { name });
+    }
+    // Window db얻어오기
+    public ArrayList<WindowDetails> getAll() {
+        ArrayList<WindowDetails> array_list = new ArrayList<WindowDetails>();
+
+        String sqlSelect = "SELECT * FROM " + Window_TABLE_NAME;
+        Cursor cursor = null;
+
+        cursor = mydatabase.rawQuery(sqlSelect, null);
+
+        while (cursor.moveToNext()) {
+            WindowDetails newAdapter = new WindowDetails();
+            newAdapter.setName(cursor.getString(1));
+            newAdapter.setAddress(cursor.getString(2));
+            newAdapter.setState(Boolean.parseBoolean(cursor.getString(3)));
+
+            array_list.add(newAdapter);
+        }
+
+        cursor.close();
+        return array_list;
+    }
+
+
 
     //Location/Station table 비어있는지 확인
     public boolean isDbEmpty(String TableName) {
@@ -89,54 +126,13 @@ public class DatabaseManager {
         return true;
     }
 
-    public static final String Station_si = "si";
-    public static final String Station_gu = "gu";
-    public static final String Station_name = "station";
 
     //Location 항목 추가 (위도/경도 엑셀db화)
-    public long createNote_station(String si, String gu, String name) {
-
-        ContentValues initialValues = new ContentValues();
-
-        initialValues.put(Station_si, si);
-        initialValues.put(Station_gu, gu);
-        initialValues.put(Station_name, name);
-
-        return mydatabase.insert(Station_TABLE_NAME, null, initialValues);
-    }
-
-
-    public String selectNote_station(String si, String gu) {
-
-        String station = null; //station에 임의의 값 넣기
-
-        String sqlSelect = "SELECT * FROM " + Station_TABLE_NAME; //측정소 데이터 조회
-        Cursor cursor = null; //커서 : 데이터를 읽음
-
-        cursor = mydatabase.rawQuery(sqlSelect, null); //위에서 조회한 측정소 데이터를 읽음
-
-        while (cursor.moveToNext()) { //커서를 다음 행으로 이동
-
-            if(si.equals(cursor.getString(1))){
-                Log.d("00", "성공1 ");
-                if(gu.equals(cursor.getString(2))){
-                    station = cursor.getString(3);
-                    Log.d("00","location : "+station);
-                    break;
-                }
-
-            }
-        }
-        cursor.close();
-        return station;
-    }
-
     public static final String Address_si = "si";
     public static final String Address_gu = "gu";
     public static final String Location_x = "x";
     public static final String Location_y = "y";
 
-    //Location 항목 추가 (위도/경도 엑셀db화)
     public long createNote_location(String si, String gu, String x, String y) {
 
         ContentValues initialValues = new ContentValues();
@@ -149,7 +145,7 @@ public class DatabaseManager {
         return mydatabase.insert(Location_TABLE_NAME, null, initialValues);
     }
 
-
+    //Location 항목 조회
     public String selectNote_location(String si, String gu) {
 
         String location = null;
@@ -175,43 +171,60 @@ public class DatabaseManager {
     }
 
 
-    //창문추가
-    public long insert(ContentValues addRowValue) {
-        return mydatabase.insert(Window_TABLE_NAME, null, addRowValue);
+    //Station 항목 추가 (위도/경도 엑셀db화)
+    public static final String Station_si = "si";
+    public static final String Station_gu = "gu";
+    public static final String Station_name = "station";
+
+    public long createNote_station(String si, String gu, String name) {
+
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put(Station_si, si);
+        initialValues.put(Station_gu, gu);
+        initialValues.put(Station_name, name);
+
+        return mydatabase.insert(Station_TABLE_NAME, null, initialValues);
     }
 
-    //창문삭제
-    public Integer delete (String name) {
-        return mydatabase.delete(Window_TABLE_NAME,
-                "name = ?", new String[] { name });
+    //Station 항목 조회
+    public String selectNote_station(String si, String gu) {
+
+        String station = null; //station에 임의의 값 넣기
+
+        String sqlSelect = "SELECT * FROM " + Station_TABLE_NAME; //측정소 데이터 조회
+        Cursor cursor = null; //커서 : 데이터를 읽음
+
+        cursor = mydatabase.rawQuery(sqlSelect, null); //위에서 조회한 측정소 데이터를 읽음
+
+        while (cursor.moveToNext()) { //커서를 다음 행으로 이동
+
+            if(si.equals(cursor.getString(1))){
+                Log.d("00", "성공1 ");
+                if(gu.equals(cursor.getString(2))){
+                    station = cursor.getString(3);
+                    Log.d("00","location : "+station);
+                    break;
+                }
+
+            }
+        }
+        cursor.close();
+        return station;
     }
 
-    //창문 상태 업데이트
-    public int update(ContentValues updateRowValue,
-                      String name)
-    {
-        return mydatabase.update(Window_TABLE_NAME,
-                updateRowValue,
-                "name= ?",
-                new String[] { name });
-    }
 
-    public static final String Actlog_datetime = "Datetime";
-    public static final String Actlog_window = "Window";
-    public static final String Actlog_state = "State";
-    public static final String Actlog_cause = "Cause";
 
-    //활동 기록 추가
+    // Timeline 추가
     public long timeline_insert(ContentValues timeValues){
-        //필드에 데이터 추가
         return mydatabase.insert(Timeline_TABLE_NAME, null, timeValues);
     }
 
-    //활동 기록 조회
+    // Timeline 조회
     public ArrayList<TimelineItem> timeline_select() {
         ArrayList<TimelineItem> timeline_list = new ArrayList<TimelineItem>();
 
-        String sqlSelect = "SELECT * FROM " + Window_TABLE_NAME;
+        String sqlSelect = "SELECT * FROM " + Timeline_TABLE_NAME;
         Cursor cursor = null;
 
         cursor = mydatabase.rawQuery(sqlSelect, null);
@@ -230,25 +243,4 @@ public class DatabaseManager {
         return timeline_list;
     }
 
-    //창문db얻어오기
-    public ArrayList<WindowDetails> getAll() {
-        ArrayList<WindowDetails> array_list = new ArrayList<WindowDetails>();
-
-        String sqlSelect = "SELECT * FROM " + Window_TABLE_NAME;
-        Cursor cursor = null;
-
-        cursor = mydatabase.rawQuery(sqlSelect, null);
-
-        while (cursor.moveToNext()) {
-            WindowDetails newAdapter = new WindowDetails();
-            newAdapter.setName(cursor.getString(1));
-            newAdapter.setAddress(cursor.getString(2));
-            newAdapter.setState(Boolean.parseBoolean(cursor.getString(3)));
-
-            array_list.add(newAdapter);
-        }
-
-        cursor.close();
-        return array_list;
-    }
 }
