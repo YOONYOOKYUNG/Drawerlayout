@@ -28,7 +28,7 @@
             android:theme="?attr/actionBarTheme"
             app:navigationIcon="@drawable/main_navi_icon_menu" />
         <ImageView
-            android:src="@drawable/question2"
+            android:src="@drawable/question3"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:id="@+id/question2"
