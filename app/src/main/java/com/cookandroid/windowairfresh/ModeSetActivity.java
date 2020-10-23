@@ -117,7 +117,7 @@ public class ModeSetActivity extends AppCompatActivity {
             }
         });
 
-        //도움말1 이벤트
+        //도움말1 수동 이벤트
         question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

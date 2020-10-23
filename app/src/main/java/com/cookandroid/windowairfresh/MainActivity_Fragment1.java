@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import java.util.Calendar;
 
 public class MainActivity_Fragment1 extends Fragment {
     ViewPager2 viewpager;
+    ImageView question2;
     TextView tvdate,temp1,humid1,micro1,location_address;
     RelativeLayout templayout, dustlayout, humidlayout, bg;
     int Start_index,End_index;
@@ -55,6 +57,7 @@ public class MainActivity_Fragment1 extends Fragment {
         temp1 = view.findViewById(R.id.temp1);
         micro1 = view.findViewById(R.id.micro1);
         humid1 = view.findViewById(R.id.humid1);
+        question2 = view.findViewById(R.id.question2);
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 aa hh시 mm분");
@@ -78,6 +81,13 @@ public class MainActivity_Fragment1 extends Fragment {
             }
         });
 
+        question2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getContext(),HelpActivity2.class);
+                startActivity(intent1);
+            }
+        });
         // 주소창 클릭 시 주소 변경
         location_address.setOnClickListener(new View.OnClickListener() {
             @Override

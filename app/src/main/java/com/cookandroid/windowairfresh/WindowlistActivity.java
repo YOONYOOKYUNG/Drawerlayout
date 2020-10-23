@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Set;
 
-public class WindowlistActivity extends AppCompatActivity {
+public class WindowlistActivity extends AppCompatActivity  {
 
 
     private DatabaseManager databaseManager;

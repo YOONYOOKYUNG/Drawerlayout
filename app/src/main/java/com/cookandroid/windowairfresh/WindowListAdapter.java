@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class WindowListAdapter extends BaseAdapter {
+public class WindowListAdapter extends BaseAdapter  {
     public  ArrayList<WindowDetails> listViewItemList = new ArrayList<>() ;
     public WindowListAdapter() { }
     private OnWindowButtonClickListener wListener;

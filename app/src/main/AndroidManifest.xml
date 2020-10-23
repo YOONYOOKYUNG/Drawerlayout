@@ -16,19 +16,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label=""
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/ic_icon"
+        android:label="WAF"
+        android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
         <activity
             android:name=".ModeSetActivity_popup_dust"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".ModeSetActivity_popup_temp"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/AppTheme2" />
         <activity android:name=".WindowNameActivity" />
         <service
             android:name=".AutoService"
@@ -44,7 +44,14 @@
         <activity
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />
-        <activity android:name=".AlarmReceiver" /> <!-- dhkim start -->
+        <activity android:name=".HelpMode1Activity"
+            android:theme="@style/AppTheme.help" />
+        <activity android:name=".HelpMode2Activity"
+            android:theme="@style/AppTheme.help"/>
+        <activity android:name=".HelpMode3Activity"
+            android:theme="@style/AppTheme.help"/>
+        <activity android:name=".AlarmReceiver" />
+
         <activity
             android:name=".Popup_warning"
             android:theme="@style/Transparent" /> <!-- android:theme="@android:style/Theme.NoTitleBar" -->
@@ -55,7 +62,7 @@
         <activity android:name=".AlarmActivity" />
         <activity
             android:name=".AlarmSpinnerActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".DeviceListActivity"
             android:label="@string/app_name">
