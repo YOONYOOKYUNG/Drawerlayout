@@ -5,6 +5,7 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -104,9 +105,9 @@ public class AlarmActivity extends AppCompatActivity {
         }
         notificationManager.notify(1,builder.build());
     }
-    private void alarmSetTime(){
-     // PendingIntent mpendingIntent = PendingIntent.getActivity(MainActivity.this, 0, new Intent(getApplicationContext(),
-      //         MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);//노티피케이션을 클릭시 해당 클래스로 화면 이동.
+    public void alarmSetTime(){
+//        PendingIntent mpendingIntent = PendingIntent.getActivity(MainActivity.this, 0, new Intent(getApplicationContext(),
+//               MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);//노티피케이션을 클릭시 해당 클래스로 화면 이동.
 
         NotificationCompat.Builder builder2 = new NotificationCompat.Builder(this, "alarm");
 
