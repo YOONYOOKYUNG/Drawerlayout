@@ -36,7 +36,8 @@
             android:exported="true" />
 
         <activity android:name=".AddressActivity" />
-        <activity android:name=".WindowDeleteActivity" />
+        <activity android:name=".WindowDeleteActivity"
+            android:theme="@style/AppTheme2"/>
         <activity
             android:name=".HelpActivity2"
             android:theme="@style/AppTheme.help" />

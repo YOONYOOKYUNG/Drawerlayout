@@ -98,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Intent intent= new Intent(this,AutoService.class);
-        startService(intent);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -157,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+        Intent intent= new Intent(this,AutoService.class);
+        startService(intent);
     }
 
     //menu

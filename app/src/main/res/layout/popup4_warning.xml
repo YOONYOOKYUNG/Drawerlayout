@@ -43,7 +43,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_toRightOf="@+id/txt2"
             android:text="로 설정되어있습니다."
             android:textSize="15dp"
@@ -53,9 +52,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#3A3535"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/txt1"
             android:textSize="15dp"
-            android:text="       수동으로 창문을 열거나 닫고 싶다면\n  메인화면의 설정창에서 변결할 수 있습니다."
+            android:text="       수동으로 창문을 열거나 닫고 싶다면\n  메인화면의 설정창에서 변경할 수 있습니다."
             android:layout_gravity="center_horizontal"/>
 </RelativeLayout>
         <Button
