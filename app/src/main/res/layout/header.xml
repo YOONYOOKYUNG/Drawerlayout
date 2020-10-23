@@ -8,8 +8,8 @@
 
     <ImageView
         android:layout_alignParentLeft="true"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:src="@drawable/waf"/>
+        android:src="@drawable/logo4"/>
 
 </RelativeLayout>

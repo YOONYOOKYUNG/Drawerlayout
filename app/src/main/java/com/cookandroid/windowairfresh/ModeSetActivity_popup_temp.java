@@ -61,6 +61,10 @@ public class ModeSetActivity_popup_temp extends AppCompatActivity {
                         Toast.makeText(ModeSetActivity_popup_temp.this, "최저 온도는 최고 온도보다 높게 설정할 수 없습니다. 다시 설정해주세요.", Toast.LENGTH_SHORT).show();
                         high_temp_edit.setSelection(high_temp_edit.length());
                         low_temp_edit.setSelection(low_temp_edit.length());
+                    }else if(low_num==high_num){
+                        Toast.makeText(ModeSetActivity_popup_temp.this, "최저 온도와 최고 온도는 같을 수 없습니다. 다시 설정해주세요.", Toast.LENGTH_SHORT).show();
+                        high_temp_edit.setSelection(high_temp_edit.length());
+                        low_temp_edit.setSelection(low_temp_edit.length());
                     }
                     else {
                         //올바른 입력값인 경우
