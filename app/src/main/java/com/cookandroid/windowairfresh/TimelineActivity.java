@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ public class TimelineActivity extends AppCompatActivity {
     private DatabaseManager databaseManager;
     ListView timeline;
     TimelineAdapter timelineAdapter;
+    ImageView backarrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +29,15 @@ public class TimelineActivity extends AppCompatActivity {
         timelineAdapter.renewItem();
 
         timeline.setAdapter(timelineAdapter);
-
+        // 뒤로가기 버튼
+        backarrow = findViewById(R.id.backarrow);
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
-
 }
 
 
