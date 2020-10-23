@@ -35,7 +35,7 @@
         android:id="@+id/tv1"
         android:text=" 알림 기능 설정"
         android:textColor="#000000"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#EDEDED"
@@ -80,7 +80,7 @@
         android:layout_below="@id/rl1"
         android:text=" 매 시간 알림 받기"
         android:textColor="#000000"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#EDEDED"
@@ -159,7 +159,7 @@
     <View
         android:layout_below="@id/rl3"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="3dp"
         android:background="#EDEDED"/>
 
 

@@ -69,7 +69,7 @@
             android:layout_height="45dp"
             android:src="@drawable/refresh2"
             android:scaleType="fitXY"
-            android:background="#00000000"
+            android:background="#EDEDED"
             android:layout_alignRight="@id/tv2"
             android:layout_centerVertical="true"
             android:padding="10dp"

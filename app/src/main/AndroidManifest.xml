@@ -25,10 +25,10 @@
 
         <activity
             android:name=".ModeSetActivity_popup_dust"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".ModeSetActivity_popup_temp"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/AppTheme2" />
         <activity android:name=".WindowNameActivity" />
         <service
             android:name=".AutoService"
@@ -55,7 +55,7 @@
         <activity android:name=".AlarmActivity" />
         <activity
             android:name=".AlarmSpinnerActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".DeviceListActivity"
             android:label="@string/app_name">
