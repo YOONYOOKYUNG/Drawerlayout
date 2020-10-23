@@ -27,15 +27,7 @@
             android:layout_gravity="left"
             android:theme="?attr/actionBarTheme"
             app:navigationIcon="@drawable/main_navi_icon_menu" />
-        <ImageView
-            android:src="@drawable/question3"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/question2"
-            android:layout_alignEnd="@+id/toolbar"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_alignParentRight="true"/>
+
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             app:ci_drawable="@drawable/blue_radius"

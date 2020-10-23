@@ -33,14 +33,6 @@
         android:layout_below="@id/toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv1"
-            android:text="모드 설정"
-            android:textSize="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EDEDED"
-            android:padding="10dp"/>
         <LinearLayout
             android:layout_below="@+id/tv1"
             android:layout_width="match_parent"
@@ -94,9 +86,10 @@
                 android:textSize="15dp" />
             <ImageView
                 android:id="@+id/question"
-                android:src="@drawable/question3"
+                android:src="@drawable/question4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:scaleType="fitXY"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
@@ -123,7 +116,7 @@
             android:text="창문 설정 하러가기"
             android:background="@drawable/modebtn"
             android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
@@ -145,12 +138,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#EDEDED"
-                android:padding="10dp" />
+                android:padding="10dp"/>
             <ImageView
                 android:id="@+id/question2"
-                android:src="@drawable/question3"
+                android:src="@drawable/question4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:scaleType="fitXY"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
@@ -195,13 +189,15 @@
             <TextView
                 android:id="@+id/set_dust"
                 android:text="수치 설정하기"
-                android:textSize="17dp"
                 android:layout_margin="5dp"
+                android:padding="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:background="#EDEDED" />
             <ImageView
                 android:id="@+id/question3"
-                android:src="@drawable/question3"
+                android:src="@drawable/question4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"

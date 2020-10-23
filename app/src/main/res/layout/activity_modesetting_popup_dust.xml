@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".popup_set_dust"
+    tools:context=".ModeSetActivity_popup_dust"
     style="@style/Transparent"
     android:background="@drawable/set_temp_popup_bg">
     <LinearLayout
