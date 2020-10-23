@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".WindowSplashActivity"
+    android:background="@color/white"
+    >
+
+    <ImageView
+        android:id="@+id/windowsplash"
+        android:layout_width="304dp"
+        android:layout_height="319dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/windowloading1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="창문을 연결중입니다··"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginTop="380dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/windowloading2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/windowloading1"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:text="잠시만 기다려주세요"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout >

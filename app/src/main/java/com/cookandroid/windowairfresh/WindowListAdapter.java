@@ -1,11 +1,8 @@
 package com.cookandroid.windowairfresh;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,14 +152,6 @@ public class WindowListAdapter extends BaseAdapter {
     }
 
 
-
-    public void removeitem(int position) {
-        if (databaseManager != null) {
-           databaseManager.delete(listViewItemList.get(position).getName());
-        }
-        listViewItemList.remove(position);
-
-    }
 
     public void initialiseList()
     {

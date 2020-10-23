@@ -57,7 +57,7 @@ public class MainActivity_Fragment1 extends Fragment {
         humid1 = view.findViewById(R.id.humid1);
 
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 aa hh시 mm분");
         cal.add(Calendar.DATE,0);
         String today = sdf.format(cal.getTime());
         tvdate = view.findViewById(R.id.tvdate);

@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Message;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class AutoOpen extends Thread {
     WindowListAdapter adapter = new WindowListAdapter();
 
@@ -28,6 +31,7 @@ public class AutoOpen extends Thread {
             if (modestate){
             if (outsiderain == 0 && coldtemp<outsidetemp && outsidetemp< hottemp && dustresult+comparedust<0) {
                 Log.d("자동모드", "자동모드:창문 열었어요");
+
                 boolean windowsOpened = false;
                 for (int i = 0; i < windownumber; i++) {
                     {
@@ -46,6 +50,15 @@ public class AutoOpen extends Thread {
                 if (windowsOpened) {
                     Message message = ((MainActivity) MainActivity.mContext).autohandler.obtainMessage(1);
                     message.sendToTarget();
+
+                    // TimeLine 추가
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf_date = new SimpleDateFormat("MM월 dd일");
+                    SimpleDateFormat sdf_time = new SimpleDateFormat("aa hh시 mm분");
+                    String data = sdf_date.format(cal.getTime());
+                    String time = sdf_time.format(cal.getTime());
+                    String timeline_content = "사용자가 설정하신 수치에 따라 창문을 열었습니다.";
+                    databaseManager.timeline_insert(data, time, timeline_content,"true");
                 }
             }
             try {

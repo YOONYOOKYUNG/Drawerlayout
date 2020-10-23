@@ -109,18 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
         mContext = this;
-        //절전모드
-        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(POWER_SERVICE);
-        boolean isWhiteListing = false;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            isWhiteListing = pm.isIgnoringBatteryOptimizations(getApplicationContext().getPackageName());
-        }
-        if (!isWhiteListing) {
-            Intent powerintent = new Intent();
-            powerintent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-            powerintent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
-            startActivity(powerintent);
-        }
 
         //도움말
         ImageView question2;
@@ -182,6 +170,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
         switch (menuitem.getItemId()) {
+            case R.id.window:
+                startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
+                break;
+
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, ModeSetActivity.class);
                 startActivity(intent1);
@@ -193,11 +185,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.log_record:
-                Intent intent3 = new Intent(MainActivity.this, ActlogActivity.class);
+                Intent intent3 = new Intent(MainActivity.this, TimelineActivity.class);
                 startActivity(intent3);
+                break;
 
-            case R.id.window:
-                startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
+
         }
         return true;
     }
@@ -428,28 +420,8 @@ public void opensocket(){
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(!checklist.isEmpty())
-        {
-            Intent intent= new Intent(this, AutoService.class);
-            stopService(intent);}
-        setAlarmTimer();
-        Thread.currentThread().interrupt();
-
-      /*  if (MainThread != null) {
-            mainThread.interrupt();
-            mainThread = null; }*/
     }
 
-    protected void setAlarmTimer() {
-        final Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        c.add(Calendar.SECOND, 1);
-        Intent Alarmintent = new Intent(this, AutoAlarmReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(this, 0,Alarmintent,0);
-
-        AlarmManager mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        mAlarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), sender);
-    }
     public void onRefresh(){
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();

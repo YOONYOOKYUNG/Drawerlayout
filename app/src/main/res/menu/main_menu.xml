@@ -20,7 +20,7 @@
         <item
             android:icon="@drawable/timeline"
             android:id="@+id/log_record"
-            android:title="활동 기록"/>
+            android:title="활동 로그"/>
     </group>
 
     <group android:checkableBehavior="none">
