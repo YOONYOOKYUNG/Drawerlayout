@@ -71,36 +71,38 @@ public class AutoClose extends Thread {
             Message message = ((MainActivity)MainActivity.mContext).autohandler.obtainMessage(num);
             message.sendToTarget();
 
-
-            // TimeLine 추가
+            //Timeline 추가
             DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.mContext);
             adapter = new WindowListAdapter();
             adapter.setDatabaseManager(databaseManager);
 
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf_date = new SimpleDateFormat("MM월 dd일");
-            SimpleDateFormat sdf_time = new SimpleDateFormat("aa hh시 mm분");
-            String data = sdf_date.format(cal.getTime());
+            //현재 날짜, 시간 불러오기
+            Calendar cal =Calendar.getInstance();
+            SimpleDateFormat sdf_date = new SimpleDateFormat("MM/dd E");
+            SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
+
+            String date = sdf_date.format(cal.getTime());
             String time = sdf_time.format(cal.getTime());
 
-            String timeline_content;
-            switch (num) {
+            String content;
+
+            //창문이 자동으로 닫히는 경우에 따라 분류류
+            switch (num){
                 case 2:
-                    timeline_content = "비가 와서 모든 창문을 닫았습니다.";
+                    content = "비가 와서 모든 창문을 닫았습니다.";
                     break;
                 case 3:
-                    timeline_content = "사용자가 설정한 온도에 따라 모든 창문을 닫았습니다.";
+                    content = "사용자가 설정한 온도 값에 따라 모든 창문을 닫았습니다.";
                     break;
                 case 4:
-                    timeline_content = "사용자가 설정한 미세먼지 수치에 따라 모든 창문을 닫았습니다.";
+                    content = "사용자가 설정한 미세먼지 수치에 따라 모든 창문을 닫았습니다.";
                     break;
                 default:
-                    timeline_content = "";
+                    content = "";
             }
 
-            databaseManager.timeline_insert(data, time, timeline_content,"false");
-
-
+           //table에 넣기
+            databaseManager.timeline_insert(date, time, content, "닫힘");
         }
     }
 }
