@@ -31,7 +31,7 @@
     <ImageView
             android:id="@+id/item_openclose"
             android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_height="88dp"
             android:src="@drawable/timelineitem_open"
             android:layout_toRightOf="@id/text_timeline"
             android:layout_centerVertical="true"/>
