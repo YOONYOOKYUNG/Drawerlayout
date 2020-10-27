@@ -41,6 +41,7 @@
             android:name=".HelpActivity2"
             android:theme="@style/AppTheme.help" />
         <activity android:name=".TimelineActivity" />
+        <activity android:name=".InformationActivity" />
         <activity
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />
@@ -48,8 +49,7 @@
             android:theme="@style/AppTheme.help" />
         <activity android:name=".HelpMode2Activity"
             android:theme="@style/AppTheme.help"/>
-        <activity android:name=".HelpMode3Activity"
-            android:theme="@style/AppTheme.help"/>
+        <activity android:name=".HelpMode3Activity"/>
         <activity android:name=".AlarmReceiver" />
 
         <activity

@@ -26,9 +26,9 @@
     <group android:checkableBehavior="none">
 
         <item
-            android:icon="@drawable/question2"
+            android:icon="@drawable/information"
             android:id="@+id/contact"
-            android:title="문의하기"/>
+            android:title="정보"/>
     </group>
 
 </menu>

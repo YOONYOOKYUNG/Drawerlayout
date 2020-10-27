@@ -182,6 +182,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent3);
                 break;
 
+            case R.id.contact:
+                Intent intent4 = new Intent(MainActivity.this,InformationActivity.class);
+                startActivity(intent4);
+                break;
+
 
         }
         return true;
