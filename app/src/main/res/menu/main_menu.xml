@@ -12,7 +12,7 @@
         <item
             android:id="@+id/alarm"
             android:icon="@drawable/alarm_icon2"
-            android:title="알람 설정"/>
+            android:title="알림 설정"/>
 
     </group>
 

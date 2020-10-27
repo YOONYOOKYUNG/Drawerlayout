@@ -58,6 +58,7 @@
             android:theme="@style/Transparent" /> <!-- android:theme="@android:style/Theme.NoTitleBar" -->
         <activity android:name=".BluetoothOnActivity" />
         <activity android:name=".ModeSetActivity" />
+        <activity android:name=".WindowSplashActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".WindowlistActivity" />
         <activity android:name=".AlarmActivity" />

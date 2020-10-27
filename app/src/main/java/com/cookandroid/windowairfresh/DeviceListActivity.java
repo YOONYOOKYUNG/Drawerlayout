@@ -31,23 +31,14 @@ import java.util.ArrayList;
 
 
 public class DeviceListActivity extends AppCompatActivity {
-
-	final int NEW_WINDOW_REQUEST=1234;
+	private DatabaseManager databaseManager;
 	public static int page = 1;
 	public static String btaddress = "";
 	private BluetoothAdapter mBluetoothAdapter; // 블루투스 어댑터
-	ImageView backarrow;
+	WindowListAdapter adapter= new WindowListAdapter();
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-		if(resultCode==RESULT_OK && requestCode==NEW_WINDOW_REQUEST){
-			Log.d("dhkim", "전달받은 새로운 창문 이름 : " + data.getStringExtra("new_window_name"));
-			Log.d("dhkim", "전달받은 새로운 창문 주소 : " + data.getStringExtra("btaddress"));
-			setResult(RESULT_OK, data);
-			DeviceListActivity.this.finish();
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+
+	ImageView backarrow;
 
 	String[] WindowList = new String[7];
 	private ListView mListView, mListView2;
@@ -59,6 +50,8 @@ public class DeviceListActivity extends AppCompatActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		databaseManager = DatabaseManager.getInstance(this);
+		adapter.setDatabaseManager(databaseManager);
 		setContentView(R.layout.activity_devicelist);
 		//어느 페이지의 레이아웃인가요?
 		mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
@@ -247,8 +240,8 @@ public class DeviceListActivity extends AppCompatActivity {
 					Intent windowintent = new Intent(DeviceListActivity.this, WindowNameActivity.class);
 						Log.d("테스트", "인텐트 바로 보내기전 주소 : "+btaddress);
 						windowintent.putExtra("btaddress",btaddress);
-						startActivityForResult(windowintent, NEW_WINDOW_REQUEST);
-
+						startActivity(windowintent);
+						finish();
 						page=1;}
 				}
 				else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {

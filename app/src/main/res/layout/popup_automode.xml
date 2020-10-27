@@ -38,20 +38,30 @@
         android:layout_marginLeft="22dp"
         android:layout_marginTop="30dp"
         android:layout_toRightOf="@+id/con1"
-        android:text="비가 와서 "
+        android:text="비가 와서"
         android:textColor="#000"
         android:textSize="19dp" />
-
 
     <TextView
         android:id="@+id/sentence2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/con1"
         android:layout_below="@id/sentence1"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="23dp"
+
+        android:layout_toRightOf="@id/con1"
         android:text="창문을 닫았습니다."
+        android:textColor="#000"
+        android:textSize="19dp" />
+
+    <TextView
+        android:id="@+id/sentence3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sentence2"
+        android:layout_marginLeft="23dp"
+        android:layout_toRightOf="@id/con1"
+        android:text=""
         android:textColor="#000"
         android:textSize="19dp" />
 

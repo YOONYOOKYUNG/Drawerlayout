@@ -41,30 +41,9 @@ public class WindowlistActivity extends AppCompatActivity  {
     GridView gridView;
     WindowListAdapter adapter;
     TextView main_label;
-    final int REQUESTCODE_DEVICELISTACTIVITY = 1111;
 
 
     @SuppressLint("HandlerLeak")
-    @Override
-
-    protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
-
-        if (resultCode == RESULT_OK && requestCode==REQUESTCODE_DEVICELISTACTIVITY) {
-            String addedWindowName =  data.getStringExtra("new_window_name");
-            String address =  data.getStringExtra("btaddress");
-            Log.d("테스트", "WindowList로 창문이름 도착 : " + addedWindowName);
-            Log.d("dhkim", "WindowList로 주소 도착 : " + address);
-            if(adapter==null) {
-                Log.d("dhkim", "adapter is null ");
-            } else {
-                adapter.addItem(addedWindowName,address,true); //세번째 블루투스어드레스는 주소값을 넣어주면됨
-                adapter.notifyDataSetChanged();
-            }
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-    //dhkim end ==============================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,7 +232,7 @@ public class WindowlistActivity extends AppCompatActivity  {
                 //연결된 디바이스 목록을 리스트에 모두 추가합니다.
                 newIntent.putParcelableArrayListExtra("device.list2", list);
                 //추가된 값 저장하기
-                startActivityForResult(newIntent, REQUESTCODE_DEVICELISTACTIVITY);
+                startActivity(newIntent);
                 return;
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //블루투스 디바이스가 검색되었을 때(디바이스 검색 결과)
