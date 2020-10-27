@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:background="#EDEDED"
                 android:padding="10dp"
-                android:text="커스텀 모드 설정"
+                android:text="수동 모드 설정"
                 android:textSize="15dp" />
             <ImageView
                 android:id="@+id/question"
@@ -90,6 +90,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:scaleType="fitXY"
+                android:visibility="invisible"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
@@ -101,7 +102,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="50dp"/>
+            android:layout_marginTop="46dp"/>
         <TextView
             android:text="수동 모드로 설정되었습니다. \n 창문 설정 화면에서 창문을 개폐하실 수 있습니다."
             android:textSize="15dp"
@@ -147,6 +148,7 @@
                 android:scaleType="fitXY"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:visibility="invisible"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
         <RelativeLayout
@@ -154,7 +156,7 @@
             android:layout_below="@id/rl4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="36dp">
             <ImageView
                 android:id="@+id/img4"
                 android:src="@drawable/window5"
@@ -171,14 +173,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"/>
         </RelativeLayout>
 
         <View
             android:id="@+id/view_3"
             android:layout_width="wrap_content"
             android:layout_height="3dp"
-            android:background="#EDEDED"
+            android:background="#00B59E9E"
             android:layout_below="@id/rl6"
             android:layout_marginTop="10dp"/>
         <RelativeLayout
@@ -202,6 +205,7 @@
                 android:src="@drawable/question4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:visibility="invisible"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>

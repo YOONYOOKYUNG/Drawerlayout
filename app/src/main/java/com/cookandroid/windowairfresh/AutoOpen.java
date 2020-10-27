@@ -51,14 +51,19 @@ public class AutoOpen extends Thread {
                     Message message = ((MainActivity) MainActivity.mContext).autohandler.obtainMessage(1);
                     message.sendToTarget();
 
-                    // TimeLine 추가
-                    Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat sdf_date = new SimpleDateFormat("MM월 dd일");
-                    SimpleDateFormat sdf_time = new SimpleDateFormat("aa hh시 mm분");
-                    String data = sdf_date.format(cal.getTime());
+                    //Timeline 추가
+                    //현재 날짜, 시간 불러오기
+                    Calendar cal =Calendar.getInstance();
+                    SimpleDateFormat sdf_date = new SimpleDateFormat("MM/dd E");
+                    SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
+
+                    String date = sdf_date.format(cal.getTime());
                     String time = sdf_time.format(cal.getTime());
-                    String timeline_content = "사용자가 설정하신 수치에 따라 창문을 열었습니다.";
-                    databaseManager.timeline_insert(data, time, timeline_content,"true");
+                    String content = "사용자가 설정한 수치에 따라 창문이 열렸습니다.";
+
+                    //table에 넣기
+                    databaseManager.timeline_insert(date, time, content, "열림");
+
                 }
             }
             try {

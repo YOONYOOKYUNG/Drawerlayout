@@ -102,14 +102,19 @@ public class WindowlistActivity extends AppCompatActivity  {
                         updateRowValue.put("state", "false");
                         databaseManager.update(updateRowValue,listViewItem.getName());
 
-                        // TimeLine 추가
-                        Calendar cal = Calendar.getInstance();
-                        SimpleDateFormat sdf_date = new SimpleDateFormat("MM월 dd일");
-                        SimpleDateFormat sdf_time = new SimpleDateFormat("aa hh시 mm분");
-                        String data = sdf_date.format(cal.getTime());
+                        //timeline에 추가
+                        Calendar cal =Calendar.getInstance();
+                        SimpleDateFormat sdf_date = new SimpleDateFormat("MM/dd E");
+                        SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
+
+                        //날짜, 시간
+                        String date = sdf_date.format(cal.getTime());
                         String time = sdf_time.format(cal.getTime());
-                        String timeline_content = "사용자가 " +listViewItem.getName()+" 창문을 닫았습니다.";
-                        databaseManager.timeline_insert(data, time, timeline_content,"false");
+
+                        //내용
+                        String content = "사용자가 " + listViewItem.getName() + "을/를 닫았습니다.";
+
+                        databaseManager.timeline_insert(date, time, content, "닫힘");
                     }
                 }
 
@@ -121,14 +126,19 @@ public class WindowlistActivity extends AppCompatActivity  {
                         updateRowValue.put("state", "true");
                         databaseManager.update(updateRowValue,listViewItem.getName());
 
-                        // TimeLine 추가
-                        Calendar cal = Calendar.getInstance();
-                        SimpleDateFormat sdf_date = new SimpleDateFormat("MM월 dd일");
-                        SimpleDateFormat sdf_time = new SimpleDateFormat("aa hh시 mm분");
-                        String data = sdf_date.format(cal.getTime());
+                        //timeline에 추가
+                        Calendar cal =Calendar.getInstance();
+                        SimpleDateFormat sdf_date = new SimpleDateFormat("MM/dd E");
+                        SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
+
+                        //날짜, 시간
+                        String date = sdf_date.format(cal.getTime());
                         String time = sdf_time.format(cal.getTime());
-                        String timeline_content = "사용자가 " +listViewItem.getName()+" 창문을 열었습니다.";
-                        databaseManager.timeline_insert(data, time, timeline_content,"true");
+
+                        //내용
+                        String content = "사용자가 " + listViewItem.getName() + "을/를 열었습니다.";
+
+                        databaseManager.timeline_insert(date, time, content, "열림");
                     }
                 }
             }

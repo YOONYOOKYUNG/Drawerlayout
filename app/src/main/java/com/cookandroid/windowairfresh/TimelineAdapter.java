@@ -1,6 +1,5 @@
 package com.cookandroid.windowairfresh;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,11 +48,14 @@ public class TimelineAdapter extends BaseAdapter {
         txt_date.setText(timelineDetails.getDate());
         txt_time.setText(timelineDetails.getTime());
         txt_content.setText(timelineDetails.getContent());
+
         //창문 개폐 아이콘 변경
-       //timelineDetails.getState().equals("true") --> 기존이미지인 timelineitem_open이 보여짐.
-        if (timelineDetails.getState().equals("false")){ //--> 이미지 변경 필요.
+        if (timelineDetails.getState().equals("닫힘")){ //추후 아이콘 변경 예정
             item_openclose.setImageResource(R.drawable.timelineitem_close);
-         }
+         } else if (timelineDetails.getState().equals("열림")){
+            item_openclose.setImageResource(R.drawable.timelineitem_open);
+        }
+
         return convertView;
     }
 
