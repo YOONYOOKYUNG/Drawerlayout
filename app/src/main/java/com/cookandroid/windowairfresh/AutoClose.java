@@ -1,9 +1,17 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.os.Build;
 import android.os.Message;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -90,12 +98,15 @@ public class AutoClose extends Thread {
             switch (num){
                 case 2:
                     content = "비가 와서 모든 창문을 닫았습니다.";
+                    closeRain();
                     break;
                 case 3:
                     content = "사용자가 설정한 온도 값에 따라 모든 창문을 닫았습니다.";
+                    closeTemp();
                     break;
                 case 4:
                     content = "사용자가 설정한 미세먼지 수치에 따라 모든 창문을 닫았습니다.";
+                    closeDust();
                     break;
                 default:
                     content = "";
@@ -104,5 +115,71 @@ public class AutoClose extends Thread {
            //table에 넣기
             databaseManager.timeline_insert(date, time, content, "닫힘");
         }
+    }
+    private void closeRain(){
+        Intent intent = new Intent(MainActivity.mContext, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.mContext, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.mContext,
+                "channel_rain");
+        builder.setSmallIcon(R.drawable.noti_rain)
+                .setContentTitle("자동 개폐 알림")
+                .setContentText("밖에 비가 와서 모든 창문을 닫았습니다.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManager manager =
+                (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            manager.createNotificationChannel(new NotificationChannel("channel_rain",
+                    "rainclose", NotificationManager.IMPORTANCE_DEFAULT));
+        }
+        manager.notify(1, builder.build());
+    }
+
+    private void closeTemp(){
+        Intent intent2 = new Intent(MainActivity.mContext, MainActivity.class);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pIntent2 = PendingIntent.getActivity(MainActivity.mContext, 0, intent2, 0);
+
+        NotificationCompat.Builder builder2 = new NotificationCompat.Builder(MainActivity.mContext,
+                "channel_temp");
+        builder2.setSmallIcon(R.drawable.noti_thermo)
+                .setContentTitle("자동 개폐 알림")
+                .setContentText("설정한 온도에 따라 모든 창문을 닫았습니다.")
+                .setContentIntent(pIntent2)
+                .setAutoCancel(true);
+
+        NotificationManager manager2 =
+                (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            manager2.createNotificationChannel(new NotificationChannel("channel_temp",
+                    "tempclose", NotificationManager.IMPORTANCE_DEFAULT));
+        }
+        manager2.notify(2, builder2.build());
+    }
+
+    private void closeDust(){
+        Intent intent3 = new Intent(MainActivity.mContext, MainActivity.class);
+        intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pIntent3 = PendingIntent.getActivity(MainActivity.mContext, 0, intent3, 0);
+
+        NotificationCompat.Builder builder3 = new NotificationCompat.Builder(MainActivity.mContext,
+                "channel_dust");
+        builder3.setSmallIcon(R.drawable.noti_dust)
+                .setContentTitle("자동 개페 알림")
+                .setContentText("설정한 미세먼지 수치에 따라 모든 창문을 닫았습니다.")
+                .setContentIntent(pIntent3)
+                .setAutoCancel(true);
+
+        NotificationManager manager3 =
+                (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            manager3.createNotificationChannel(new NotificationChannel("channel_dust",
+                    "dustclose", NotificationManager.IMPORTANCE_DEFAULT));
+        }
+        manager3.notify(3,builder3.build());
     }
 }

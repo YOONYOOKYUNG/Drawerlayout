@@ -1,9 +1,17 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Message;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -64,6 +72,8 @@ public class AutoOpen extends Thread {
                     //table에 넣기
                     databaseManager.timeline_insert(date, time, content, "열림");
 
+                    openNoty();
+
                 }
             }
             try {
@@ -72,5 +82,24 @@ public class AutoOpen extends Thread {
             }
         }
         }
+    }
+    private void openNoty(){
+        Intent intent = new Intent(MainActivity.mContext, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.mContext, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.mContext, "channel_open");
+        builder.setSmallIcon(R.drawable.window_open)
+                .setContentTitle("자동 개폐 알림")
+                .setContentText("내부 미세먼지 수치가 외부보다 높아 모든 창문을 열였습니다.")
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManager manager = (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            manager.createNotificationChannel(new NotificationChannel("channel_open",
+                    "자동 열림 ", NotificationManager.IMPORTANCE_DEFAULT));
+        }
+        manager.notify(1, builder.build());
     }
 }
