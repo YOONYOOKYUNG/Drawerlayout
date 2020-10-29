@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.contact:
                 Intent intent4 = new Intent(MainActivity.this,InformationActivity.class);
                 startActivity(intent4);
+                drawerLayout.closeDrawers();
                 break;
 
 
