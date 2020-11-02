@@ -420,6 +420,6 @@ public void opensocket(){
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();
         viewpager.setAdapter(slideadapter);
-        ((MainActivity) MainActivity.mContext).arduinoRefresh();
+        arduinoRefresh();
     }
 }
