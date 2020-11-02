@@ -309,66 +309,57 @@ public void opensocket(){
             WindowDetails listViewItem = adapter.listViewItemList.get(0);
             address = listViewItem.getAddress();
         }
-
         onRefresh();
+        arduinoRefresh();
+            //handler.postDelayed(new Handler(),1000)
+    }
 
-        if (databaseManager != null){
-            checklist = databaseManager.getAll();
-        }
+    public void arduinoRefresh(){
         if(!checklist.isEmpty()){
             if(!btsocketstate){opensocket();}
             ConnectedThread.write("1");
         }
-        else
-        {
-            Intent intent= new Intent(this, AutoService.class);
-            stopService(intent);}
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    case RECIEVE_MESSAGE:
+                        byte[] readBuf = (byte[]) msg.obj;
 
+                        String strIncom = new String(readBuf, 0, msg.arg1);
+                        Log.d("a2", strIncom);
+                        sb.append(strIncom);
+                        Log.d("a3", String.valueOf(sb));
 
-            //handler.postDelayed(new Handler(),1000)
+                        int endOfLineIndex = sb.indexOf("\r\n");
+                        Log.d("a4", String.valueOf(endOfLineIndex));
+                        if (endOfLineIndex > 0) {
+                            String sbprint = sb.substring(0, endOfLineIndex);
+                            Log.d("a5", sbprint);
+                            sb.delete(0, sb.length());
 
-            handler = new Handler() {
-                public void handleMessage(android.os.Message msg) {
-                    switch (msg.what) {
-                        case RECIEVE_MESSAGE:
-                            byte[] readBuf = (byte[]) msg.obj;
+                            array = sbprint.split("#");
 
-                            String strIncom = new String(readBuf, 0, msg.arg1);
-                            Log.d("a2", strIncom);
-                            sb.append(strIncom);
-                            Log.d("a3", String.valueOf(sb));
+                            Log.d("a6", array[0]);
+                            Log.d("a6", array[1]);
+                            Log.d("a6", array[2]);
+                            Log.d("a6", array[3]);
 
-                            int endOfLineIndex = sb.indexOf("\r\n");
-                            Log.d("a4", String.valueOf(endOfLineIndex));
-                            if (endOfLineIndex > 0) {
-                                String sbprint = sb.substring(0, endOfLineIndex);
-                                Log.d("a5", sbprint);
-                                sb.delete(0, sb.length());
+                            SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
+                            SharedPreferences.Editor editor =pf.edit();
+                            editor.putString("temp", array[1]);
+                            editor.putString("dust", array[2]);
+                            insidedust = Float.parseFloat(pf.getString("dust","0"));
+                            editor.putString("humid", array[3]);
+                            editor.commit();
 
-                                array = sbprint.split("#");
+                            flag++;
+                        }
 
-                                Log.d("a6", array[0]);
-                                Log.d("a6", array[1]);
-                                Log.d("a6", array[2]);
-                                Log.d("a6", array[3]);
-
-                                SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
-                                SharedPreferences.Editor editor =pf.edit();
-                                editor.putString("temp", array[1]);
-                                editor.putString("dust", array[2]);
-                                insidedust = Float.parseFloat(pf.getString("dust","0"));
-                                editor.putString("humid", array[3]);
-                                editor.commit();
-
-                                flag++;
-                            }
-
-                            break;
-                    }
+                        break;
                 }
-            };
+            }
+        };
     }
-
 
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -429,5 +420,6 @@ public void opensocket(){
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();
         viewpager.setAdapter(slideadapter);
+        ((MainActivity) MainActivity.mContext).arduinoRefresh();
     }
 }

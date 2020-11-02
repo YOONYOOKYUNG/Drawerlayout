@@ -24,7 +24,6 @@ public class MainActivity_Fragment2 extends Fragment {
     Boolean nowrain;
     String pty;
     SwipeRefreshLayout swipe2;
-
     public MainActivity_Fragment2() {
         // Required empty public constructor
     }
@@ -76,6 +75,7 @@ public class MainActivity_Fragment2 extends Fragment {
                 swipe2.setRefreshing(false);
             }
         });
+
         // 주소창 클릭 시 주소 변경
         location_address.setOnClickListener(new View.OnClickListener() {
             @Override
