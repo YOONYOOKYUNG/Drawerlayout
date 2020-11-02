@@ -43,7 +43,7 @@ public class WindowSplashActivity extends AppCompatActivity {
             public void run() {
                 finish();
             }
-        }, 6000);  //시간설정
+        }, 8000);  //시간설정
     }
 
     @Override

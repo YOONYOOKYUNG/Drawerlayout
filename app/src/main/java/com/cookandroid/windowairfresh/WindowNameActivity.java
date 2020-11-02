@@ -38,6 +38,8 @@ public class WindowNameActivity extends Activity {
         inputnameDlg.setContentView(R.layout.activity_windowname);
         //노출
         inputnameDlg.show();
+        inputnameDlg.setCancelable(false);
+
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
         final EditText message = (EditText) inputnameDlg.findViewById(R.id.messagse);
