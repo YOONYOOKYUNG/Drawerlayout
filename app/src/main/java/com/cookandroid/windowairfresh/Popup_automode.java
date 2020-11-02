@@ -58,7 +58,7 @@ public class Popup_automode {
         switch(i){
             case 1:
                 sentence1.setText("밖의 미세먼지가");
-                sentence2.setText("실내보다 "+comparedust+"만큼 낮아");
+                sentence2.setText("실내보다 "+comparedust+"이상 낮아");
                 sentence3.setText("창문을 열었습니다.");
                 con1.setImageResource(R.drawable.window_open);
                 break;
@@ -71,7 +71,7 @@ public class Popup_automode {
                 break;
             case 4:
                 sentence1.setText("밖의 미세먼지가");
-                sentence2.setText("실내보다 "+comparedust+"만큼 높아");
+                sentence2.setText("실내보다 "+comparedust+"이상 높아");
                 sentence3.setText("창문을 닫았습니다.");
                 break;
             default:
