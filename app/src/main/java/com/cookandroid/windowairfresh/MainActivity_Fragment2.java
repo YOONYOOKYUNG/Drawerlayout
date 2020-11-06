@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
 public class MainActivity_Fragment2 extends Fragment {
 
     ViewPager2 viewpager;
@@ -53,7 +54,6 @@ public class MainActivity_Fragment2 extends Fragment {
         location_address = view.findViewById(R.id.location_address);
         SharedPreferences pf2 = getContext().getSharedPreferences("address",getContext().MODE_PRIVATE);
         location_address.setText(pf2.getString("addr0","서울시 성동구"));
-
 
         SharedPreferences pf1 = getContext().getSharedPreferences("fragment2",getContext().MODE_PRIVATE);
         temp.setText(pf1.getString("temp","20"));
@@ -115,7 +115,5 @@ public class MainActivity_Fragment2 extends Fragment {
             }
         });
         return view;
-
-
     }
 }

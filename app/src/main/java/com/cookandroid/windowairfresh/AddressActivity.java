@@ -124,7 +124,7 @@ public class AddressActivity extends AppCompatActivity {
                     addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_sejong, android.R.layout.simple_spinner_dropdown_item);
                     addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(addr_spin2);
-                } else if(addr_spin1.getItem(i).equals("제주특별자치시")){
+                } else if(addr_spin1.getItem(i).equals("제주특별자치도")){
                     addr_spin2 = ArrayAdapter.createFromResource(AddressActivity.this, R.array.spinner_do_jeju, android.R.layout.simple_spinner_dropdown_item);
                     addr_spin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(addr_spin2);
@@ -150,8 +150,8 @@ public class AddressActivity extends AppCompatActivity {
                 station = databaseManager.selectNote_station(user_si,user_gu);
                 String location2[] = location.split(",");
 
-                Log.d("00",location);
-                Log.d("00",station);
+                Log.d("경원","주소(온도,습도) : " + location);
+                Log.d("경원","측정소(미세먼지) : " + station);
                 location = user_si+ " "+user_gu;
 
                 SharedPreferences pf = getSharedPreferences("address", MODE_PRIVATE);
@@ -164,7 +164,10 @@ public class AddressActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                Log.d("경원","주소창 닫힘->메인화면 넘어감.");
 
+
+                finish();
             }
         });
 

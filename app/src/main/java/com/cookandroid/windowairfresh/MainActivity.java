@@ -47,7 +47,6 @@ import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainActivity_Fragment1.AutoWindowListener{
 
-
     //블루투스 관련 선언 시작(블투1)
     private static final String TAG = "bluetooth2";
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
@@ -326,23 +325,23 @@ public void opensocket(){
                         byte[] readBuf = (byte[]) msg.obj;
 
                         String strIncom = new String(readBuf, 0, msg.arg1);
-                        Log.d("a2", strIncom);
+                        //Log.d("경원", strIncom);
                         sb.append(strIncom);
-                        Log.d("a3", String.valueOf(sb));
+                        //Log.d("경원", String.valueOf(sb));
 
                         int endOfLineIndex = sb.indexOf("\r\n");
-                        Log.d("a4", String.valueOf(endOfLineIndex));
+                        //Log.d("경원", String.valueOf(endOfLineIndex));
                         if (endOfLineIndex > 0) {
                             String sbprint = sb.substring(0, endOfLineIndex);
-                            Log.d("a5", sbprint);
+                           // Log.d("경원", "sbprint : "+sbprint);
                             sb.delete(0, sb.length());
 
                             array = sbprint.split("#");
 
-                            Log.d("a6", array[0]);
-                            Log.d("a6", array[1]);
-                            Log.d("a6", array[2]);
-                            Log.d("a6", array[3]);
+                            Log.d("경원","아두이노 측정값(쓰레기값): " +array[0]);
+                            Log.d("경원","아두이노 측정값(온도): "+ array[1]);
+                            Log.d("경원","아두이노 측정값(미세먼지): "+ array[2]);
+                            Log.d("경원","아두이노 측정값(습도): "+ array[3]);
 
                             SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
                             SharedPreferences.Editor editor =pf.edit();

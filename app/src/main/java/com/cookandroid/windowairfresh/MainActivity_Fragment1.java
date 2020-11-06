@@ -40,6 +40,7 @@ public class MainActivity_Fragment1 extends Fragment {
     AutoWindowListener callback;
     FragmentStateAdapter slideadapter;
     private DatabaseManager databaseManager;
+
     public MainActivity_Fragment1() {
         // Required empty public constructor
     }
@@ -128,15 +129,16 @@ public class MainActivity_Fragment1 extends Fragment {
             }
         });
 
+
         final Handler handler = new Handler();
         new Thread(new Runnable() {
 
             public void run() {
 
                 data= getXmlData1();
-                Log.d("00","data : "+data);
+                Log.d("경원","API(온,습도) 파싱 성공: "+ data);
                 data2=getXmlData2();
-                Log.d("00","data : "+data2);
+                Log.d("경원","API(미세먼지) 파싱 성공: "+ data2);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -166,14 +168,14 @@ public class MainActivity_Fragment1 extends Fragment {
                             t1h= t1h.substring(0,index);
                         //보정값
 
-                        Log.d("00",t1h);
-                        Log.d("00",reh);
-                        Log.d("00","0"+data2+"0");
-
+                        Log.d("경원","API(온도) : " + t1h);
+                        Log.d("경원","API(습도) : " + reh);
+                        Log.d("경원","API(미세먼지) : "+ data2);
 
                         if (t1h.equals("-")){ t1h = "18";}
                         if (reh.equals("-")){ reh = "15";}
                         if (data2.equals("-")){ data2 = "32";}
+
 
                         temp1.setText(t1h);
                         humid1.setText(reh);

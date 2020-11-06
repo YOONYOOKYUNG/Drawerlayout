@@ -17,7 +17,9 @@ import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
 public class AlarmReceiver extends BroadcastReceiver{
+
     @Override
     public void onReceive(Context context, Intent intent){
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -28,8 +30,17 @@ public class AlarmReceiver extends BroadcastReceiver{
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"default");
 
+
+        String pty,dust;
+        SharedPreferences pf1 = context.getSharedPreferences("fragment2",context.MODE_PRIVATE);
+        dust=pf1.getString("dust","15");
+        pty=pf1.getString("pty","0");
+
+
+
+
         //오레오 api 26 이상에서는 채널 필요
-        if(Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.O){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             builder.setSmallIcon(R.drawable.alaram);
 
             String channelName = "매일 알람 채널";

@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class InformationActivity extends AppCompatActivity {
-ImageView backarrow;
+
+    ImageView backarrow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
