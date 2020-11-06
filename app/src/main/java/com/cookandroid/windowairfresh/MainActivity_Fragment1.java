@@ -351,7 +351,7 @@ public class MainActivity_Fragment1 extends Fragment {
                         tag= xpp.getName();//태그 이름 얻어오기
 
                         if(tag.equals("item")) ;// 첫번째 검색결과
-                        else if(tag.equals("pm10Value")){
+                        else if(tag.equals("pm25Value")){
                             xpp.next();
                             buffer2.append(xpp.getText());
                         }
