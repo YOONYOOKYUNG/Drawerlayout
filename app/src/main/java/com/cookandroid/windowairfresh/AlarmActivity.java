@@ -93,7 +93,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         builder.setSmallIcon(R.drawable.alarm_icon);
         builder.setContentTitle("WAF 푸쉬 알림");
-        builder.setContentText("푸쉬 알림이 커졌습니다.");
+        builder.setContentText("푸쉬 알림이 켜졌습니다.");
 
         builder.setAutoCancel(true);
 

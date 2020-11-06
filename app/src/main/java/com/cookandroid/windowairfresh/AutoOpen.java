@@ -85,6 +85,8 @@ public class AutoOpen extends Thread {
     }
     private void openNoty(){
         Intent intent = new Intent(MainActivity.mContext, MainActivity.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.mContext, 0, intent, 0);
 
@@ -98,7 +100,7 @@ public class AutoOpen extends Thread {
         NotificationManager manager = (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             manager.createNotificationChannel(new NotificationChannel("channel_open",
-                    "자동 열림 ", NotificationManager.IMPORTANCE_DEFAULT));
+                    "자동 열림 ", NotificationManager.IMPORTANCE_HIGH));
         }
         manager.notify(1, builder.build());
     }

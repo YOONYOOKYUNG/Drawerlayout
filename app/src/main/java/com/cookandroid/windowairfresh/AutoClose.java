@@ -118,15 +118,17 @@ public class AutoClose extends Thread {
     }
     private void closeRain(){
         Intent intent = new Intent(MainActivity.mContext, MainActivity.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.mContext, 0, intent, 0);
 
+        //채널 생성
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.mContext,
                 "channel_rain");
         builder.setSmallIcon(R.drawable.noti_rain)
                 .setContentTitle("자동 개폐 알림")
                 .setContentText("밖에 비가 와서 모든 창문을 닫았습니다.")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
@@ -134,13 +136,15 @@ public class AutoClose extends Thread {
                 (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             manager.createNotificationChannel(new NotificationChannel("channel_rain",
-                    "rainclose", NotificationManager.IMPORTANCE_DEFAULT));
+                    "rainclose", NotificationManager.IMPORTANCE_HIGH));
         }
         manager.notify(1, builder.build());
     }
 
     private void closeTemp(){
         Intent intent2 = new Intent(MainActivity.mContext, MainActivity.class);
+        intent2.setAction(Intent.ACTION_MAIN);
+        intent2.addCategory(Intent.ACTION_MAIN);
         intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pIntent2 = PendingIntent.getActivity(MainActivity.mContext, 0, intent2, 0);
 
@@ -156,13 +160,15 @@ public class AutoClose extends Thread {
                 (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             manager2.createNotificationChannel(new NotificationChannel("channel_temp",
-                    "tempclose", NotificationManager.IMPORTANCE_DEFAULT));
+                    "tempclose", NotificationManager.IMPORTANCE_HIGH));
         }
         manager2.notify(2, builder2.build());
     }
 
     private void closeDust(){
         Intent intent3 = new Intent(MainActivity.mContext, MainActivity.class);
+        intent3.setAction(Intent.ACTION_MAIN);
+        intent3.addCategory(Intent.ACTION_MAIN);
         intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pIntent3 = PendingIntent.getActivity(MainActivity.mContext, 0, intent3, 0);
 
@@ -178,7 +184,7 @@ public class AutoClose extends Thread {
                 (NotificationManager) MainActivity.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             manager3.createNotificationChannel(new NotificationChannel("channel_dust",
-                    "dustclose", NotificationManager.IMPORTANCE_DEFAULT));
+                    "dustclose", NotificationManager.IMPORTANCE_HIGH));
         }
         manager3.notify(3,builder3.build());
     }
