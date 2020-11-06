@@ -59,16 +59,52 @@ public class AlarmReceiver extends BroadcastReceiver{
         }else builder.setSmallIcon(R.drawable.alaram);
 
 
-        builder.setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setTicker("Time to watch")
-                .setContentTitle("WAF")
-                .setSmallIcon(R.drawable.main_popup_colorbad)
-                .setContentText("미세먼지가 나쁘니 외출을 삼가해주세요.")
-                .setContentInfo("INFO")
-                .setContentIntent(pendingIntent);
+        String pty,dust;
+        SharedPreferences pf1 = context.getSharedPreferences("fragment2",context.MODE_PRIVATE);
 
+        dust=pf1.getString("dust","15");
+        pty=pf1.getString("pty","0");
+            if (Integer.parseInt(dust) < 30) {
+                builder.setAutoCancel(true)
+                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                        .setWhen(System.currentTimeMillis())
+                        .setTicker("Time to watch")
+                        .setContentTitle("WAF")
+                        .setSmallIcon(R.drawable.main_popup_colorgood)
+                        .setContentText("미세먼지가 좋으니 외부 활동을 하셔도 좋습니다.")
+                        .setContentInfo("INFO")
+                        .setContentIntent(pendingIntent);
+            } else if (Integer.parseInt(dust) < 50) {
+                builder.setAutoCancel(true)
+                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                        .setWhen(System.currentTimeMillis())
+                        .setTicker("Time to watch")
+                        .setContentTitle("WAF")
+                        .setSmallIcon(R.drawable.main_popup_colorsoso)
+                        .setContentText("미세먼지가 괜찮으나 기관지가 약한분들은 조심하세요.")
+                        .setContentInfo("INFO")
+                        .setContentIntent(pendingIntent);
+            } else if (Integer.parseInt(dust) >= 80) {
+                builder.setAutoCancel(true)
+                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                        .setWhen(System.currentTimeMillis())
+                        .setTicker("Time to watch")
+                        .setContentTitle("WAF")
+                        .setSmallIcon(R.drawable.main_popup_colorbad)
+                        .setContentText("미세먼지가 나쁘니 외출을 삼가해주세요.")
+                        .setContentInfo("INFO")
+                        .setContentIntent(pendingIntent);
+            }else if(Integer.parseInt(pty)==1){
+                builder.setAutoCancel(true)
+                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                        .setWhen(System.currentTimeMillis())
+                        .setTicker("Time to watch")
+                        .setContentTitle("WAF")
+                        .setSmallIcon(R.drawable.window_close_wh)
+                        .setContentText("비가 오니까 창문을 닫아주세요. ")
+                        .setContentInfo("INFO")
+                        .setContentIntent(pendingIntent);
+            }
 
         if(notificationManager != null){
             notificationManager.notify(1234,builder.build()); //노티피케이션 동작 시킴.
@@ -88,4 +124,6 @@ public class AlarmReceiver extends BroadcastReceiver{
             //Toast.makeText(context.getApplicationContext(),"다음 알림은"+date_txt+"으로 설정되었습니다.",Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
