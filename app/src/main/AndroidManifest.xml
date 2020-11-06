@@ -51,7 +51,9 @@
         <activity android:name=".HelpMode2Activity"
             android:theme="@style/AppTheme.help"/>
         <activity android:name=".HelpMode3Activity"/>
-        <activity android:name=".AlarmReceiver" />
+        <activity android:name=".AlarmReceiver">
+
+        </activity>
 
         <activity
             android:name=".Popup_warning"
@@ -89,7 +91,11 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
