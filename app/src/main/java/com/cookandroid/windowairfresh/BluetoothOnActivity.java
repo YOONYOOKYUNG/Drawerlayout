@@ -60,6 +60,7 @@ public class BluetoothOnActivity extends AppCompatActivity {
                     }
                     Intent nextintent = new Intent(BluetoothOnActivity.this,AddressActivity.class);
                     startActivity(nextintent);
+                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 }
             }
         });

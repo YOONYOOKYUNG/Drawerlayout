@@ -164,6 +164,7 @@ public class AddressActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 Log.d("경원","주소창 닫힘->메인화면 넘어감.");
 
 

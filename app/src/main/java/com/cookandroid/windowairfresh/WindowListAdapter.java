@@ -1,5 +1,6 @@
 package com.cookandroid.windowairfresh;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -107,11 +108,13 @@ public class WindowListAdapter extends BaseAdapter  {
        windowdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(context,WindowDeleteActivity.class);
+                Activity activity = (Activity) context;
+                Intent intent = new Intent(activity,WindowDeleteActivity.class);
                 Log.d("0000", String.valueOf(pos));
                 intent.putExtra("position",pos);
-                context.startActivity(intent);
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+
 
             }
         });

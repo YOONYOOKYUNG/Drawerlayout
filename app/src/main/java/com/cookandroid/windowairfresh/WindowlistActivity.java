@@ -72,6 +72,7 @@ public class WindowlistActivity extends AppCompatActivity  {
                 if(mode) {
                     Intent intent = new Intent(WindowlistActivity.this,Popup_warning.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 }
                 else if(state) {
                     listViewItem.setState(false);

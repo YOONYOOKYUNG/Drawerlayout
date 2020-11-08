@@ -12,8 +12,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_icon"
@@ -30,14 +28,16 @@
             android:name=".ModeSetActivity_popup_temp"
             android:theme="@style/AppTheme2" />
         <activity android:name=".WindowNameActivity" />
+
         <service
             android:name=".AutoService"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".AddressActivity" />
-        <activity android:name=".WindowDeleteActivity"
-            android:theme="@style/AppTheme2"/>
+        <activity
+            android:name=".WindowDeleteActivity"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".HelpActivity2"
             android:theme="@style/AppTheme.help" />
@@ -46,15 +46,14 @@
         <activity
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />
-        <activity android:name=".HelpMode1Activity"
+        <activity
+            android:name=".HelpMode1Activity"
             android:theme="@style/AppTheme.help" />
-        <activity android:name=".HelpMode2Activity"
-            android:theme="@style/AppTheme.help"/>
-        <activity android:name=".HelpMode3Activity"/>
-        <activity android:name=".AlarmReceiver">
-
-        </activity>
-
+        <activity
+            android:name=".HelpMode2Activity"
+            android:theme="@style/AppTheme.help" />
+        <activity android:name=".HelpMode3Activity" />
+        <activity android:name=".AlarmReceiver"></activity>
         <activity
             android:name=".Popup_warning"
             android:theme="@style/Transparent" /> <!-- android:theme="@android:style/Theme.NoTitleBar" -->
@@ -93,7 +92,7 @@
         </receiver>
         <receiver android:name=".AlarmReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </receiver>
     </application>

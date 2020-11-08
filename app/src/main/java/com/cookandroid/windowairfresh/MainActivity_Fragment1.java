@@ -87,6 +87,7 @@ public class MainActivity_Fragment1 extends Fragment {
             public void onClick(View view) {
                 Intent intent1 = new Intent(getContext(),HelpActivity2.class);
                 startActivity(intent1);
+                getActivity().overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
         // 주소창 클릭 시 주소 변경
@@ -94,6 +95,7 @@ public class MainActivity_Fragment1 extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), AddressActivity.class));
+                getActivity().overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 
