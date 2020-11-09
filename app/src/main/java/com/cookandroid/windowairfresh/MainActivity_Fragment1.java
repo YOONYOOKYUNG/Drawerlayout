@@ -191,6 +191,7 @@ public class MainActivity_Fragment1 extends Fragment {
                         if(pf1.getBoolean("show", true)==true) {
                             Intent intent = new Intent(getContext(), HelpActivity.class);
                             startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                         }
                         if (Integer.parseInt(pty)!=0){
                             bg.setBackgroundResource(R.drawable.fragment2_rain);
