@@ -141,7 +141,7 @@ public class WindowlistActivity extends AppCompatActivity  {
             }
         });
 
-//ㅎㅎ
+
 
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +168,7 @@ public class WindowlistActivity extends AppCompatActivity  {
             }
         });
 
-//마마
+
 
 
       for(int i=0;i<adapter.getCount();i++){
