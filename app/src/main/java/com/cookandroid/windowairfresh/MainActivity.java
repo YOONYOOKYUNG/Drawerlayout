@@ -347,6 +347,7 @@ public void opensocket(){
                             Log.d("경원","아두이노 측정값(온도): "+ array[1]);
                             Log.d("경원","아두이노 측정값(미세먼지): "+ array[2]);
                             Log.d("경원","아두이노 측정값(습도): "+ array[3]);
+                            Log.d("경원","아두이노 측정값(빗물감지): "+ array[4]);
 
                             SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
                             SharedPreferences.Editor editor =pf.edit();
@@ -354,6 +355,7 @@ public void opensocket(){
                             editor.putString("dust", array[2]);
                             insidedust = Float.parseFloat(pf.getString("dust","0"));
                             editor.putString("humid", array[3]);
+                            editor.putString("rain", array[4]);
                             editor.commit();
 
                             flag++;

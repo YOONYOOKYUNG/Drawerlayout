@@ -145,15 +145,12 @@ public class MainActivity_Fragment1 extends Fragment {
                     @Override
                     public void run() {
 
-                        // 비 오는지 안오는지 파싱  (0:비안옴  / 1~7:비 또는 눈)
-                        Start_index = data.indexOf("PTY:");
-                        End_index = data.indexOf("/",Start_index);
-                        String pty = data.substring(Start_index+4,End_index);
-                        //String pty = "1"; //억지로 비오는 설정 넣기
+                        // 비 오는지 안오는지 파싱  (0:비안옴  / 1:비 감지)
                         SharedPreferences sf = getContext().getSharedPreferences("fragment2",0);
-                        SharedPreferences.Editor editor =sf.edit();
-                        editor.putString("pty",pty);
-                        editor.commit();
+                        String pty = sf.getString("rain","0");
+
+                        //String pty = "1"; //억지로 비오는 설정 넣기
+
                         //습도 파싱
                         Start_index = data.indexOf("REH:");
                         End_index = data.indexOf("/",Start_index);
@@ -161,23 +158,22 @@ public class MainActivity_Fragment1 extends Fragment {
                         //온도 파싱
                         Start_index = data.indexOf("T1H:");
                         End_index = data.indexOf("/",Start_index);
-
-
                         String t1h = data.substring(Start_index+4,End_index);
 
+                        //보정값 (소수점 빼기)
                         int index = t1h.indexOf(".",0);
                         if (index!=-1)
                             t1h= t1h.substring(0,index);
-                        //보정값
+
 
                         Log.d("경원","API(온도) : " + t1h);
                         Log.d("경원","API(습도) : " + reh);
                         Log.d("경원","API(미세먼지) : "+ data2);
 
+                        //보정값 (홈페이지 파싱값이 문자일 경우 디폴드값)
                         if (t1h.equals("-")){ t1h = "18";}
                         if (reh.equals("-")){ reh = "15";}
                         if (data2.equals("-")){ data2 = "32";}
-
 
                         temp1.setText(t1h);
                         humid1.setText(reh);
