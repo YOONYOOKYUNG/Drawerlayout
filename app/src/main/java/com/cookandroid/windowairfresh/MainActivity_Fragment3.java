@@ -29,6 +29,7 @@ public class MainActivity_Fragment3 extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), WindowlistActivity.class));
+                getActivity().overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
         return view;}}

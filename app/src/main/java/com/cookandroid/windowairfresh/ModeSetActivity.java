@@ -146,8 +146,10 @@ public class ModeSetActivity extends AppCompatActivity {
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent7 = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent7);
             }
+
         });
     }
 
@@ -210,3 +212,22 @@ public class ModeSetActivity extends AppCompatActivity {
         super.onStop();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

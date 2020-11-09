@@ -241,6 +241,7 @@ public class DeviceListActivity extends AppCompatActivity {
 						Log.d("테스트", "인텐트 바로 보내기전 주소 : "+btaddress);
 						windowintent.putExtra("btaddress",btaddress);
 						startActivity(windowintent);
+						overridePendingTransition(R.anim.fadein,R.anim.fadeout);
 						finish();
 						page=1;}
 				}

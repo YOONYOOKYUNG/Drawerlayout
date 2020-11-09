@@ -69,6 +69,7 @@ public class WindowNameActivity extends Activity {
                         splashintent.putExtra("windowname",inputText);
                         splashintent.putExtra("btaddress",btaddress);
                         startActivity(splashintent);
+                        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                         inputnameDlg.dismiss();
                         WindowNameActivity.this.finish();
                     }
