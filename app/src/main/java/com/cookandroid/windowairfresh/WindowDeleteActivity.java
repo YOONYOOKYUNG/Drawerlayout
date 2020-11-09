@@ -49,6 +49,7 @@ public class WindowDeleteActivity extends Activity {
                 adapter.listViewItemList.remove(pos);
                 adapter.notifyDataSetChanged();
                 inputnameDlg.dismiss();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 finish();
             }
         });

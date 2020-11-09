@@ -97,6 +97,7 @@ public class ModeSetActivity extends AppCompatActivity {
                 intent.putExtra("high_temp",shared_temp_high);
                 intent.putExtra("low_temp",shared_temp_low);
                 startActivityForResult(intent,RESULT_TEST);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
         dustbtn.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +106,7 @@ public class ModeSetActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(getApplicationContext(), ModeSetActivity_popup_dust.class);
                 intent2.putExtra("compare_dust",shared_dust);
                 startActivityForResult(intent2,RESULT_TEST);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 
@@ -114,6 +116,7 @@ public class ModeSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent3 = new Intent(ModeSetActivity.this, WindowlistActivity.class);
                 startActivity(intent3);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 
@@ -148,6 +151,7 @@ public class ModeSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent7 = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent7);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
 
         });

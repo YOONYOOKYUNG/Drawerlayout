@@ -35,6 +35,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
     }

@@ -165,30 +165,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.window:
                 startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
                 drawerLayout.closeDrawers();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
 
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, ModeSetActivity.class);
                 startActivity(intent1);
                 drawerLayout.closeDrawers();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
 
             case R.id.alarm:
                 Intent intent2 = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent2);
                 drawerLayout.closeDrawers();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
 
             case R.id.log_record:
                 Intent intent3 = new Intent(MainActivity.this, TimelineActivity.class);
                 startActivity(intent3);
                 drawerLayout.closeDrawers();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
 
             case R.id.contact:
                 Intent intent4 = new Intent(MainActivity.this,InformationActivity.class);
                 startActivity(intent4);
                 drawerLayout.closeDrawers();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
 
 

@@ -164,6 +164,7 @@ public class WindowlistActivity extends AppCompatActivity  {
                 //블루투스 디바이스 검색이 끝났을 때
                 registerReceiver(mReceiver, filter);
                 //receiver를 등록한다
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 
@@ -181,6 +182,7 @@ public class WindowlistActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 
@@ -234,12 +236,14 @@ public class WindowlistActivity extends AppCompatActivity  {
                 newIntent.putParcelableArrayListExtra("device.list2", list);
                 //추가된 값 저장하기
                 startActivity(newIntent);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 return;
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //블루투스 디바이스가 검색되었을 때(디바이스 검색 결과)
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 //추가된 값 받아오기
                 mDeviceList.add(device);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         }
     };

@@ -140,6 +140,7 @@ public class DeviceListActivity extends AppCompatActivity {
 				filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 				//블루투스 디바이스 검색이 끝났을 때
 				registerReceiver(mReceiver, filter);
+				overridePendingTransition(R.anim.fadein,R.anim.fadeout);
 				//receiver를 등록한다
 			}
 		});
@@ -149,6 +150,7 @@ public class DeviceListActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				finish();
+				overridePendingTransition(R.anim.fadein,R.anim.fadeout);
 			}
 		});
 
@@ -234,7 +236,9 @@ public class DeviceListActivity extends AppCompatActivity {
 					page++;
 					if(page==2||page==3)
 					{
+						overridePendingTransition(R.anim.fadein,R.anim.fadeout);
 						finish();
+
 					}
 					if(page==4){
 					Intent windowintent = new Intent(DeviceListActivity.this, WindowNameActivity.class);

@@ -30,14 +30,17 @@ public class SplashActivity extends AppCompatActivity {
                     String shared_address=pf.getString("addr0","");
                     if(shared_address.isEmpty()) {
                         startActivity(new Intent(SplashActivity.this, AddressActivity.class));
+                        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                         finish();
                     }
                     else{
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                     }
                 }
                 else{
                     startActivity(new Intent(SplashActivity.this, BluetoothOnActivity.class));
+                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                     finish();
                 }
             }
