@@ -137,6 +137,7 @@ public class MainActivity_Fragment1 extends Fragment {
 
             public void run() {
 
+
                 data= getXmlData1();
                 Log.d("경원","API(온,습도) 파싱 성공: "+ data);
                 data2=getXmlData2();
