@@ -50,7 +50,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         }else builder.setSmallIcon(R.drawable.alaram);
 
 
-        //PTY,DUST 값 불러오기
+        //PTY,DUST 값 불러오기 -(3)
         String pty,dust;
         SharedPreferences pf1 = context.getSharedPreferences("fragment2",context.MODE_PRIVATE);
 
