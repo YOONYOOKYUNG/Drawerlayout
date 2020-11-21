@@ -11,7 +11,7 @@ import com.cookandroid.windowairfresh.R;
 
 public class HelpActivity2 extends AppCompatActivity {
 ImageView cancel;
-
+//도움말 띄우는 화면
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

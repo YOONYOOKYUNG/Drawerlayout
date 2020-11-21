@@ -53,6 +53,7 @@ public class AlarmActivity extends AppCompatActivity {
         swit_setTime.setChecked(state2);
         //스위치값저장
 
+        //알림 설정
         swit_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -62,6 +63,7 @@ public class AlarmActivity extends AppCompatActivity {
                 }
             }
         });
+        //매시간알림받기
         swit_setTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -72,6 +74,7 @@ public class AlarmActivity extends AppCompatActivity {
 
             }
         });
+        //매시간 알림받기 시간 설정
         rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +141,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode,resultCode,date);
     }
-
+//종료될때 설정한 값을 저장함
     protected void onStop(){
 
         Switch swit_push = (Switch)findViewById(R.id.swit_push);

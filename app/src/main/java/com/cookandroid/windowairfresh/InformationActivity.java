@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class InformationActivity extends AppCompatActivity {
 
     ImageView backarrow;
-
+//정보 탭 화면
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
