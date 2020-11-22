@@ -45,7 +45,7 @@ import java.util.UUID;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainActivity_Fragment1.AutoWindowListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainActivity_Fragment1.AutoWindowListener {
 
     //블루투스 관련 선언 시작(블투1)
     private static final String TAG = "bluetooth2";
@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ConnectedThread ConnectedThread;
     public static Context mContext;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
+    //블루투스 하드코딩
     private static String address = "98:D3:51:F9:28:05";
-    public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
+    public ArrayList<WindowDetails> checklist = new ArrayList<>();
     String[] array;
     //블루투스 관련 선언 종료(블투1)
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     float outsidedust;
     float outsidetemp;
     int outsiderain;
-    static boolean btsocketstate=false;
+    static boolean btsocketstate = false;
     Handler autohandler;
 
     @Override
@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onAutoWindowSet(String temp, String dust, String rain) {
-        outsidetemp=Float.parseFloat(temp);
-        outsidedust=Float.parseFloat(dust);
-        outsiderain=Integer.parseInt(rain);
+        outsidetemp = Float.parseFloat(temp);
+        outsidedust = Float.parseFloat(dust);
+        outsiderain = Integer.parseInt(rain);
     }
 
     @Override
@@ -140,12 +140,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-        mContext=this;
-
+        mContext = this;
 
 
         //자동시작
-        autohandler  = new Handler(Looper.getMainLooper()) {
+        autohandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
                 Popup_automode popup = new Popup_automode(mContext);
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-        Intent intent= new Intent(this,AutoService.class);
+        Intent intent = new Intent(this, AutoService.class);
         startService(intent);
     }
 
@@ -165,35 +164,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.window:
                 startActivity(new Intent(MainActivity.this, WindowlistActivity.class));
                 drawerLayout.closeDrawers();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
 
             case R.id.auto_set:
                 Intent intent1 = new Intent(MainActivity.this, ModeSetActivity.class);
                 startActivity(intent1);
                 drawerLayout.closeDrawers();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
 
             case R.id.alarm:
                 Intent intent2 = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent2);
                 drawerLayout.closeDrawers();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
 
             case R.id.log_record:
                 Intent intent3 = new Intent(MainActivity.this, TimelineActivity.class);
                 startActivity(intent3);
                 drawerLayout.closeDrawers();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
 
             case R.id.contact:
-                Intent intent4 = new Intent(MainActivity.this,InformationActivity.class);
+                Intent intent4 = new Intent(MainActivity.this, InformationActivity.class);
                 startActivity(intent4);
                 drawerLayout.closeDrawers();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
 
 
@@ -203,19 +202,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //(블투3)
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-            try {
-                final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
-                return (BluetoothSocket) m.invoke(device, MY_UUID);
-            } catch (Exception e) {
-                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
-            }
+        try {
+            final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[]{UUID.class});
+            return (BluetoothSocket) m.invoke(device, MY_UUID);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not create Insecure RFComm Connection", e);
+        }
 
-        return  device.createRfcommSocketToServiceRecord(MY_UUID);
+        return device.createRfcommSocketToServiceRecord(MY_UUID);
     }
+
     private void checkBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
         // Emulator doesn't support Bluetooth and will return null
-        if(btAdapter==null) {
+        if (btAdapter == null) {
             errorExit("Fatal Error", "Bluetooth not support");
         } else {
             if (btAdapter.isEnabled()) {
@@ -241,11 +241,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
 
             InputStream = tmpIn;
             OutputStream = tmpOut;
         }
+
         public void run() {
             byte[] buffer = new byte[256];  // buffer store for the stream
             int bytes; // bytes returned from read()
@@ -261,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
+
         public void write(String message) {
             Log.d(TAG, "...Data to send: " + message + "...");
             byte[] msgBuffer = message.getBytes();
@@ -272,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-public void makesocket(){
+    public void makesocket() {
         BluetoothDevice device = btAdapter.getRemoteDevice(adapter.listViewItemList.get(0).getAddress());
         try {
             btSocket = createBluetoothSocket(device);
@@ -281,33 +284,33 @@ public void makesocket(){
         }
     }
 
-public void opensocket(){
-    makesocket();
-    btAdapter.cancelDiscovery();
-    try {
-        btSocket.connect();
-        btsocketstate=true;
-    } catch (IOException e) {
+    public void opensocket() {
+        makesocket();
+        btAdapter.cancelDiscovery();
         try {
-            btSocket.close();
-            btsocketstate=false;
-        } catch (IOException e2) {
-            errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+            btSocket.connect();
+            btsocketstate = true;
+        } catch (IOException e) {
+            try {
+                btSocket.close();
+                btsocketstate = false;
+            } catch (IOException e2) {
+                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+            }
         }
+        ConnectedThread = new ConnectedThread(btSocket);
+        ConnectedThread.start();
     }
-    ConnectedThread = new ConnectedThread(btSocket);
-    ConnectedThread.start();
-}
 
 
     @Override
     public void onResume() {
         super.onResume();
-        if (databaseManager != null){
+        if (databaseManager != null) {
             checklist = databaseManager.getAll();
         }
         if (checklist.isEmpty()) {
-            //블루투스 하드코딩 유리:"90:D3:51:F9:26:E0" / 경원 "98:D3:51:F9:28:05"
+            //블루투스 하드코딩
             address = "98:D3:51:F9:28:05";
         } else {
             WindowDetails listViewItem = adapter.listViewItemList.get(0);
@@ -315,12 +318,14 @@ public void opensocket(){
         }
         onRefresh();
         arduinoRefresh();
-            //handler.postDelayed(new Handler(),1000)
+        //handler.postDelayed(new Handler(),1000)
     }
 
-    public void arduinoRefresh(){
-        if(!checklist.isEmpty()){
-            if(!btsocketstate){opensocket();}
+    public void arduinoRefresh() {
+        if (!checklist.isEmpty()) {
+            if (!btsocketstate) {
+                opensocket();
+            }
             ConnectedThread.write("1");
         }
         handler = new Handler() {
@@ -328,34 +333,23 @@ public void opensocket(){
                 switch (msg.what) {
                     case RECIEVE_MESSAGE:
                         byte[] readBuf = (byte[]) msg.obj;
-
                         String strIncom = new String(readBuf, 0, msg.arg1);
-                        //Log.d("경원", strIncom);
                         sb.append(strIncom);
-                        //Log.d("경원", String.valueOf(sb));
-
                         int endOfLineIndex = sb.indexOf("\r\n");
-                        //Log.d("경원", String.valueOf(endOfLineIndex));
                         if (endOfLineIndex > 0) {
                             String sbprint = sb.substring(0, endOfLineIndex);
-                           // Log.d("경원", "sbprint : "+sbprint);
                             sb.delete(0, sb.length());
 
                             array = sbprint.split("#");
 
-                            Log.d("경원","아두이노 측정값(쓰레기값): " +array[0]);
-                            Log.d("경원","아두이노 측정값(온도): "+ array[1]);
-                            Log.d("경원","아두이노 측정값(미세먼지): "+ array[2]);
-                            Log.d("경원","아두이노 측정값(습도): "+ array[3]);
-                            Log.d("경원","아두이노 측정값(빗물감지): "+ array[4]);
-
+                            //SharedPreferences에 아두이노 측정값 저장
                             SharedPreferences pf = getSharedPreferences("fragment2", MODE_PRIVATE);
-                            SharedPreferences.Editor editor =pf.edit();
-                            editor.putString("temp", array[1]);
-                            editor.putString("dust", array[2]);
-                            insidedust = Float.parseFloat(pf.getString("dust","0"));
-                            editor.putString("humid", array[3]);
-                            editor.putString("rain", array[4]);
+                            SharedPreferences.Editor editor = pf.edit();
+                            editor.putString("temp", array[1]); //아두이노 측정값(온도)
+                            editor.putString("dust", array[2]);//아두이노 측정값(미세먼지)
+                            insidedust = Float.parseFloat(pf.getString("dust", "0"));
+                            editor.putString("humid", array[3]);//아두이노 측정값(습도)
+                            editor.putString("rain", array[4]);//아두이노 측정값(빗물감지)
                             editor.commit();
 
                             flag++;
@@ -367,13 +361,14 @@ public void opensocket(){
         };
     }
 
+    //뒤로가기 함수
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             if (viewpager.getCurrentItem() == 0) {
-                super.onBackPressed();}
-            else{
+                super.onBackPressed();
+            } else {
                 // Otherwise, select the previous step.
                 viewpager.setCurrentItem(viewpager.getCurrentItem() - 1);
             }
@@ -381,39 +376,43 @@ public void opensocket(){
     }
 
 
-    private void errorExit(String title, String message){
+    private void errorExit(String title, String message) {
         Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
         finish();
     }
 
     //창문설정 - 열기
-    public void openwindow(int pos){
-            adapter.initialiseList();
-            WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-            address=listViewItem.getAddress();
-           if(!listViewItem.getState()){
-               if (!btsocketstate)
-               { opensocket();}
-            ConnectedThread.write("2");}
-    }
-    //창문설정 - 닫기
-    public void closewindow(int pos){
-            adapter.initialiseList();
-            WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-            address=listViewItem.getAddress();
-           if(listViewItem.getState()){
-               if (!btsocketstate)
-               { opensocket();}
-            ConnectedThread.write("3");}
+    public void openwindow(int pos) {
+        adapter.initialiseList();
+        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+        address = listViewItem.getAddress();
+        if (!listViewItem.getState()) {
+            if (!btsocketstate) {
+                opensocket();
+            }
+            ConnectedThread.write("2");
+        }
     }
 
-    //창문 db 닫기상태로 업데이트
-    void dbcloseupdate(int i)
-    {
+    //창문설정 - 닫기
+    public void closewindow(int pos) {
+        adapter.initialiseList();
+        WindowDetails listViewItem = adapter.listViewItemList.get(pos);
+        address = listViewItem.getAddress();
+        if (listViewItem.getState()) {
+            if (!btsocketstate) {
+                opensocket();
+            }
+            ConnectedThread.write("3");
+        }
+    }
+
+    //창문 DB - 닫기상태로 업데이트
+    void dbcloseupdate(int i) {
         if (databaseManager != null) {
             ContentValues updateRowValue = new ContentValues();
             updateRowValue.put("state", "false");
-            databaseManager.update(updateRowValue,adapter.listViewItemList.get(i).getName());
+            databaseManager.update(updateRowValue, adapter.listViewItemList.get(i).getName());
         }
     }
 
@@ -422,7 +421,8 @@ public void opensocket(){
         super.onDestroy();
     }
 
-    public void onRefresh(){
+    //새로고침 함수
+    public void onRefresh() {
         slideadapter = new Main_SlideAdapter(this, databaseManager);
         slideadapter.notifyDataSetChanged();
         viewpager.setAdapter(slideadapter);
