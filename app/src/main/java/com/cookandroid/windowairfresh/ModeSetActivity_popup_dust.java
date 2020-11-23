@@ -59,6 +59,7 @@ public class ModeSetActivity_popup_dust extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 

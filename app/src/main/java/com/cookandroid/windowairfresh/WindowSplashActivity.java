@@ -17,8 +17,8 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 
 public class WindowSplashActivity extends AppCompatActivity {
-    WindowListAdapter adapter= new WindowListAdapter();
-    private String btaddress,windowname;
+    WindowListAdapter adapter = new WindowListAdapter();
+    private String btaddress, windowname;
     private DatabaseManager databaseManager;
 
     @Override
@@ -27,18 +27,17 @@ public class WindowSplashActivity extends AppCompatActivity {
         databaseManager = DatabaseManager.getInstance(this);
         setContentView(R.layout.activity_windowsplash);
         adapter.setDatabaseManager(databaseManager);
-        ImageView windowsplash =(ImageView)findViewById(R.id.windowsplash);
+        ImageView windowsplash = (ImageView) findViewById(R.id.windowsplash);
         GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(windowsplash);
         Glide.with(this).load(R.drawable.windowsplash).into(gifImage);
-        btaddress=getIntent().getStringExtra("btaddress");
-        windowname=getIntent().getStringExtra("windowname");
-        adapter.addItem(windowname,btaddress,true); //세번째 블루투스어드레스는 주소값을 넣어주면됨
+        btaddress = getIntent().getStringExtra("btaddress");
+        windowname = getIntent().getStringExtra("windowname");
+        adapter.addItem(windowname, btaddress, true); //세번째 블루투스어드레스는 주소값을 넣어주면됨
         adapter.notifyDataSetChanged();
-        Log.d("경원","btaddress:"+btaddress);
-        Log.d("경원","windowname"+windowname);
-        Log.d("경원","확인");
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
+
+        Handler handler = new Handler();
+        //8초 뒤 스플래시 종료
+       handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 finish();
@@ -47,7 +46,7 @@ public class WindowSplashActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         finish();
     }

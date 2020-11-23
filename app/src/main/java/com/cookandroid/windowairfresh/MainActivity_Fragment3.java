@@ -15,21 +15,24 @@ public class MainActivity_Fragment3 extends Fragment {
     private Button windowadd;
 
     public MainActivity_Fragment3() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ViewGroup view = (ViewGroup)  inflater.inflate(R.layout.activity_main_fragment3, container, false);
+        //fragment 설정
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_main_fragment3, container, false);
         viewpager = getActivity().findViewById(R.id.viewpager);
+
+        //창문추가 버튼 이벤트
         windowadd = (Button) view.findViewById(R.id.windowadd);
         windowadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), WindowlistActivity.class));
-                getActivity().overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         });
-        return view;}}
+        return view;
+    }
+}

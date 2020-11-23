@@ -20,14 +20,14 @@ import java.util.ArrayList;
 public class WindowNameActivity extends Activity {
     private DatabaseManager databaseManager;
     private String btaddress;
-    private Boolean namestate=true;
-    public ArrayList<WindowDetails> checklist = new ArrayList<>() ;
+    private Boolean namestate = true;
+    public ArrayList<WindowDetails> checklist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseManager = DatabaseManager.getInstance(this);
-        if (databaseManager != null){
+        if (databaseManager != null) {
             checklist = databaseManager.getAll();
         }
         final Dialog inputnameDlg = new Dialog(this);
@@ -41,35 +41,32 @@ public class WindowNameActivity extends Activity {
         inputnameDlg.setCancelable(false);
 
 
-        // 커스텀 다이얼로그의 각 위젯들을 정의한다.
+        // 커스텀 다이얼로그의 각 위젯들을 정의
         final EditText message = (EditText) inputnameDlg.findViewById(R.id.messagse);
         final Button okButton = (Button) inputnameDlg.findViewById(R.id.okButton);
         final Button cancelButton = (Button) inputnameDlg.findViewById(R.id.cancelButton);
 
+        //확인 버튼 클릭 시 창문등록 확인 버튼 클릭시 입력된 내용 전달
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btaddress=getIntent().getStringExtra("btaddress");
-                Log.d("테스트", "윈도우네임에 도착한 주소 : "+btaddress);
+                btaddress = getIntent().getStringExtra("btaddress");
                 int windownumber = checklist.size();
-                String inputText =  message.getText().toString();
-                if(!inputText.equals("")){
-                    namestate=true;
-                    Log.d("하하","창문갯수"+windownumber);
+                String inputText = message.getText().toString();
+                if (!inputText.equals("")) {
+                    namestate = true;
                     for (int i = 0; i < windownumber; i++) {
-                        Log.d("하하","일단 걸리기전 값"+checklist.get(i).getName());
-                        if(inputText.equals(checklist.get(i).getName())){
-                            Log.d("하하","이거랑 같은지 비교함"+checklist.get(i).getName());
+                        if (inputText.equals(checklist.get(i).getName())) {
                             Toast.makeText(WindowNameActivity.this, "창문의 이름이 중복됩니다.", Toast.LENGTH_SHORT).show();
-                            namestate=false;
+                            namestate = false;
                         }
                     }
-                    if(namestate){
+                    if (namestate) {
                         Intent splashintent = new Intent(WindowNameActivity.this, WindowSplashActivity.class);
-                        splashintent.putExtra("windowname",inputText);
-                        splashintent.putExtra("btaddress",btaddress);
+                        splashintent.putExtra("windowname", inputText);
+                        splashintent.putExtra("btaddress", btaddress);
                         startActivity(splashintent);
-                        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         inputnameDlg.dismiss();
                         WindowNameActivity.this.finish();
                     }
@@ -78,6 +75,7 @@ public class WindowNameActivity extends Activity {
                 }
             }
         });
+        //취소 버튼 클릭 시
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

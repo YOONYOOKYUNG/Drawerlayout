@@ -22,7 +22,7 @@ public class WindowDeleteActivity extends Activity {
         super.onCreate(savedInstanceState);
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
-        //커스텀 다이얼로그를 정의하기 위해 Dialog 클래스를 생성한다.
+        //커스텀 다이얼로그를 정의하기 위해 Dialog 클래스를 생성
         final Dialog inputnameDlg = new Dialog(this);
         //타이틀바 숨김
         inputnameDlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,20 +36,19 @@ public class WindowDeleteActivity extends Activity {
         final Button okButton = (Button) inputnameDlg.findViewById(R.id.okButton);
         final Button cancelButton = (Button) inputnameDlg.findViewById(R.id.cancelButton);
 
-
+        //선택된 창문 삭제
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = getIntent();
                 int pos = intent.getIntExtra("position", 0);
-                Log.d("유이", "창문" + pos);
                 if (databaseManager != null) {
                     databaseManager.delete(adapter.listViewItemList.get(pos).getName());
                 }
                 adapter.listViewItemList.remove(pos);
                 adapter.notifyDataSetChanged();
                 inputnameDlg.dismiss();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 finish();
             }
         });
@@ -62,9 +61,10 @@ public class WindowDeleteActivity extends Activity {
         });
 
     }
+
     public boolean onTouchEvent(MotionEvent event) {
         //바깥레이어 클릭시 안닫히게
-        if(event.getAction()== MotionEvent.ACTION_OUTSIDE){
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
         return true;

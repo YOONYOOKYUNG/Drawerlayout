@@ -82,6 +82,7 @@ public class ModeSetActivity_popup_temp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
             }
         });
 

@@ -50,11 +50,13 @@ public class AlarmReceiver extends BroadcastReceiver{
         }else builder.setSmallIcon(R.drawable.alaram);
 
 
+        //PTY,DUST 값 불러오기 -(4)
         String pty,dust;
         SharedPreferences pf1 = context.getSharedPreferences("fragment2",context.MODE_PRIVATE);
 //미세먼지 값에 따른 알림
         dust=pf1.getString("dust","15");
         pty=pf1.getString("pty","0");
+
             if (Integer.parseInt(dust) < 30) {
                 builder.setAutoCancel(true)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
