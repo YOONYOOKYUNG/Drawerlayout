@@ -44,11 +44,13 @@ public class AutoOpen extends Thread {
             float dustresult = outsidedust - insidedust;
             int windownumber = adapter.getCount();
 
+            //모드 구분 코드
             if (modestate) {
                 if (outsiderain == 0 && coldtemp < outsidetemp && outsidetemp < hottemp && dustresult + comparedust < 0) {
                     Log.d("자동모드", "자동모드:창문 열었어요");
 
                     boolean windowsOpened = false;
+                    //창문 자동 설정 - 모두 열기
                     for (int i = 0; i < windownumber; i++) {
                         {
                             if (!adapter.listViewItemList.get(i).getState()) {
@@ -64,6 +66,7 @@ public class AutoOpen extends Thread {
                         }
                     }
 
+                    //창문이 자동으로 열릴 시
                     if (windowsOpened) {
                         //메세지 보내기
                         Message message = ((MainActivity) MainActivity.mContext).autohandler.obtainMessage(1);

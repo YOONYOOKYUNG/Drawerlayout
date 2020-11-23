@@ -43,6 +43,7 @@ public class AutoClose extends Thread {
             int outsiderain = ((MainActivity) MainActivity.mContext).outsiderain;
             float dustresult = outsidedust - insidedust;
 
+            //모드 구분 코드
             if (modestate) {
                 if (outsiderain != 0) {
                     Log.d("자동모드", "비가 와서 창문 닫았습니다");
@@ -78,6 +79,7 @@ public class AutoClose extends Thread {
             }
         }
 
+        //창문이 자동으로 닫힐 시
         if (windowsclosed) {
             //메세지 보내기
             Message message = ((MainActivity) MainActivity.mContext).autohandler.obtainMessage(num);
