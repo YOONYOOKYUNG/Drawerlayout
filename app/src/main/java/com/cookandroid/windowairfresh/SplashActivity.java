@@ -37,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                     } else {//저장된 주소가 있을 시
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                        finish();
                     }
                 } else { //블루투스 어답터 비활성화 시
                     startActivity(new Intent(SplashActivity.this, BluetoothOnActivity.class));
