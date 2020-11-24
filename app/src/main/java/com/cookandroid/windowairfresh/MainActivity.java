@@ -48,20 +48,17 @@ import me.relex.circleindicator.CircleIndicator3;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainActivity_Fragment1.AutoWindowListener {
 
     //블루투스 관련 선언 시작(블투1)
-    private static final String TAG = "bluetooth2";
-    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
+    private static String TAG = "BLUETOOTH";
+    final int RECIEVE_MESSAGE = 1;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private StringBuilder sb = new StringBuilder();
-    private static int flag = 0;
     private ConnectedThread ConnectedThread;
     public static Context mContext;
+    static String address = "98:D3:51:F9:28:05";
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    //블루투스 하드코딩
-    private static String address = "98:D3:51:F9:28:05";
     public ArrayList<WindowDetails> checklist = new ArrayList<>();
     String[] array;
-    //블루투스 관련 선언 종료(블투1)
 
     private DatabaseManager databaseManager;
     ViewPager2 viewpager;
@@ -71,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     Handler handler;
-    SwipeRefreshLayout swipeRefreshLayout;
     FragmentStateAdapter slideadapter;
     float insidedust;
     float outsidedust;
@@ -81,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Handler autohandler;
 
     @Override
+    //activity에 fragment 삽입
     public void onAttachFragment(Fragment fragment) {
         if (fragment instanceof MainActivity_Fragment1) {
             MainActivity_Fragment1 mainFragment1 = (MainActivity_Fragment1) fragment;
@@ -88,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //자동모드 일 시 자동모드 서비스로 값 전송
     public void onAutoWindowSet(String temp, String dust, String rain) {
         outsidetemp = Float.parseFloat(temp);
         outsidedust = Float.parseFloat(dust);
@@ -96,19 +94,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //database 관련
         databaseManager = DatabaseManager.getInstance(this);
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         adapter.initialiseList();
         mContext = this;
-
-        //도움말
-        ImageView question2;
 
         //fragment 관련
         viewpager = findViewById(R.id.viewpager);
@@ -117,22 +112,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         indicator = findViewById(R.id.indicator);
         indicator.setViewPager(viewpager);
 
-
-        //(블투2)
-        btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
+        //블루투스
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
         checkBTState();
-        //(블투2)
 
-        //hooks
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        //툴바
         toolbar = findViewById(R.id.toolbar);
-
-        //toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        //navigation drawer menu
+        //네비게이션 드로어 메뉴
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawer_layout);
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.nav_drawer_open, R.string.nav_drawer_close);
@@ -143,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mContext = this;
 
 
-        //자동시작
+        //자동모드 팝업
         autohandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
@@ -153,11 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+        //자동모드 서비스 시작
         Intent intent = new Intent(this, AutoService.class);
         startService(intent);
     }
 
-    //menu
+    //메뉴
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
         switch (menuitem.getItemId()) {
@@ -200,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //(블투3)
+    //블루투스 소켓 관련
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
         try {
             final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[]{UUID.class});
@@ -212,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return device.createRfcommSocketToServiceRecord(MY_UUID);
     }
 
+    //블루투스 상태 체크
     private void checkBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
         // Emulator doesn't support Bluetooth and will return null
@@ -249,15 +242,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         public void run() {
-            byte[] buffer = new byte[256];  // buffer store for the stream
-            int bytes; // bytes returned from read()
+            byte[] buffer = new byte[256];
+            int bytes;
 
-            // Keep listening to the InputStream until an exception occurs
+
             while (true) {
                 try {
                     Thread.sleep(1000);
-                    bytes = InputStream.read(buffer);        // Get number of bytes and message in "buffer"
-                    handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                    bytes = InputStream.read(buffer);
+                    handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();
                 } catch (IOException | InterruptedException e) {
                     break;
                 }
@@ -275,6 +268,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+    //블루투스 소켓 생성
     public void makesocket() {
         BluetoothDevice device = btAdapter.getRemoteDevice(adapter.listViewItemList.get(0).getAddress());
         try {
@@ -284,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //블루투스 소캣 열기
     public void opensocket() {
         makesocket();
         btAdapter.cancelDiscovery();
@@ -316,9 +312,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             WindowDetails listViewItem = adapter.listViewItemList.get(0);
             address = listViewItem.getAddress();
         }
+
+        //새로고침
         onRefresh();
         arduinoRefresh();
-        //handler.postDelayed(new Handler(),1000)
+
     }
 
     public void arduinoRefresh() {
@@ -326,8 +324,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (!btsocketstate) {
                 opensocket();
             }
+            //아두이노로 측정값을 수신하기 위한 신호인 '1'을 전송
             ConnectedThread.write("1");
         }
+
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
@@ -352,7 +352,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             editor.putString("rain", array[4]);//아두이노 측정값(빗물감지)
                             editor.commit();
 
-                            flag++;
                         }
 
                         break;
@@ -369,16 +368,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (viewpager.getCurrentItem() == 0) {
                 super.onBackPressed();
             } else {
-                // Otherwise, select the previous step.
+                // 그렇지 않을경우 이전 상태를 선택
                 viewpager.setCurrentItem(viewpager.getCurrentItem() - 1);
             }
         }
     }
 
 
-    private void errorExit(String title, String message) {
-        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-        finish();
+    //새로고침 함수
+    public void onRefresh() {
+        slideadapter = new Main_SlideAdapter(this, databaseManager);
+        slideadapter.notifyDataSetChanged();
+        viewpager.setAdapter(slideadapter);
+        arduinoRefresh();
     }
 
     //창문설정 - 열기
@@ -416,16 +418,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+    private void errorExit(String title, String message) {
+        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
+        finish();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
-    //새로고침 함수
-    public void onRefresh() {
-        slideadapter = new Main_SlideAdapter(this, databaseManager);
-        slideadapter.notifyDataSetChanged();
-        viewpager.setAdapter(slideadapter);
-        arduinoRefresh();
-    }
 }

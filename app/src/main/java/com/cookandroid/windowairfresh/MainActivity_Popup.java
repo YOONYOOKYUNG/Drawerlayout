@@ -16,19 +16,25 @@ import com.cookandroid.windowairfresh.R;
 public class MainActivity_Popup {
 
     private Context context;
+
     public MainActivity_Popup(Context context) {
         this.context = context;
     }
 
     private String temp;
+
     public void settemp(String _temp) {
         temp = _temp;
     }
 
     private String dust;
-    public void setdust(String _dust) { dust = _dust; }
+
+    public void setdust(String _dust) {
+        dust = _dust;
+    }
 
     private String humid;
+
     public void sethumid(String _humid) {
         humid = _humid;
     }
