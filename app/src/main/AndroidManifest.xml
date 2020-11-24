@@ -46,13 +46,6 @@
         <activity
             android:name=".HelpActivity"
             android:theme="@style/AppTheme.help" />
-        <activity
-            android:name=".HelpMode1Activity"
-            android:theme="@style/AppTheme.help" />
-        <activity
-            android:name=".HelpMode2Activity"
-            android:theme="@style/AppTheme.help" />
-        <activity android:name=".HelpMode3Activity" />
         <activity android:name=".AlarmReceiver"></activity>
         <activity
             android:name=".Popup_warning"

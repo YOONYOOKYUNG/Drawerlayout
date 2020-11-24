@@ -120,30 +120,6 @@ public class ModeSetActivity extends AppCompatActivity {
             }
         });
 
-        //도움말1 수동 이벤트
-        question.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent4 = new Intent(getApplicationContext(), HelpMode1Activity.class);
-                startActivity(intent4);
-
-            }
-        });
-        //도움말2 이벤트
-        question2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent5 = new Intent(getApplicationContext(), HelpMode2Activity.class);
-                startActivity(intent5);
-            }
-        });
-        question3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent6 = new Intent(getApplicationContext(),HelpMode3Activity.class);
-                startActivity(intent6);
-            }
-        });
 
         //뒤로가기 이벤트
         backarrow.setOnClickListener(new View.OnClickListener() {
