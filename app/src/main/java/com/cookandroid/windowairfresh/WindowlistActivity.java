@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Set;
 
-public class WindowlistActivity extends AppCompatActivity  {
+public class WindowlistActivity extends AppCompatActivity {
 
 
     private DatabaseManager databaseManager;
@@ -52,10 +52,10 @@ public class WindowlistActivity extends AppCompatActivity  {
         adapter = new WindowListAdapter();
         adapter.setDatabaseManager(databaseManager);
         setContentView(R.layout.activity_windowlist);
+        //GPS permission 허용
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-        //GPS permission 허용
         btn1 = findViewById(R.id.btn1);
         // 커스텀 다이얼로그에서 입력한 메시지를 출력할 TextView 를 준비한다.
         main_label = (TextView) findViewById(R.id.main_label);
@@ -63,27 +63,32 @@ public class WindowlistActivity extends AppCompatActivity  {
         gridView = findViewById(R.id.listview1);
 
         adapter.setListener(new WindowListAdapter.OnWindowButtonClickListener() {
+            //창문버튼을 눌렀을 때 동작하는 코드
             @Override
             public void onWindowButtonClick(int pos) {
                 WindowDetails listViewItem = adapter.listViewItemList.get(pos);
-                Boolean state=listViewItem.getState();
+                Boolean state = listViewItem.getState();
+                //SharedPreference로 현재 설정된 모드 값 가져오기
                 SharedPreferences sf = getSharedPreferences("autoset", 0);
                 Boolean mode = sf.getBoolean("modestate", false); // 키값으로
-                if(mode) {
-                    Intent intent = new Intent(WindowlistActivity.this,Popup_warning.class);
+                //자동모드면 버튼을 눌렀을 때 경고창 뜬다
+                if (mode) {
+                    Intent intent = new Intent(WindowlistActivity.this, Popup_warning.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
-                }
-                else if(state) {
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    //수동모드라면 창문의 상태가 바뀐다
+                } else if (state) {
+                    //창문이 열린 상태라면
                     listViewItem.setState(false);
-                    ((MainActivity)MainActivity.mContext).closewindow(pos);
+                    ((MainActivity) MainActivity.mContext).closewindow(pos);//창문닫기 기능 수행
                     if (databaseManager != null) {
                         ContentValues updateRowValue = new ContentValues();
+                        //닫힘상태로 데이터베이스 업데이트
                         updateRowValue.put("state", "false");
-                        databaseManager.update(updateRowValue,listViewItem.getName());
+                        databaseManager.update(updateRowValue, listViewItem.getName());
 
                         //timeline에 추가
-                        Calendar cal =Calendar.getInstance();
+                        Calendar cal = Calendar.getInstance();
                         SimpleDateFormat sdf_date = new SimpleDateFormat("MM/dd E");
                         SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
 
@@ -96,18 +101,18 @@ public class WindowlistActivity extends AppCompatActivity  {
 
                         databaseManager.timeline_insert(date, time, content, "닫힘");
                     }
-                }
-
-                else {
+                } else {
+                    //창문이 닫힌 상태라면
                     listViewItem.setState(true);
-                    ((MainActivity)MainActivity.mContext).openwindow(pos);
+                    ((MainActivity) MainActivity.mContext).openwindow(pos);//창문닫기 열기 수행
                     if (databaseManager != null) {
                         ContentValues updateRowValue = new ContentValues();
+                        //열림상태로 데이터베이스 업데이트
                         updateRowValue.put("state", "true");
-                        databaseManager.update(updateRowValue,listViewItem.getName());
+                        databaseManager.update(updateRowValue, listViewItem.getName());
 
                         //timeline에 추가
-                        Calendar cal =Calendar.getInstance();
+                        Calendar cal = Calendar.getInstance();
                         SimpleDateFormat sdf_date = new SimpleDateFormat("MM/dd E");
                         SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
 
@@ -142,8 +147,6 @@ public class WindowlistActivity extends AppCompatActivity  {
         });
 
 
-
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,25 +167,23 @@ public class WindowlistActivity extends AppCompatActivity  {
                 //블루투스 디바이스 검색이 끝났을 때
                 registerReceiver(mReceiver, filter);
                 //receiver를 등록한다
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         });
 
 
+        for (int i = 0; i < adapter.getCount(); i++) {
+            WindowDetails item = (WindowDetails) adapter.getItem(i);
+        }
 
 
-      for(int i=0;i<adapter.getCount();i++){
-          WindowDetails item =(WindowDetails) adapter.getItem(i);
-      }
-
-
-      // 뒤로가기 버튼
+        // 뒤로가기 버튼
         backarrow = findViewById(R.id.backarrow);
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         });
 
@@ -190,6 +191,7 @@ public class WindowlistActivity extends AppCompatActivity  {
 
     @Override
     public void onResume() {
+        //페이지에 돌아올 때마다 창문상태를 업데이트 한다
         adapter.initialiseList();
         gridView.setAdapter(adapter);
         super.onResume();
@@ -217,7 +219,7 @@ public class WindowlistActivity extends AppCompatActivity  {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             //각 action에 따른 반응
-            if  (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //블루투스 디바이스 검색 시작
                 mDeviceList = new ArrayList<>();
                 //블루투스 기기 목록 갱신
@@ -236,20 +238,20 @@ public class WindowlistActivity extends AppCompatActivity  {
                 newIntent.putParcelableArrayListExtra("device.list2", list);
                 //추가된 값 저장하기
                 startActivity(newIntent);
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 return;
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //블루투스 디바이스가 검색되었을 때(디바이스 검색 결과)
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 //추가된 값 받아오기
                 mDeviceList.add(device);
-                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         }
     };
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         WindowlistActivity.this.finish();
         super.onBackPressed();
     }

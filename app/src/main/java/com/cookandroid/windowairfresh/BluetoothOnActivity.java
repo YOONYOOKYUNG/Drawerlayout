@@ -25,10 +25,11 @@ public class BluetoothOnActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //블루투스 사용을 위한 GPS permission 허용
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-        //GPS permission 허용
+
 
         //커스텀 다이얼로그를 정의하기 위해 Dialog 클래스를 생성한다.
         final Dialog bluetoothDlg = new Dialog(this);
@@ -43,11 +44,11 @@ public class BluetoothOnActivity extends AppCompatActivity {
         setTitle("Bluetooth 연결");
         btnok = bluetoothDlg.findViewById(R.id.btnok);
         btnend = bluetoothDlg.findViewById(R.id.btnend);
+        //블루투스 통신을 위해 블루투스 어댑터를 가져옴
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        //블루투스 통신을 위해 블루투스 어댑터를 가져옵니다
 
         btnok.setOnClickListener(new View.OnClickListener() {
-                @Override
+            @Override
             public void onClick(View v) {
                 if (mBluetoothAdapter != null) {
                     //블루투스 되는 기기이다.
@@ -58,9 +59,9 @@ public class BluetoothOnActivity extends AppCompatActivity {
                         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                         startActivity(intent);
                     }
-                    Intent nextintent = new Intent(BluetoothOnActivity.this,AddressActivity.class);
+                    Intent nextintent = new Intent(BluetoothOnActivity.this, AddressActivity.class);
                     startActivity(nextintent);
-                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 }
             }
         });

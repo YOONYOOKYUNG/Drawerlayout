@@ -23,10 +23,8 @@ public class DatabaseManager {
     private SQLiteDatabase mydatabase = null;
 
     //MovieDatabaseManager 싱글톤 패턴으로 구현
-    public static DatabaseManager getInstance(Context context)
-    {
-        if(myDBManager == null)
-        {
+    public static DatabaseManager getInstance(Context context) {
+        if (myDBManager == null) {
             myDBManager = new DatabaseManager(context);
         }
 
@@ -38,7 +36,7 @@ public class DatabaseManager {
         myContext = context;
 
         //DB Open
-        mydatabase = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE,null);
+        mydatabase = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
 
         //창문 Table 생성
         mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Window_TABLE_NAME +
@@ -66,7 +64,7 @@ public class DatabaseManager {
 
         //활동 기록 Table 생성
         mydatabase.execSQL("CREATE TABLE IF NOT EXISTS " + Timeline_TABLE_NAME +
-                "("  + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Date TEXT," +
                 "Time TEXT," +
                 "Content TEXT," +
@@ -80,14 +78,15 @@ public class DatabaseManager {
     }
 
     // Window 삭제
-    public Integer delete (String name) {
-        return mydatabase.delete(Window_TABLE_NAME, "name = ?", new String[] { name });
+    public Integer delete(String name) {
+        return mydatabase.delete(Window_TABLE_NAME, "name = ?", new String[]{name});
     }
 
     // Window 상태 업데이트
     public int update(ContentValues updateRowValue, String name) {
-        return mydatabase.update(Window_TABLE_NAME, updateRowValue, "name= ?", new String[] { name });
+        return mydatabase.update(Window_TABLE_NAME, updateRowValue, "name= ?", new String[]{name});
     }
+
     // Window db얻어오기
     public ArrayList<WindowDetails> getAll() {
         ArrayList<WindowDetails> array_list = new ArrayList<WindowDetails>();
@@ -109,7 +108,6 @@ public class DatabaseManager {
         cursor.close();
         return array_list;
     }
-
 
 
     //Location/Station table 비어있는지 확인
@@ -158,11 +156,11 @@ public class DatabaseManager {
 
         while (cursor.moveToNext()) {
 
-            if(si.equals(cursor.getString(1))){
+            if (si.equals(cursor.getString(1))) {
                 Log.d("00", "성공1 ");
-                if(gu.equals(cursor.getString(2))){
-                    location = cursor.getString(3)+","+cursor.getString(4);
-                    Log.d("00","location : "+location);
+                if (gu.equals(cursor.getString(2))) {
+                    location = cursor.getString(3) + "," + cursor.getString(4);
+                    Log.d("00", "location : " + location);
                     break;
                 }
 
@@ -201,11 +199,11 @@ public class DatabaseManager {
 
         while (cursor.moveToNext()) { //커서를 다음 행으로 이동
 
-            if(si.equals(cursor.getString(1))){
+            if (si.equals(cursor.getString(1))) {
                 Log.d("00", "성공1 ");
-                if(gu.equals(cursor.getString(2))){
+                if (gu.equals(cursor.getString(2))) {
                     station = cursor.getString(3);
-                    Log.d("00","location : "+station);
+                    Log.d("00", "location : " + station);
                     break;
                 }
 
@@ -216,14 +214,13 @@ public class DatabaseManager {
     }
 
 
-
     // Timeline 추가
     public static final String Timeline_data = "Date";
     public static final String Timeline_time = "Time";
     public static final String Timeline_content = "Content";
     public static final String Timeline_state = "State";
 
-    public long timeline_insert(String date, String time, String content, String state){
+    public long timeline_insert(String date, String time, String content, String state) {
 
         ContentValues timeValues = new ContentValues();
         timeValues.put(Timeline_data, date);

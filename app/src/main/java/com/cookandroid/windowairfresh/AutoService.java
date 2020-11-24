@@ -21,8 +21,10 @@ public class AutoService extends Service {
         // 서비스에서 가장 먼저 호출됨(최초에 한번만)
         Log.d("test", "서비스의 onCreate");
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        //자동모드 실행
         AutoOpen autoOpen = new AutoOpen();
         autoOpen.start();
         AutoClose autoClose = new AutoClose();
